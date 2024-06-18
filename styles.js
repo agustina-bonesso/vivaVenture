@@ -9,6 +9,7 @@ export default createGlobalStyle`
 
   body {
     margin: 0;
+    padding-top: 9.375rem;
     font-family: system-ui;
   }
 `;

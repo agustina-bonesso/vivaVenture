@@ -1,15 +1,24 @@
 import Image from "next/image";
+import styled from "styled-components";
 
 export default function ActivityCard({ activity }) {
   return (
     <article>
-      <Image src={activity.image} alt={activity.title} width={200} height={200} />
+      <StyledImage
+        src={activity.image}
+        alt={activity.title}
+        width={200}
+        height={200}
+      />
       <h2>{activity.title}</h2>
       <span>
-        {activity.country},{activity.area}
+        {activity.area}, {activity.country}
       </span>
-      <div>{activity.category}</div>
+      <div>{activity.category.join(", ")}</div>
       <p>{activity.description}</p>
     </article>
   );
 }
+const StyledImage = styled(Image)`
+  width: 100%;
+`;

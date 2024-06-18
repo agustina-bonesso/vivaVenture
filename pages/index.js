@@ -1,12 +1,13 @@
 import ActivityCard from "@/components/ActivityCard";
 import Header from "@/components/Header";
 import { dummyData } from "@/lib/dummyData";
+import styled from "styled-components";
 
 export default function HomePage() {
   return (
     <>
       <Header></Header>
-      <ul>
+      <StyledList>
         {dummyData.map((activity) => {
           return (
             <li key={activity.id}>
@@ -14,7 +15,15 @@ export default function HomePage() {
             </li>
           );
         })}
-      </ul>
+      </StyledList>
     </>
   );
 }
+
+const StyledList = styled.ul`
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+`;
