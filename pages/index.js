@@ -6,12 +6,12 @@ import styled from "styled-components";
 export default function HomePage() {
   return (
     <>
-      <Header></Header>
+      <Header />
       <StyledList>
         {dummyData.map((activity) => {
           return (
             <li key={activity.id}>
-              <ActivityCard activity={activity}></ActivityCard>
+              <ActivityCard activity={activity} />
             </li>
           );
         })}
