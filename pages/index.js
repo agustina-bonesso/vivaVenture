@@ -6,7 +6,6 @@ import styled from "styled-components";
 export default function HomePage() {
   return (
     <>
-      <Header />
       <main>
         <StyledList>
           {dummyData.map((activity) => {
