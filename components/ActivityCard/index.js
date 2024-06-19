@@ -4,12 +4,10 @@ import styled from "styled-components";
 export default function ActivityCard({ activity }) {
   return (
     <article>
-      <StyledImage
-        src={activity.image}
-        alt={activity.title}
-        width={200}
-        height={200}
-      />
+      <ImageContainer>
+        <StyledImage src={activity.image} alt={activity.title} fill />
+      </ImageContainer>
+
       <h2>{activity.title}</h2>
       <span>
         {activity.area}, {activity.country}
@@ -20,5 +18,10 @@ export default function ActivityCard({ activity }) {
   );
 }
 const StyledImage = styled(Image)`
-  width: 100%;
+  object-fit: cover;
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  height: 200px;
 `;

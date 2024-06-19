@@ -7,15 +7,17 @@ export default function HomePage() {
   return (
     <>
       <Header />
-      <StyledList>
-        {dummyData.map((activity) => {
-          return (
-            <li key={activity.id}>
-              <ActivityCard activity={activity} />
-            </li>
-          );
-        })}
-      </StyledList>
+      <main>
+        <StyledList>
+          {dummyData.map((activity) => {
+            return (
+              <li key={activity.id}>
+                <ActivityCard activity={activity} />
+              </li>
+            );
+          })}
+        </StyledList>
+      </main>
     </>
   );
 }
@@ -25,5 +27,5 @@ const StyledList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 1rem;
+  padding: 0;
 `;
