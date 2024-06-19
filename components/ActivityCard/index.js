@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styled from "styled-components";
 import Link from "next/link";
-import StyledImageComponent from "../StyledImage";
+import StyledImageComponent from "../StyledImageComponent";
 
 export default function ActivityCard({ activity }) {
   return (
@@ -10,11 +10,12 @@ export default function ActivityCard({ activity }) {
         <StyledImageComponent src={activity.image} alt={activity.title} />
         <h2>{activity.title}</h2>
       </Link>
-      <span>
-        {activity.area}, {activity.country}
-      </span>
-      <br />
-      <span>{activity.category.join(", ")}</span>
+      <div>
+        <p>
+          {activity.area}, {activity.country}
+        </p>
+        <p>{activity.category.join(", ")}</p>
+      </div>
     </article>
   );
 }
