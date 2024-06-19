@@ -11,4 +11,8 @@ export default createGlobalStyle`
     margin: 0;
     font-family: system-ui;
   }
+
+  main {
+    padding: 9.375rem .625rem .9375rem .625rem;
+  }
 `;
