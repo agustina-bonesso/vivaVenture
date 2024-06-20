@@ -1,21 +1,19 @@
 import Image from "next/image";
 import styled from "styled-components";
-import Link from "next/link";
 import StyledImageComponent from "../StyledImageComponent";
 
-export default function ActivityCard({ activity }) {
+export default function ActivityDetails({ activity }) {
   return (
     <article>
-      <Link href={`/${activity.id}`}>
-        <StyledImageComponent src={activity.image} alt={activity.title} />
-        <h2>{activity.title}</h2>
-      </Link>
+      <StyledImageComponent src={activity.image} alt={activity.title} />
+      <h2>{activity.title}</h2>
       <div>
         <p>
           {activity.area}, {activity.country}
         </p>
         <p>{activity.category.join(", ")}</p>
       </div>
+      <p>{activity.description}</p>
     </article>
   );
 }

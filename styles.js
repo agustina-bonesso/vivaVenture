@@ -13,6 +13,6 @@ export default createGlobalStyle`
   }
 
   main {
-    padding: 9.375rem .625rem .9375rem .625rem;
+    padding: 3.75rem .625rem .9375rem .625rem;
   }
 `;
