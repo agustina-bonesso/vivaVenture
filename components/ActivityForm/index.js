@@ -1,15 +1,17 @@
 import styled from "styled-components";
-import { StyledButton } from "./StyledButton.js";
+import { StyledButton } from "../StyledButton";
 
-export default function ActivityForm({ onSubmit, formName, defaultData }) {
+export default function ActivityForm({onAddActivity}) {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    onSubmit(data);
+    const newActivity = data;
+    onAddActivity(newActivity);
+    
   }
   return (
-    <StyledForm aria-labelledby={formName} onSubmit={handleSubmit}>
+    <StyledForm onSubmit={handleSubmit}>
       <StyledLabel htmlFor="title">Activity</StyledLabel>
       <StyledInput
         id="title"
@@ -21,20 +23,13 @@ export default function ActivityForm({ onSubmit, formName, defaultData }) {
       />
 
       <StyledLabel htmlFor="area">Area</StyledLabel>
-      <StyledInput
-        id="area"
-        name="area"
-        type="text"
-        defaultValue="add area"
-        required
-      />
+      <StyledInput id="area" name="area" type="text" defaultValue="add area" />
       <StyledLabel htmlFor="country">Country</StyledLabel>
       <StyledInput
         id="country"
         name="country"
         type="text"
         defaultValue="add country"
-        required
       />
 
       <StyledLabel htmlFor="category">Category</StyledLabel>
@@ -52,7 +47,6 @@ export default function ActivityForm({ onSubmit, formName, defaultData }) {
         cols="30"
         rows="10"
         defaultValue="add description"
-        required
       ></StyledTextarea>
       <StyledLabel htmlFor="image">Image</StyledLabel>
       <StyledInput
@@ -69,6 +63,7 @@ export default function ActivityForm({ onSubmit, formName, defaultData }) {
 const StyledForm = styled.form`
   display: grid;
   gap: 0.5rem;
+  padding-top: 4rem;
 `;
 const StyledInput = styled.input`
   padding: 0.5rem;
