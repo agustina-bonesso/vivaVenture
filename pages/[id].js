@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import ActivityDetails from "@/components/ActivityDetails";
 import { dummyData } from "@/lib/dummyData";
-import { StyledLink } from "@/components/StyledLink";
+import { StyledBackLink } from "@/components/StyledLink";
 
 export default function Activity() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function Activity() {
       ) : (
         <p>Activity not found</p>
       )}
-      <StyledLink href={"/"}>
+      <StyledBackLink href={"/"}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -31,7 +31,7 @@ export default function Activity() {
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
         Back to all Activities
-      </StyledLink>
+      </StyledBackLink>
     </>
   );
 }
