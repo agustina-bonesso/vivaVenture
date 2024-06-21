@@ -1,4 +1,3 @@
-import Link from "next/link";
 import StyledImageComponent from "../StyledImageComponent";
 import { StyledLink } from "../StyledLink";
 

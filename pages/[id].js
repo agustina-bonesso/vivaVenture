@@ -10,12 +10,7 @@ export default function Activity() {
   const activity = dummyData.find((activity) => activity.id === id);
 
   return (
-    <>
-      {activity ? (
-        <ActivityDetails activity={activity} />
-      ) : (
-        <p>Activity not found</p>
-      )}
+    <main>
       <StyledBackLink href={"/"}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,6 +27,11 @@ export default function Activity() {
         </svg>
         Back to all Activities
       </StyledBackLink>
-    </>
+      {activity ? (
+        <ActivityDetails activity={activity} />
+      ) : (
+        <p>Activity not found</p>
+      )}
+    </main>
   );
 }

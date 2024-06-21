@@ -1,59 +1,121 @@
 import styled from "styled-components";
 import { StyledButton } from "../StyledButton";
+import { useRouter } from "next/router";
+import { StyledBackLink } from "../StyledLink";
 
-export default function ActivityForm({onAddActivity}) {
+export default function ActivityForm({ onAddActivity }) {
+  const router = useRouter();
+
+  function validateCheckboxes() {
+    const checkboxes = document.querySelectorAll(
+      'input[name="category"]:checked'
+    );
+    if (checkboxes.length === 0) {
+      alert("Please select at least one category.");
+      return false;
+    }
+    return true;
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
+    if (!validateCheckboxes()) return;
     const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
-    const newActivity = data;
+    const newActivity = Object.fromEntries(formData);
+    newActivity.category = formData.getAll("category");
     onAddActivity(newActivity);
-    
+    router.push("/");
   }
   return (
     <StyledForm onSubmit={handleSubmit}>
+      <StyledBackLink href={"/"}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="black"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back to all Activities
+      </StyledBackLink>{" "}
       <StyledLabel htmlFor="title">Activity</StyledLabel>
       <StyledInput
         id="title"
-        title="title"
+        name="title"
         type="text"
         maxLength="150"
-        defaultValue="add activity-title"
+        placeholder="add activity-title"
         required
       />
-
       <StyledLabel htmlFor="area">Area</StyledLabel>
-      <StyledInput id="area" name="area" type="text" defaultValue="add area" />
+      <StyledInput
+        id="area"
+        name="area"
+        type="text"
+        placeholder="add area"
+        required
+      />
       <StyledLabel htmlFor="country">Country</StyledLabel>
       <StyledInput
         id="country"
         name="country"
         type="text"
-        defaultValue="add country"
+        placeholder="add country"
+        required
       />
-
       <StyledLabel htmlFor="category">Category</StyledLabel>
-      <select name="category" id="category">
-        <option value="">--Please choose an option--</option>
-        <option value="outdoor">Outdoor</option>
-        <option value="water">Water</option>
-        <option value="sport">Sport</option>
-      </select>
+      <StyledCheckboxContainer>
+        <StyledInput
+          type="checkbox"
+          id="outdoor"
+          name="category"
+          value="outdoor"
+        />
+        <label htmlFor="outdoor">Outdoor</label>
 
+        <StyledInput type="checkbox" id="water" name="category" value="water" />
+        <label htmlFor="water">Water</label>
+
+        <StyledInput type="checkbox" id="sport" name="category" value="sport" />
+        <label htmlFor="sport">Sport</label>
+
+        <StyledInput
+          type="checkbox"
+          id="running"
+          name="category"
+          value="running"
+        />
+        <label htmlFor="running">Running</label>
+
+        <StyledInput
+          type="checkbox"
+          id="cycling"
+          name="category"
+          value="cycling"
+        />
+        <label htmlFor="cycling">Cycling</label>
+      </StyledCheckboxContainer>
       <StyledLabel htmlFor="description">Description</StyledLabel>
       <StyledTextarea
         name="description"
         id="description"
         cols="30"
         rows="10"
-        defaultValue="add description"
+        placeholder="add description"
       ></StyledTextarea>
       <StyledLabel htmlFor="image">Image</StyledLabel>
       <StyledInput
         id="image"
         name="image"
         type="text"
-        defaultValue="paste your image-url here"
+        placeholder="https://example.com/image.jpg"
+        defaultValue={"/images/default-image.jpg"}
       />
       <StyledButton type="submit">Add</StyledButton>
     </StyledForm>
@@ -63,7 +125,7 @@ export default function ActivityForm({onAddActivity}) {
 const StyledForm = styled.form`
   display: grid;
   gap: 0.5rem;
-  padding-top: 4rem;
+  justify-content: center;
 `;
 const StyledInput = styled.input`
   padding: 0.5rem;
@@ -79,4 +141,15 @@ const StyledTextarea = styled.textarea`
 `;
 const StyledLabel = styled.label`
   font-weight: bold;
+`;
+
+const StyledCheckboxContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+
+  input[type="checkbox"] {
+    margin: 0 10px;
+  }
 `;

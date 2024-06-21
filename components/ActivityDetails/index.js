@@ -1,5 +1,3 @@
-import Image from "next/image";
-import styled from "styled-components";
 import StyledImageComponent from "../StyledImageComponent";
 
 export default function ActivityDetails({ activity }) {

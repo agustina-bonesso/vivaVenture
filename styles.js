@@ -13,7 +13,7 @@ export default createGlobalStyle`
   }
 
   main {
-    padding: 4rem .625rem .9375rem .625rem;
+    padding: 6rem .625rem .9375rem .625rem;
    
   }
 `;
