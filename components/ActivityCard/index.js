@@ -1,5 +1,5 @@
-import StyledImageComponent from "../StyledImageComponent";
-import { StyledLink } from "../StyledLink";
+import StyledImageComponent from "@/components/StyledImageComponent";
+import { StyledLink } from "@/components/StyledLinks";
 
 export default function ActivityCard({ activity }) {
   return (

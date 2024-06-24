@@ -1,47 +1,29 @@
 import styled from "styled-components";
-import { StyledButton } from "../StyledButton";
+import { StyledButton } from "@/components/StyledButton";
 import { useRouter } from "next/router";
-import { StyledBackLink } from "../StyledLink";
+import { StyledBackLink } from "@/components/StyledLinks";
+import { Icon } from "@/components/Icons";
 
 export default function ActivityForm({ onAddActivity }) {
   const router = useRouter();
 
-  function validateCheckboxes() {
-    const checkboxes = document.querySelectorAll(
-      'input[name="category"]:checked'
-    );
-    if (checkboxes.length === 0) {
-      alert("Please select at least one category.");
-      return false;
-    }
-    return true;
-  }
-
   function handleSubmit(event) {
     event.preventDefault();
-    if (!validateCheckboxes()) return;
     const formData = new FormData(event.target);
     const newActivity = Object.fromEntries(formData);
     newActivity.category = formData.getAll("category");
+    if (newActivity.category.length === 0) {
+      alert("Please select at least one category.");
+      return false;
+    }
     onAddActivity(newActivity);
     router.push("/");
   }
+
   return (
     <StyledForm onSubmit={handleSubmit}>
       <StyledBackLink href={"/"}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="black"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
+        <Icon name="chevronLeft" />
         Back to all Activities
       </StyledBackLink>{" "}
       <StyledLabel htmlFor="title">Activity</StyledLabel>
@@ -71,35 +53,55 @@ export default function ActivityForm({ onAddActivity }) {
       />
       <StyledLabel htmlFor="category">Category</StyledLabel>
       <StyledCheckboxContainer>
-        <StyledInput
-          type="checkbox"
-          id="outdoor"
-          name="category"
-          value="outdoor"
-        />
-        <label htmlFor="outdoor">Outdoor</label>
+        <label htmlFor="outdoor">
+          Outdoor
+          <StyledInput
+            type="checkbox"
+            id="outdoor"
+            name="category"
+            value="outdoor"
+          />
+        </label>
 
-        <StyledInput type="checkbox" id="water" name="category" value="water" />
-        <label htmlFor="water">Water</label>
+        <label htmlFor="water">
+          Water
+          <StyledInput
+            type="checkbox"
+            id="water"
+            name="category"
+            value="water"
+          />
+        </label>
 
-        <StyledInput type="checkbox" id="sport" name="category" value="sport" />
-        <label htmlFor="sport">Sport</label>
+        <label htmlFor="sport">
+          Sport
+          <StyledInput
+            type="checkbox"
+            id="sport"
+            name="category"
+            value="sport"
+          />
+        </label>
 
-        <StyledInput
-          type="checkbox"
-          id="running"
-          name="category"
-          value="running"
-        />
-        <label htmlFor="running">Running</label>
+        <label htmlFor="running">
+          Running
+          <StyledInput
+            type="checkbox"
+            id="running"
+            name="category"
+            value="running"
+          />
+        </label>
 
-        <StyledInput
-          type="checkbox"
-          id="cycling"
-          name="category"
-          value="cycling"
-        />
-        <label htmlFor="cycling">Cycling</label>
+        <label htmlFor="cycling">
+          Cycling
+          <StyledInput
+            type="checkbox"
+            id="cycling"
+            name="category"
+            value="cycling"
+          />
+        </label>
       </StyledCheckboxContainer>
       <StyledLabel htmlFor="description">Description</StyledLabel>
       <StyledTextarea
@@ -131,12 +133,10 @@ const StyledForm = styled.form`
 `;
 const StyledInput = styled.input`
   padding: 0.5rem;
-  font-size: inherit;
   border: 3px solid black;
   border-radius: 0.5rem;
 `;
 const StyledTextarea = styled.textarea`
-  font-family: inherit;
   border: 3px solid black;
   border-radius: 0.5rem;
   padding: 0.5rem;

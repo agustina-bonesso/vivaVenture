@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import GlobalStyle from "../styles";
+import GlobalStyle from "@/styles";
 import { dummyData } from "@/lib/dummyData";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
