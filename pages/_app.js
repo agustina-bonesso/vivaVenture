@@ -16,11 +16,13 @@ export default function App({ Component, pageProps }) {
     <>
       <GlobalStyle />
       <Header />
-      <Component
-        {...pageProps}
-        onAddActivity={handleAddActivity}
-        activityData={activityData}
-      />
+      <main>
+        <Component
+          {...pageProps}
+          onAddActivity={handleAddActivity}
+          activityData={activityData}
+        />
+      </main>
     </>
   );
 }

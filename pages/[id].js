@@ -10,7 +10,7 @@ export default function Activity({ activityData }) {
   const activity = activityData.find((activity) => activity.id === id);
 
   return (
-    <main>
+    <>
       <StyledBackLink href={"/"}>
         <Icon name="chevronLeft" />
         Back to all Activities
@@ -20,6 +20,6 @@ export default function Activity({ activityData }) {
       ) : (
         <p>Activity not found</p>
       )}
-    </main>
+    </>
   );
 }

@@ -5,7 +5,7 @@ import { Icon } from "@/components/Icons";
 
 export default function HomePage({ activityData }) {
   return (
-    <main>
+    <>
       <StyledList>
         {activityData.map((activity) => {
           return (
@@ -18,7 +18,7 @@ export default function HomePage({ activityData }) {
       <StyledFixLink href="/createActivity">
         <Icon name="plusSquare" />
       </StyledFixLink>
-    </main>
+    </>
   );
 }
 
