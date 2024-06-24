@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Icon } from "@/components/Icons";
 
 export default function HomePage({ activityData }) {
-  console.log(activityData);
   return (
     <main>
       <StyledList>

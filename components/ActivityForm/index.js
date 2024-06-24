@@ -128,8 +128,6 @@ const StyledForm = styled.form`
   display: grid;
   gap: 0.5rem;
   justify-content: center;
-  
-
 `;
 const StyledInput = styled.input`
   padding: 0.5rem;

@@ -8,5 +8,4 @@ export const StyledButton = styled.button`
   text-decoration: none;
   font-weight: bold;
   border: none;
-  font-size: inherit;
 `;
