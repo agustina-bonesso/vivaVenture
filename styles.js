@@ -14,6 +14,8 @@ export default createGlobalStyle`
 
   main {
     padding: 6rem .625rem .9375rem .625rem;
+    display: grid;
+    
    
   }
 `;
