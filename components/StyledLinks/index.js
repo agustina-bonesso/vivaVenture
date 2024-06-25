@@ -9,5 +9,6 @@ export const StyledLink = styled(Link)`
 export const StyledBackLink = styled(StyledLink)`
   display: flex;
   align-items: center;
+  width: 12.5rem;
   margin: 0.75rem 0 0.75rem -0.3125rem;
 `;

@@ -1,7 +1,7 @@
 import ActivityCard from "@/components/ActivityCard";
 import Link from "next/link";
 import styled from "styled-components";
-import { Icon } from "@/components/Icons";
+import { Icon } from "@/components/Icon";
 
 export default function HomePage({ activityData }) {
   return (
