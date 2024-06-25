@@ -11,6 +11,7 @@ export default function StyledImageComponent({ src, alt }) {
 
 const StyledImage = styled(Image)`
   object-fit: cover;
+  box-shadow: 3px 3px 5px black;
 `;
 
 const ImageContainer = styled.div`
