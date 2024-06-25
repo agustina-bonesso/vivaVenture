@@ -32,11 +32,17 @@ export default function ActivityForm({
 
   return (
     <>
-      <StyledBackLink href={"/"}>
-        <Icon name="chevronLeft" />
-        Back to all Activities
-      </StyledBackLink>
-
+      {isEditMode ? (
+        <StyledBackLink href={`/${initialData.id}`}>
+          <Icon name="chevronLeft" />
+          Discard changes
+        </StyledBackLink>
+      ) : (
+        <StyledBackLink href={"/"}>
+          <Icon name="chevronLeft" />
+          Back to all Activities
+        </StyledBackLink>
+      )}
       <StyledForm onSubmit={handleSubmit}>
         <StyledLabel htmlFor="title">Activity</StyledLabel>
         <StyledInput
@@ -152,9 +158,7 @@ export default function ActivityForm({
             isEditMode ? initialData.image : "/images/default-image.jpg"
           }
         />
-        <StyledButton type="submit">
-          {isEditMode ? "Update" : "Add"}
-        </StyledButton>
+        <StyledButton type="submit">{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>
   );
