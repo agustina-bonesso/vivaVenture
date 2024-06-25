@@ -1,4 +1,6 @@
 import StyledImageComponent from "@/components/StyledImageComponent";
+import { StyledButton } from "@/components/StyledButton";
+import { StyledLink } from "@/components/StyledLinks";
 
 export default function ActivityDetails({ activity }) {
   return (
@@ -12,6 +14,9 @@ export default function ActivityDetails({ activity }) {
         <p>{activity.category.join(", ")}</p>
       </div>
       <p>{activity.description}</p>
+      <StyledButton>
+        <StyledLink href={`/${activity.id}/edit`}>Edit</StyledLink>
+      </StyledButton>
     </article>
   );
 }

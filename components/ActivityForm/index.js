@@ -4,7 +4,12 @@ import { useRouter } from "next/router";
 import { StyledBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 
-export default function ActivityForm({ onAddActivity }) {
+export default function ActivityForm({
+  onAddActivity,
+  initialData,
+  isEditMode,
+  onEditActivity,
+}) {
   const router = useRouter();
 
   function handleSubmit(event) {
@@ -16,7 +21,12 @@ export default function ActivityForm({ onAddActivity }) {
       alert("Please select at least one category.");
       return false;
     }
-    onAddActivity(newActivity);
+    if (isEditMode) {
+      const updateActivity = { id: initialData.id, ...newActivity };
+      onEditActivity(updateActivity);
+    } else {
+      onAddActivity(newActivity);
+    }
     router.push("/");
   }
 
@@ -35,6 +45,7 @@ export default function ActivityForm({ onAddActivity }) {
           type="text"
           maxLength="150"
           placeholder="add activity-title"
+          defaultValue={initialData?.title}
           required
         />
         <StyledLabel htmlFor="area">Area</StyledLabel>
@@ -43,6 +54,7 @@ export default function ActivityForm({ onAddActivity }) {
           name="area"
           type="text"
           placeholder="add area"
+          defaultValue={initialData?.area}
           required
         />
         <StyledLabel htmlFor="country">Country</StyledLabel>
@@ -51,6 +63,7 @@ export default function ActivityForm({ onAddActivity }) {
           name="country"
           type="text"
           placeholder="add country"
+          defaultValue={initialData?.country}
           required
         />
         <StyledLabel htmlFor="category">Category</StyledLabel>
@@ -60,7 +73,10 @@ export default function ActivityForm({ onAddActivity }) {
               type="checkbox"
               id="outdoor"
               name="category"
-              value="outdoor"
+              value="Outdoor"
+              defaultChecked={
+                isEditMode && initialData.category.includes("Outdoor")
+              }
             />
             Outdoor
           </label>
@@ -70,7 +86,10 @@ export default function ActivityForm({ onAddActivity }) {
               type="checkbox"
               id="water"
               name="category"
-              value="water"
+              value="Water"
+              defaultChecked={
+                isEditMode && initialData.category.includes("Water")
+              }
             />
             Water
           </label>
@@ -80,7 +99,10 @@ export default function ActivityForm({ onAddActivity }) {
               type="checkbox"
               id="sport"
               name="category"
-              value="sport"
+              value="Sport"
+              defaultChecked={
+                isEditMode && initialData.category.includes("Sport")
+              }
             />
             Sport
           </label>
@@ -90,7 +112,10 @@ export default function ActivityForm({ onAddActivity }) {
               type="checkbox"
               id="running"
               name="category"
-              value="running"
+              value="Running"
+              defaultChecked={
+                isEditMode && initialData.category.includes("Running")
+              }
             />
             Running
           </label>
@@ -100,7 +125,10 @@ export default function ActivityForm({ onAddActivity }) {
               type="checkbox"
               id="cycling"
               name="category"
-              value="cycling"
+              value="Cycling"
+              defaultChecked={
+                isEditMode && initialData.category.includes("Cycling")
+              }
             />
             Cycling
           </label>
@@ -112,6 +140,7 @@ export default function ActivityForm({ onAddActivity }) {
           cols="30"
           rows="10"
           placeholder="add description"
+          defaultValue={initialData?.description}
         ></StyledTextarea>
         <StyledLabel htmlFor="image">Image</StyledLabel>
         <StyledInput
@@ -119,9 +148,13 @@ export default function ActivityForm({ onAddActivity }) {
           name="image"
           type="text"
           placeholder="https://example.com/image.jpg"
-          defaultValue={"/images/default-image.jpg"}
+          defaultValue={
+            isEditMode ? initialData.image : "/images/default-image.jpg"
+          }
         />
-        <StyledButton type="submit">Add</StyledButton>
+        <StyledButton type="submit">
+          {isEditMode ? "Update" : "Add"}
+        </StyledButton>
       </StyledForm>
     </>
   );

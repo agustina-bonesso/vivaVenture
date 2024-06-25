@@ -11,7 +11,15 @@ export default function App({ Component, pageProps }) {
     const newActivityWithId = { ...newActivity, id: uuid() };
     setActivityData([newActivityWithId, ...activityData]);
   }
-
+  function handleEditActivity(newActivity) {
+    const setUpActivity = activityData.map((activity) => {
+      if (activity.id !== newActivity.id) {
+        return activity;
+      }
+      return newActivity;
+    });
+    setActivityData(setUpActivity);
+  }
   return (
     <>
       <GlobalStyle />
@@ -21,6 +29,7 @@ export default function App({ Component, pageProps }) {
           {...pageProps}
           onAddActivity={handleAddActivity}
           activityData={activityData}
+          onEditActivity={handleEditActivity}
         />
       </main>
     </>
