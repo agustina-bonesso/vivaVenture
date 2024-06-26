@@ -80,9 +80,7 @@ export default function ActivityForm({
               id="outdoor"
               name="category"
               value="Outdoor"
-              defaultChecked={
-                isEditMode && initialData.category.includes("Outdoor")
-              }
+              defaultChecked={initialData?.category.includes("Outdoor")}
             />
             Outdoor
           </label>
@@ -93,9 +91,7 @@ export default function ActivityForm({
               id="water"
               name="category"
               value="Water"
-              defaultChecked={
-                isEditMode && initialData.category.includes("Water")
-              }
+              defaultChecked={initialData?.category.includes("Water")}
             />
             Water
           </label>
@@ -106,9 +102,7 @@ export default function ActivityForm({
               id="sport"
               name="category"
               value="Sport"
-              defaultChecked={
-                isEditMode && initialData.category.includes("Sport")
-              }
+              defaultChecked={initialData?.category.includes("Sport")}
             />
             Sport
           </label>
@@ -119,9 +113,7 @@ export default function ActivityForm({
               id="running"
               name="category"
               value="Running"
-              defaultChecked={
-                isEditMode && initialData.category.includes("Running")
-              }
+              defaultChecked={initialData?.category.includes("Running")}
             />
             Running
           </label>
@@ -132,9 +124,7 @@ export default function ActivityForm({
               id="cycling"
               name="category"
               value="Cycling"
-              defaultChecked={
-                isEditMode && initialData.category.includes("Cycling")
-              }
+              defaultChecked={initialData?.category.includes("Cycling")}
             />
             Cycling
           </label>
