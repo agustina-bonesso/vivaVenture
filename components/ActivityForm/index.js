@@ -23,10 +23,6 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
 
   return (
     <>
-      <StyledBackLink href={isEditMode ? `/${initialData?.id}` : "/"}>
-        <Icon name="chevronLeft" />
-        {isEditMode ? "Discard changes" : "Back to all Activities"}
-      </StyledBackLink>
       <StyledForm onSubmit={handleSubmit}>
         <StyledLabel htmlFor="title">Activity</StyledLabel>
         <StyledInput
