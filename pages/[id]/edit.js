@@ -11,7 +11,7 @@ export default function EditPage({ activityData, onEditActivity }) {
     <ActivityForm
       initialData={activity}
       isEditMode
-      onEditActivity={onEditActivity}
+      onSubmit={ (newActivity) => onEditActivity( {...newActivity, id: id} ) }
     />
   );
 }

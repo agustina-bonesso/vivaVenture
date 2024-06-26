@@ -11,14 +11,14 @@ export default function App({ Component, pageProps }) {
     const newActivityWithId = { ...newActivity, id: uuid() };
     setActivityData([newActivityWithId, ...activityData]);
   }
-  function handleEditActivity(newActivity) {
-    const setUpActivity = activityData.map((activity) => {
-      if (activity.id !== newActivity.id) {
+  function handleEditActivity(updatedActivity) {
+    const updatedActivities = activityData.map((activity) => {
+      if (activity.id !== updatedActivity.id) {
         return activity;
       }
-      return newActivity;
+      return updatedActivity;
     });
-    setActivityData(setUpActivity);
+    setActivityData(updatedActivities);
   }
   return (
     <>

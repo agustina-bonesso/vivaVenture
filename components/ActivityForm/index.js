@@ -4,45 +4,29 @@ import { useRouter } from "next/router";
 import { StyledBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 
-export default function ActivityForm({
-  onAddActivity,
-  initialData,
-  isEditMode,
-  onEditActivity,
-}) {
+export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const newActivity = Object.fromEntries(formData);
+    let newActivity = Object.fromEntries(formData);
     newActivity.category = formData.getAll("category");
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
       return false;
     }
-    if (isEditMode) {
-      const updateActivity = { id: initialData.id, ...newActivity };
-      onEditActivity(updateActivity);
-    } else {
-      onAddActivity(newActivity);
-    }
+
+    onSubmit(newActivity);
     router.push("/");
   }
 
   return (
     <>
-      {isEditMode ? (
-        <StyledBackLink href={`/${initialData?.id}`}>
-          <Icon name="chevronLeft" />
-          Discard changes
-        </StyledBackLink>
-      ) : (
-        <StyledBackLink href={"/"}>
-          <Icon name="chevronLeft" />
-          Back to all Activities
-        </StyledBackLink>
-      )}
+      <StyledBackLink href={isEditMode ? `/${initialData?.id}` : "/"}>
+        <Icon name="chevronLeft" />
+        {isEditMode ? "Discard changes" : "Back to all Activities"}
+      </StyledBackLink>
       <StyledForm onSubmit={handleSubmit}>
         <StyledLabel htmlFor="title">Activity</StyledLabel>
         <StyledInput
@@ -148,7 +132,7 @@ export default function ActivityForm({
             isEditMode ? initialData?.image : "/images/default-image.jpg"
           }
         />
-        <StyledButton type="submit">{isEditMode ? "Save" : "Add"}</StyledButton>
+        <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>
   );
