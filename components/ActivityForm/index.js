@@ -75,7 +75,7 @@ export default function ActivityForm({
               name="category"
               value="Outdoor"
               defaultChecked={
-                isEditMode && initialData.category.includes("Outdoor")
+                isEditMode && initialData?.category.includes("Outdoor")
               }
             />
             Outdoor
@@ -88,7 +88,7 @@ export default function ActivityForm({
               name="category"
               value="Water"
               defaultChecked={
-                isEditMode && initialData.category.includes("Water")
+                isEditMode && initialData?.category.includes("Water")
               }
             />
             Water
@@ -101,7 +101,7 @@ export default function ActivityForm({
               name="category"
               value="Sport"
               defaultChecked={
-                isEditMode && initialData.category.includes("Sport")
+                isEditMode && initialData?.category.includes("Sport")
               }
             />
             Sport
@@ -114,7 +114,7 @@ export default function ActivityForm({
               name="category"
               value="Running"
               defaultChecked={
-                isEditMode && initialData.category.includes("Running")
+                isEditMode && initialData?.category.includes("Running")
               }
             />
             Running
@@ -127,7 +127,7 @@ export default function ActivityForm({
               name="category"
               value="Cycling"
               defaultChecked={
-                isEditMode && initialData.category.includes("Cycling")
+                isEditMode && initialData?.category.includes("Cycling")
               }
             />
             Cycling
@@ -149,7 +149,7 @@ export default function ActivityForm({
           type="text"
           placeholder="https://example.com/image.jpg"
           defaultValue={
-            isEditMode ? initialData.image : "/images/default-image.jpg"
+            isEditMode ? initialData?.image : "/images/default-image.jpg"
           }
         />
         <StyledButton type="submit">
