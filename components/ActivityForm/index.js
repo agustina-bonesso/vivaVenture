@@ -145,7 +145,7 @@ export default function ActivityForm({
           type="text"
           placeholder="https://example.com/image.jpg"
           defaultValue={
-            isEditMode ? initialData.image : "/images/default-image.jpg"
+            isEditMode ? initialData?.image : "/images/default-image.jpg"
           }
         />
         <StyledButton type="submit">{isEditMode ? "Save" : "Add"}</StyledButton>
