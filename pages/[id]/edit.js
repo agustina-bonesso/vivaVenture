@@ -11,7 +11,7 @@ export default function EditPage({ activityData, onEditActivity }) {
 
   return (
     <>
-      <StyledBackLink href={`/${activity.id}`}>
+      <StyledBackLink href={`/${id}`}>
         <Icon name="chevronLeft" />
         Discard changes
       </StyledBackLink>
