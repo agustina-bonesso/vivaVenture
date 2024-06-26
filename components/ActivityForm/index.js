@@ -33,7 +33,7 @@ export default function ActivityForm({
   return (
     <>
       {isEditMode ? (
-        <StyledBackLink href={`/${initialData.id}`}>
+        <StyledBackLink href={`/${initialData?.id}`}>
           <Icon name="chevronLeft" />
           Discard changes
         </StyledBackLink>
