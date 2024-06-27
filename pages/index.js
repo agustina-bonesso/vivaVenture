@@ -33,5 +33,6 @@ const StyledList = styled.ul`
 const StyledFixLink = styled(Link)`
   position: sticky;
   float: right;
-  bottom: 0;
+  right: 1.125rem;
+  bottom: 1.125rem;
 `;
