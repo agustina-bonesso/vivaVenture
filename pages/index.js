@@ -15,9 +15,11 @@ export default function HomePage({ activityData }) {
           );
         })}
       </StyledList>
-      <StyledFixLink href="/createActivity">
-        <Icon name="add" />
-      </StyledFixLink>
+      <StyledLinkContainer>
+        <StyledFixLink href="/createActivity">
+          <Icon name="add" />
+        </StyledFixLink>
+      </StyledLinkContainer>
     </>
   );
 }
@@ -30,9 +32,12 @@ const StyledList = styled.ul`
   padding: 0;
 `;
 
+const StyledLinkContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const StyledFixLink = styled(Link)`
-  position: sticky;
-  float: right;
-  right: 1.125rem;
-  bottom: 1.125rem;
+  position: fixed;
+  bottom: 1.875rem;
 `;

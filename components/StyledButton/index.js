@@ -12,10 +12,4 @@ export const StyledButton = styled.button`
   background-color: ${(props) => {
     return props.$variant === "delete" ? "white" : "lightsalmon";
   }};
-
-  ${({ $variant }) =>
-    $variant === "delete" &&
-    css`
-      background-color: white;
-    `}
 `;
