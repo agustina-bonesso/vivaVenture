@@ -133,9 +133,9 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
 }
 
 const StyledForm = styled.form`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
-  justify-content: center;
 `;
 const StyledInput = styled.input`
   padding: 0.5rem;

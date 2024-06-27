@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledButton = styled.button`
   background-color: lightsalmon;
@@ -8,4 +8,11 @@ export const StyledButton = styled.button`
   text-decoration: none;
   font-weight: bold;
   border: none;
+  cursor: pointer;
+
+  ${({ $variant }) =>
+    $variant === "delete" &&
+    css`
+      background-color: white;
+    `}
 `;

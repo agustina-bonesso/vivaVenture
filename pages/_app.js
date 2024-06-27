@@ -1,16 +1,18 @@
 import Header from "@/components/Header";
 import GlobalStyle from "@/styles";
 import { dummyData } from "@/lib/dummyData";
-import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/router";
+import useLocalStorageState from "use-local-storage-state";
 
 export default function App({ Component, pageProps }) {
-  const [activityData, setActivityData] = useState(dummyData);
+  const [activityData, setActivityData] = useLocalStorageState(`activityData`, {
+    defaultValue: dummyData,
+  });
   const router = useRouter();
 
   function handleAddActivity(newActivity) {
-    const newActivityWithId = { ...newActivity, id: uuid() };
+    const newActivityWithId = { id: uuid(), ...newActivity };
     setActivityData([newActivityWithId, ...activityData]);
   }
 

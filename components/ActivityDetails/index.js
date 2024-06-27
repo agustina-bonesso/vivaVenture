@@ -2,6 +2,7 @@ import StyledImageComponent from "@/components/StyledImageComponent";
 import { StyledLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import styled from "styled-components";
+import { StyledButton } from "../StyledButton";
 
 export default function ActivityDetails({ activity, onDeleteActivity }) {
   return (
@@ -13,13 +14,13 @@ export default function ActivityDetails({ activity, onDeleteActivity }) {
           <StyledLink href={`/${activity.id}/edit`}>
             <Icon name="edit" />
           </StyledLink>
-          <button
-            style={{ backgroundColor: "white", border: "none" }}
+          <StyledButton
             type="button"
+            $variant="delete"
             onClick={() => onDeleteActivity(activity.id)}
           >
             <Icon name="delete" />
-          </button>
+          </StyledButton>
         </div>
       </StyledDiv>
       <div>
