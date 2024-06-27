@@ -1,18 +1,26 @@
 import StyledImageComponent from "@/components/StyledImageComponent";
-import { StyledButton } from "@/components/StyledButton";
 import { StyledLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import styled from "styled-components";
 
-export default function ActivityDetails({ activity }) {
+export default function ActivityDetails({ activity, onDeleteActivity }) {
   return (
     <article>
       <StyledImageComponent src={activity.image} alt={activity.title} />
       <StyledDiv>
         <h2>{activity.title}</h2>
-        <StyledLink href={`/${activity.id}/edit`}>
-          <Icon name="edit" />
-        </StyledLink>
+        <div>
+          <StyledLink href={`/${activity.id}/edit`}>
+            <Icon name="edit" />
+          </StyledLink>
+          <button
+            style={{ backgroundColor: "white", border: "none" }}
+            type="button"
+            onClick={() => onDeleteActivity(activity.id)}
+          >
+            <Icon name="delete" />
+          </button>
+        </div>
       </StyledDiv>
       <div>
         <p>

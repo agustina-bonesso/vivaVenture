@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { StyledButton } from "@/components/StyledButton";
 import { useRouter } from "next/router";
-import { StyledBackLink } from "@/components/StyledLinks";
-import { Icon } from "@/components/Icon";
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
@@ -29,9 +27,9 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           id="title"
           name="title"
           type="text"
-          maxLength="150"
           placeholder="add activity-title"
           defaultValue={initialData?.title}
+          pattern="[A-Za-z][A-Za-z\s]{2,35}"
           required
         />
         <StyledLabel htmlFor="area">Area</StyledLabel>
