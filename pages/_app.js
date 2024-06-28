@@ -1,16 +1,21 @@
 import Header from "@/components/Header";
 import GlobalStyle from "@/styles";
 import { dummyData } from "@/lib/dummyData";
-import { useState } from "react";
 import { v4 as uuid } from "uuid";
+import { useRouter } from "next/router";
+import useLocalStorageState from "use-local-storage-state";
 
 export default function App({ Component, pageProps }) {
-  const [activityData, setActivityData] = useState(dummyData);
+  const [activityData, setActivityData] = useLocalStorageState(`activityData`, {
+    defaultValue: dummyData,
+  });
+  const router = useRouter();
 
   function handleAddActivity(newActivity) {
-    const newActivityWithId = { ...newActivity, id: uuid() };
+    const newActivityWithId = { id: uuid(), ...newActivity };
     setActivityData([newActivityWithId, ...activityData]);
   }
+
   function handleEditActivity(updatedActivity) {
     const updatedActivities = activityData.map((activity) => {
       if (activity.id !== updatedActivity.id) {
@@ -20,6 +25,21 @@ export default function App({ Component, pageProps }) {
     });
     setActivityData(updatedActivities);
   }
+
+  function handleDeleteActivity(id) {
+    const confirmDelete = confirm(
+      "Are you sure you want to delete this activity?"
+    );
+
+    if (confirmDelete) {
+      const updatedActivities = activityData.filter(
+        (activity) => activity.id !== id
+      );
+      setActivityData(updatedActivities);
+      router.push("/");
+    }
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -27,9 +47,10 @@ export default function App({ Component, pageProps }) {
       <main>
         <Component
           {...pageProps}
-          onAddActivity={handleAddActivity}
           activityData={activityData}
+          onAddActivity={handleAddActivity}
           onEditActivity={handleEditActivity}
+          onDeleteActivity={handleDeleteActivity}
         />
       </main>
     </>

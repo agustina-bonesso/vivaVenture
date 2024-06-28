@@ -3,7 +3,7 @@ import ActivityDetails from "@/components/ActivityDetails";
 import { StyledBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 
-export default function Activity({ activityData }) {
+export default function Activity({ activityData, onDeleteActivity }) {
   const router = useRouter();
   const { id } = router.query;
 
@@ -16,7 +16,10 @@ export default function Activity({ activityData }) {
         Back to all Activities
       </StyledBackLink>
       {activity ? (
-        <ActivityDetails activity={activity} />
+        <ActivityDetails
+          activity={activity}
+          onDeleteActivity={onDeleteActivity}
+        />
       ) : (
         <p>Activity not found</p>
       )}

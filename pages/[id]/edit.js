@@ -1,5 +1,7 @@
 import ActivityForm from "@/components/ActivityForm";
 import { useRouter } from "next/router";
+import { StyledBackLink } from "@/components/StyledLinks";
+import { Icon } from "@/components/Icon";
 
 export default function EditPage({ activityData, onEditActivity }) {
   const router = useRouter();
@@ -8,10 +10,16 @@ export default function EditPage({ activityData, onEditActivity }) {
   const activity = activityData.find((activity) => activity.id === id);
 
   return (
-    <ActivityForm
-      initialData={activity}
-      isEditMode
-      onSubmit={ (newActivity) => onEditActivity( {...newActivity, id: id} ) }
-    />
+    <>
+      <StyledBackLink href={`/${id}`}>
+        <Icon name="chevronLeft" />
+        Discard changes
+      </StyledBackLink>
+      <ActivityForm
+        initialData={activity}
+        isEditMode
+        onSubmit={(newActivity) => onEditActivity({ ...newActivity, id: id })}
+      />
+    </>
   );
 }

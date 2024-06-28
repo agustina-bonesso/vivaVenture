@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { StyledButton } from "@/components/StyledButton";
 import { useRouter } from "next/router";
-import { StyledBackLink } from "@/components/StyledLinks";
-import { Icon } from "@/components/Icon";
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
@@ -11,6 +9,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const newActivity = Object.fromEntries(formData);
+    newActivity.title.trim();
     newActivity.category = formData.getAll("category");
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
@@ -23,19 +22,15 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
 
   return (
     <>
-      <StyledBackLink href={isEditMode ? `/${initialData?.id}` : "/"}>
-        <Icon name="chevronLeft" />
-        {isEditMode ? "Discard changes" : "Back to all Activities"}
-      </StyledBackLink>
       <StyledForm onSubmit={handleSubmit}>
         <StyledLabel htmlFor="title">Activity</StyledLabel>
         <StyledInput
           id="title"
           name="title"
           type="text"
-          maxLength="150"
           placeholder="add activity-title"
           defaultValue={initialData?.title}
+          pattern="[\sA-Za-z][A-Za-z\s]{2,35}"
           required
         />
         <StyledLabel htmlFor="area">Area</StyledLabel>
@@ -139,9 +134,9 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
 }
 
 const StyledForm = styled.form`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
-  justify-content: center;
 `;
 const StyledInput = styled.input`
   padding: 0.5rem;
