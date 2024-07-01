@@ -9,7 +9,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const newActivity = Object.fromEntries(formData);
-    newActivity.title.trim();
+    newActivity.title = newActivity.title.trim();
     newActivity.category = formData.getAll("category");
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
