@@ -9,7 +9,11 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const newActivity = Object.fromEntries(formData);
-    newActivity.title = newActivity.title.trim();
+    newActivity.title = newActivity.title
+      .trim()
+      .replace(/\b\s+\b/g, " ")
+      .replace(/(\.)\s+/g, "$1 ");
+    console.log(newActivity.title);
     newActivity.category = formData.getAll("category");
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
@@ -30,7 +34,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           type="text"
           placeholder="add activity-title"
           defaultValue={initialData?.title}
-          pattern="[\sA-Za-z][A-Za-z\s]{2,35}"
+          pattern="^\s*[A-Za-z0-9*][A-Za-z0-9\.\s]{1,34}[A-Za-z0-9\.]$"
           required
         />
         <StyledLabel htmlFor="area">Area</StyledLabel>
