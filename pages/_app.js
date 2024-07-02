@@ -10,6 +10,10 @@ export default function App({ Component, pageProps }) {
     defaultValue: dummyData,
   });
   const router = useRouter();
+  const [favoriteActivitiesList, setFavoriteActivitiesList] =
+    useLocalStorageState("favorites", {
+      defaultValue: [],
+    });
 
   function handleAddActivity(newActivity) {
     const newActivityWithId = { id: uuid(), ...newActivity };
@@ -39,7 +43,24 @@ export default function App({ Component, pageProps }) {
       router.push("/");
     }
   }
+  function handleToggleFavorite(id) {
+    const isSaved = favoriteActivitiesList.find(
+      (activity) => activity.id === id
+    );
 
+    if (isSaved) {
+      const updatedList = favoriteActivitiesList.map((activity) => {
+        if (activity.id !== id) {
+          return activity;
+        }
+        return { ...activity, isFavorite: !activity.isFavorite };
+      });
+      setFavoriteActivitiesList(updatedList);
+    } else {
+      const newFavoriteActivity = { id: id, isFavorite: true };
+      setFavoriteActivitiesList([newFavoriteActivity, ...favoriteActivitiesList]);
+    }
+  }
   return (
     <>
       <GlobalStyle />
@@ -48,9 +69,11 @@ export default function App({ Component, pageProps }) {
         <Component
           {...pageProps}
           activityData={activityData}
+          favoriteActivitiesList={favoriteActivitiesList}
           onAddActivity={handleAddActivity}
           onEditActivity={handleEditActivity}
           onDeleteActivity={handleDeleteActivity}
+          onToggleFavorite={handleToggleFavorite}
         />
       </main>
     </>

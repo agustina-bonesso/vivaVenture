@@ -4,10 +4,21 @@ import { Icon } from "@/components/Icon";
 import styled from "styled-components";
 import { StyledButton } from "../StyledButton";
 
-export default function ActivityDetails({ activity, onDeleteActivity }) {
+export default function ActivityDetails({
+  activity,
+  onDeleteActivity,
+  isFavorite,
+  onToggleFavorite,
+}) {
   return (
     <article>
-      <StyledImageComponent src={activity.image} alt={activity.title} />
+      <StyledImageComponent
+        src={activity.image}
+        alt={activity.title}
+        isFavorite={isFavorite}
+        onToggleFavorite={onToggleFavorite}
+        id={activity.id}
+      />
       <StyledDiv>
         <h2>{activity.title}</h2>
         <div>

@@ -3,14 +3,26 @@ import Link from "next/link";
 import styled from "styled-components";
 import { Icon } from "@/components/Icon";
 
-export default function HomePage({ activityData }) {
+export default function HomePage({
+  activityData,
+  onToggleFavorite,
+  favoriteActivitiesList,
+}) {
   return (
     <>
       <StyledList>
         {activityData.map((activity) => {
           return (
             <li key={activity.id}>
-              <ActivityCard activity={activity} />
+              <ActivityCard
+                activity={activity}
+                onToggleFavorite={onToggleFavorite}
+                isFavorite={
+                  favoriteActivitiesList.find(
+                    (favActivity) => favActivity.id === activity.id
+                  )?.isFavorite
+                }
+              />
             </li>
           );
         })}

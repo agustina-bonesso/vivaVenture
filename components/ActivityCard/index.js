@@ -1,11 +1,21 @@
 import StyledImageComponent from "@/components/StyledImageComponent";
 import { StyledLink } from "@/components/StyledLinks";
 
-export default function ActivityCard({ activity }) {
+export default function ActivityCard({
+  activity,
+  onToggleFavorite,
+  isFavorite
+}) {
   return (
     <article>
       <StyledLink href={`/${activity.id}`}>
-        <StyledImageComponent src={activity.image} alt={activity.title} />
+        <StyledImageComponent
+          src={activity.image}
+          alt={activity.title}
+          onToggleFavorite={onToggleFavorite}
+          isFavorite={isFavorite}
+          id={activity.id}
+        />
         <h2>{activity.title}</h2>
       </StyledLink>
       <div>
