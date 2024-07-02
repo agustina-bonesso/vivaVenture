@@ -1,9 +1,11 @@
 import StyledImageComponent from "@/components/StyledImageComponent";
 import { StyledLink } from "@/components/StyledLinks";
+import styled from "styled-components";
+import createGlobalStyle from "styled-components";
 
 export default function ActivityCard({ activity }) {
   return (
-    <article>
+    <StyledArticle>
       <StyledLink href={`/${activity.id}`}>
         <StyledImageComponent src={activity.image} alt={activity.title} />
         <h2>{activity.title}</h2>
@@ -14,6 +16,14 @@ export default function ActivityCard({ activity }) {
         </p>
         <p>{activity.category.join(", ")}</p>
       </div>
-    </article>
+    </StyledArticle>
   );
 }
+
+const StyledArticle = styled.article`
+  box-shadow: var(--box-shadow);
+  background-color: #fff;
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin: 1rem;
+`;

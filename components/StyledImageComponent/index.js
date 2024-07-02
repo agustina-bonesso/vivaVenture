@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styled from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 export default function StyledImageComponent({ src, alt }) {
   return (
@@ -11,7 +12,7 @@ export default function StyledImageComponent({ src, alt }) {
 
 const StyledImage = styled(Image)`
   object-fit: cover;
-  box-shadow: 3px 3px 5px black;
+  border-radius: var(--border-radius);
 `;
 
 const ImageContainer = styled.div`
