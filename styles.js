@@ -4,21 +4,21 @@ export default createGlobalStyle`
 
 @font-face {
     font-family: 'Roboto Slab';
-    src: url('src/fonts/Roboto_Slab/RobotoSlab-Regular.ttf') format('truetype');
+    src: url('/fonts/Roboto_Slab/RobotoSlab-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Lusitana';
-    src: url('src/fonts/Lusitana/Lusitana-Regular.ttf') format('truetype');
+    src: url('/fonts/Lusitana/Lusitana-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
 
   @font-face {
     font-family: 'Biryani';
-    src: url('src/fonts/Biryani/Biryani-Regular.ttf') format('truetype');
+    src: url('/fonts/Biryani/Biryani-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
@@ -45,13 +45,13 @@ export default createGlobalStyle`
 
   h2{
     font-family: var(--font-h2);
+    margin-bottom: -.8rem;
   }
 
   p{
     font-family: var(--font-p);
+    font-size: 1.2rem;
   }
-
-
 
   :root {
     --dark-gray: #0D0D0D;
@@ -69,8 +69,9 @@ export default createGlobalStyle`
     --card-background: #fff;  /* Weiß */
 
     --font-h1: 'Roboto Slab', serif;
-    --font-h2: 'Lusitana', serif;
+    --font-h2: 'Biryani', serif;
     --font-p: 'Biryani', sans-serif;
+    --styled-link: 'Biryani', sans-serif;
 
     --border-radius: 0.5rem;
 
