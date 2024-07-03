@@ -1,12 +1,12 @@
 const Icons = {
-  chevronLeft: (
+  chevronLeft: (color) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="black"
+      stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -15,14 +15,15 @@ const Icons = {
       <polyline points="15 18 9 12 15 6"></polyline>
     </svg>
   ),
-  add: (
+
+  add: (color) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="40"
       height="40"
       viewBox="0 0 24 24"
       fill="white"
-      stroke="black"
+      stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -34,14 +35,14 @@ const Icons = {
     </svg>
   ),
 
-  edit: (
+  edit: (color) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
+      stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -51,14 +52,15 @@ const Icons = {
       <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
     </svg>
   ),
-  delete: (
+
+  delete: (color) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="currentColor"
+      stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -72,6 +74,7 @@ const Icons = {
   ),
 };
 
-export const Icon = ({ name }) => {
-  return Icons[name];
+export const Icon = ({ name, color = "var(--icon-color)" }) => {
+  const IconComponent = Icons[name];
+  return IconComponent(color);
 };

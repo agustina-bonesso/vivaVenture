@@ -13,7 +13,6 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       .trim()
       .replace(/\b\s+\b/g, " ")
       .replace(/(\.)\s+/g, "$1 ");
-    console.log(newActivity.title);
     newActivity.category = formData.getAll("category");
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
@@ -58,7 +57,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
         <StyledLabel htmlFor="category">Category</StyledLabel>
         <StyledCheckboxContainer>
           <label>
-            <StyledInput
+            <StyledCheckbox
               type="checkbox"
               id="outdoor"
               name="category"
@@ -69,7 +68,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           </label>
 
           <label>
-            <StyledInput
+            <StyledCheckbox
               type="checkbox"
               id="water"
               name="category"
@@ -80,7 +79,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           </label>
 
           <label>
-            <StyledInput
+            <StyledCheckbox
               type="checkbox"
               id="sport"
               name="category"
@@ -91,7 +90,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           </label>
 
           <label>
-            <StyledInput
+            <StyledCheckbox
               type="checkbox"
               id="running"
               name="category"
@@ -102,7 +101,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           </label>
 
           <label>
-            <StyledInput
+            <StyledCheckbox
               type="checkbox"
               id="cycling"
               name="category"
@@ -140,30 +139,80 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.6rem;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+  background: var(--form-background);
+  color: var(--text-color);
 `;
+
 const StyledInput = styled.input`
-  padding: 0.5rem;
-  border: 3px solid black;
-  border-radius: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--dark-gray);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  color: var(--text-color);
+  background: var(--background-color);
 `;
+
 const StyledTextarea = styled.textarea`
-  border: 3px solid black;
-  border-radius: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--dark-gray);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  color: var(--text-color);
+  background: var(--background-color);
 `;
+
 const StyledLabel = styled.label`
   font-weight: bold;
+  margin-top: 0.8rem;
+  font-family: var(--font-h1);
+  font-size: 1.125rem;
 `;
 
 const StyledCheckboxContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.3125rem 0.9375rem;
-  align-items: center;
-  margin-bottom: 0.625rem;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  label {
+    display: flex;
+    align-items: flex-start;
+    font-family: var(--font-p);
+    font-size: 15px;
+  }
 
   input[type="checkbox"] {
-    margin: 0 10px;
+    margin-right: 0.5rem;
+  }
+`;
+
+const StyledCheckbox = styled.input.attrs({ type: "checkbox" })`
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--text-color);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+
+  &:checked {
+    background-color: green;
+    border-color: green;
+  }
+
+  &:checked::after {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 16px;
   }
 `;

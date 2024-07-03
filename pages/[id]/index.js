@@ -11,10 +11,6 @@ export default function Activity({ activityData, onDeleteActivity }) {
 
   return (
     <>
-      <StyledBackLink href={"/"}>
-        <Icon name="chevronLeft" />
-        Back to all Activities
-      </StyledBackLink>
       {activity ? (
         <ActivityDetails
           activity={activity}

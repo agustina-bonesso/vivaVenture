@@ -17,7 +17,7 @@ export default function HomePage({ activityData }) {
       </StyledList>
       <StyledLinkContainer>
         <StyledFixLink href="/createActivity">
-          <Icon name="add" />
+          <Icon name="add" color="black"/>
         </StyledFixLink>
       </StyledLinkContainer>
     </>
