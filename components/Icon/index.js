@@ -1,11 +1,11 @@
 const Icons = {
-  chevronLeft: (
+  chevronLeft: (fill) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
+      fill={fill}
       stroke="black"
       strokeWidth="2"
       strokeLinecap="round"
@@ -15,13 +15,13 @@ const Icons = {
       <polyline points="15 18 9 12 15 6"></polyline>
     </svg>
   ),
-  add: (
+  add: (fill) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="40"
       height="40"
       viewBox="0 0 24 24"
-      fill="white"
+      fill={fill}
       stroke="black"
       strokeWidth="2"
       strokeLinecap="round"
@@ -33,14 +33,13 @@ const Icons = {
       <line x1="8" y1="12" x2="16" y2="12"></line>
     </svg>
   ),
-
-  edit: (
+  edit: (fill) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
+      fill={fill}
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
@@ -51,13 +50,13 @@ const Icons = {
       <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
     </svg>
   ),
-  delete: (
+  delete: (fill) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
+      fill={fill}
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
@@ -70,8 +69,25 @@ const Icons = {
       <line x1="14" y1="11" x2="14" y2="17"></line>
     </svg>
   ),
+  heart: (fill) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill={fill}
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="feather feather-heart"
+    >
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </svg>
+  ),
 };
 
-export const Icon = ({ name }) => {
-  return Icons[name];
+export const Icon = ({ name, fill = "none" }) => {
+  const IconComponent = Icons[name];
+  return IconComponent(fill);
 };

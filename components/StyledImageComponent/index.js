@@ -12,20 +12,7 @@ export default function StyledImageComponent({
   return (
     <>
       <StyledFavoriteButton onClick={() => onToggleFavorite(id)}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill={isFavorite ? "red" : "black"}
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="feather feather-heart"
-        >
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-        </svg>
+        <Icon fill={isFavorite ? "red" : "black"} />
       </StyledFavoriteButton>
       <ImageContainer>
         <StyledImage src={src} alt={alt} fill />
@@ -45,5 +32,4 @@ const ImageContainer = styled.div`
 `;
 const StyledFavoriteButton = styled.button`
   width: 3.75rem;
-
 `;
