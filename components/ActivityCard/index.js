@@ -21,7 +21,7 @@ export default function ActivityCard({
         <p>
           {activity.area}, {activity.country}
         </p>
-        {/* <p>{activity.category.join(", ")}</p> */}
+        <p>{activity.category.join(", ")}</p>
       </div>
     </article>
   );
