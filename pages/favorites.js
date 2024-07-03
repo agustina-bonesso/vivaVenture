@@ -1,10 +1,13 @@
-import ActivityCard from "@/components/ActivityCard";
 import styled from "styled-components";
+import ActivityCard from "@/components/ActivityCard";
 
-export default function Favorites({ activity, onToggleFavorite }) {
+export default function Favorites({
+  favoriteActivitiesList,
+  onToggleFavorite,
+}) {
   return (
     <StyledList>
-      {activityData.map((activity) => {
+      {favoriteActivitiesList.map((activity) => {
         return (
           <li key={activity.id}>
             <ActivityCard

@@ -8,9 +8,6 @@ export default function ActivityCard({
   onToggleFavorite,
   isFavorite,
 }) {
-  const StyledFavoriteButton = styled.button`
-    width: 3.75rem;
-  `;
   return (
     <article>
       <StyledLink href={`/${activity.id}`}>
@@ -24,8 +21,12 @@ export default function ActivityCard({
         <p>
           {activity.area}, {activity.country}
         </p>
-        <p>{activity.category.join(", ")}</p>
+        {/* <p>{activity.category.join(", ")}</p> */}
       </div>
     </article>
   );
 }
+
+const StyledFavoriteButton = styled.button`
+  width: 3.75rem;
+`;
