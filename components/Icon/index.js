@@ -1,11 +1,11 @@
 const Icons = {
-  chevronLeft: (fill) => (
+  chevronLeft: (fillColor) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill={fill}
+      fill={fillColor}
       stroke="black"
       strokeWidth="2"
       strokeLinecap="round"
@@ -15,13 +15,13 @@ const Icons = {
       <polyline points="15 18 9 12 15 6"></polyline>
     </svg>
   ),
-  add: (fill) => (
+  add: (fillColor) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="40"
       height="40"
       viewBox="0 0 24 24"
-      fill={fill}
+      fill={fillColor}
       stroke="black"
       strokeWidth="2"
       strokeLinecap="round"
@@ -33,13 +33,13 @@ const Icons = {
       <line x1="8" y1="12" x2="16" y2="12"></line>
     </svg>
   ),
-  edit: (fill) => (
+  edit: (fillColor) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill={fill}
+      fill={fillColor}
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
@@ -50,13 +50,13 @@ const Icons = {
       <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
     </svg>
   ),
-  delete: (fill) => (
+  delete: (fillColor) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill={fill}
+      fill={fillColor}
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
@@ -69,13 +69,13 @@ const Icons = {
       <line x1="14" y1="11" x2="14" y2="17"></line>
     </svg>
   ),
-  heart: (fill) => (
+  heart: (fillColor) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill={fill}
+      fill={fillColor}
       stroke="currentColor"
       strokeWidth="2"
       strokeLinecap="round"
@@ -87,7 +87,7 @@ const Icons = {
   ),
 };
 
-export const Icon = ({ name, fill = "none" }) => {
+export const Icon = ({ name, fillColor = "none" }) => {
   const IconComponent = Icons[name];
-  return IconComponent(fill);
+  return IconComponent(fillColor);
 };

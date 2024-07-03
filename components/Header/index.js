@@ -5,6 +5,7 @@ import Link from "next/link";
 export default function Header() {
   return (
     <StyledHeader>
+      <Link href="/favorites">Favorites</Link>
       <Link href="/">
         <Image
           src="/images/logo.svg"
