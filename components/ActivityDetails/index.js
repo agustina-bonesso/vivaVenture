@@ -34,6 +34,9 @@ export default function ActivityDetails({
           </StyledButton>
         </div>
       </StyledDiv>
+      <StyledFavoriteButton onClick={() => onToggleFavorite(activity.id)}>
+        <Icon name="heart" fillColor={isFavorite ? "red" : "black"} />
+      </StyledFavoriteButton>
       <div>
         <p>
           {activity.area}, {activity.country}
@@ -50,4 +53,8 @@ const StyledDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: -1rem;
+`;
+
+const StyledFavoriteButton = styled.button`
+  width: 3.75rem;
 `;
