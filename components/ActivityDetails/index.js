@@ -4,6 +4,7 @@ import { Icon } from "@/components/Icon";
 import styled from "styled-components";
 import { StyledButton } from "../StyledButton";
 import { useRouter } from "next/router";
+import { StyledSmallLink } from "@/components/StyledLinks";
 
 export default function ActivityDetails({ activity, onDeleteActivity }) {
   const router = useRouter();
@@ -24,14 +25,14 @@ export default function ActivityDetails({ activity, onDeleteActivity }) {
         <StyledDiv>
           <Title>{activity.title}</Title>
           <ActionIcons>
-            <SmallButton
+            <StyledSmallLink
               title="Edit activity"
               type="button"
               $variant="edit"
-              onClick={handleEditClick}
+              href={`/${activity.id}/edit`}
             >
               <Icon name="edit" />
-            </SmallButton>
+            </StyledSmallLink>
             <SmallButton
               title="Delete activity"
               type="button"
