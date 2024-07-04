@@ -3,11 +3,9 @@ import styled from "styled-components";
 
 export default function StyledImageComponent({ src, alt }) {
   return (
-    <>
-      <ImageContainer>
-        <StyledImage src={src} alt={alt} fill />
-      </ImageContainer>
-    </>
+    <ImageContainer>
+      <StyledImage src={src} alt={alt} fill />
+    </ImageContainer>
   );
 }
 
