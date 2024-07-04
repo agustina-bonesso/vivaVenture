@@ -2,22 +2,29 @@ import styled from "styled-components";
 import ActivityCard from "@/components/ActivityCard";
 
 export default function Favorites({
+  activityData,
   favoriteActivitiesList,
   onToggleFavorite,
 }) {
+  const favoriteActivitiesID = favoriteActivitiesList
+    .filter((activity) => activity.isFavorite)
+    .map((activity) => {
+      return activity.id;
+    });
+
+  const favoriteActivitiesData = activityData.filter((activity) => {
+    return favoriteActivitiesID.includes(activity.id);
+  });
+
   return (
     <StyledList>
-      {favoriteActivitiesList.map((activity) => {
+      {favoriteActivitiesData.map((activity) => {
         return (
           <li key={activity.id}>
             <ActivityCard
               activity={activity}
               onToggleFavorite={onToggleFavorite}
-              isFavorite={
-                favoriteActivitiesList.find(
-                  (favActivity) => favActivity.id === activity.id
-                )?.isFavorite
-              }
+              isFavorite
             />
           </li>
         );
