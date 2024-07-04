@@ -60,8 +60,8 @@ export default function App({ Component, pageProps }) {
     } else {
       const activityToAdd = activityData.find((activity) => activity.id === id);
       if (activityToAdd) {
-        const newFavoriteActivity = { ...activityToAdd, isFavorite: true };
-        // const newFavoriteActivity = { id: id, isFavorite: true };
+        //const newFavoriteActivity = { ...activityToAdd, isFavorite: true };
+        const newFavoriteActivity = { id: id, isFavorite: true };
         setFavoriteActivitiesList([
           newFavoriteActivity,
           ...favoriteActivitiesList,

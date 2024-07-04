@@ -6,19 +6,17 @@ export default function Favorites({
   favoriteActivitiesList,
   onToggleFavorite,
 }) {
-  const favoriteActivitiesID = favoriteActivitiesList
+  const favoriteActivities = favoriteActivitiesList
     .filter((activity) => activity.isFavorite)
     .map((activity) => {
-      return activity.id;
+      return activityData.find(
+        (filteredActivity) => filteredActivity.id === activity.id
+      );
     });
-
-  const favoriteActivitiesData = activityData.filter((activity) => {
-    return favoriteActivitiesID.includes(activity.id);
-  });
 
   return (
     <StyledList>
-      {favoriteActivitiesData.map((activity) => {
+      {favoriteActivities.map((activity) => {
         return (
           <li key={activity.id}>
             <ActivityCard
