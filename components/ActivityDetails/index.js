@@ -3,16 +3,9 @@ import { TransparentBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import styled from "styled-components";
 import { StyledButton } from "../StyledButton";
-import { useRouter } from "next/router";
-import { StyledSmallLink } from "@/components/StyledLinks";
+import { StyledEditLink } from "@/components/StyledLinks";
 
 export default function ActivityDetails({ activity, onDeleteActivity }) {
-  const router = useRouter();
-
-  const handleEditClick = () => {
-    router.push(`/${activity.id}/edit`);
-  };
-
   return (
     <StyledArticle>
       <ImageContainer>
@@ -25,22 +18,22 @@ export default function ActivityDetails({ activity, onDeleteActivity }) {
         <StyledDiv>
           <Title>{activity.title}</Title>
           <ActionIcons>
-            <StyledSmallLink
+            <StyledEditLink
               title="Edit activity"
               type="button"
               $variant="edit"
               href={`/${activity.id}/edit`}
             >
               <Icon name="edit" />
-            </StyledSmallLink>
-            <SmallButton
+            </StyledEditLink>
+            <StyledButton
               title="Delete activity"
               type="button"
               $variant="delete"
               onClick={() => onDeleteActivity(activity.id)}
             >
               <Icon name="delete" />
-            </SmallButton>
+            </StyledButton>
           </ActionIcons>
         </StyledDiv>
 
@@ -75,10 +68,6 @@ const ActionIcons = styled.div`
   gap: 0.625rem;
 `;
 
-const SmallButton = styled(StyledButton)`
-  padding: 0.1rem 0.3rem;
-`;
-
 const Content = styled.div`
   padding: 1.25rem;
 `;
@@ -96,7 +85,7 @@ const StyledDiv = styled.div`
 
 const Info = styled.p`
   font-size: 1rem;
-  color: var(--light-orange);
+  color: var(--brown);
   margin-top: 0.3125rem;
 `;
 
@@ -104,7 +93,7 @@ const Description = styled.p`
   margin-top: 0.625rem;
   font-size: 1rem;
   line-height: 1.6;
-  color: var(--dark-teal);
+  color: var(--teal);
 `;
 
 const CategoryTags = styled.div`
@@ -115,7 +104,7 @@ const CategoryTags = styled.div`
 
 const Tag = styled.span`
   background: var(--light-orange);
-  color: white;
+  color: black;
   padding: 0.3125rem 0.625rem;
   border-radius: var(--border-radius);
 `;

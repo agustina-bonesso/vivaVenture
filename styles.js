@@ -2,27 +2,6 @@ import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
 
-@font-face {
-    font-family: 'Roboto Slab';
-    src: url('/fonts/Roboto_Slab/RobotoSlab-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Lusitana';
-    src: url('/fonts/Lusitana/Lusitana-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
-
-  @font-face {
-    font-family: 'Biryani';
-    src: url('/fonts/Biryani/Biryani-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
-
   *,
   *::before,
   *::after {
@@ -37,7 +16,7 @@ export default createGlobalStyle`
   }
 
   main {
-    padding: .625rem;
+    padding: 6.25rem .625rem .625rem ;
     max-width: 35rem;
     margin: 0 auto;
   }
@@ -58,10 +37,9 @@ export default createGlobalStyle`
 
   :root {
     --dark-gray: #0D0D0D;
-    --teal: #00A6AA;
-    --dark-teal: #11898E;
+    --teal: #0c7579;
     --light-orange: #F2B366;
-    --brown: #A66B38;
+    --brown: #986133;
 
     /* Hintergrund- und Textfarben für den hellen Modus */
     --background-color: #ffffff;  
@@ -102,6 +80,8 @@ export default createGlobalStyle`
       --form-background: #1e1e1e;
       --box-shadow:0 2px 4px rgba(255, 255, 255, 0.5);
       --icon-color: white;
+      --teal: #00A6AA; 
+      --brown: #b9773e;
 
       /* Button */
       --button-background: #333;

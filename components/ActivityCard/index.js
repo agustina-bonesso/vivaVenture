@@ -54,7 +54,7 @@ const Title = styled.h2`
 
 const Info = styled.p`
   font-size: 1rem;
-  color: var(--light-orange);
+  color: var(--brown);
   margin: 0 0 0.625rem 0;
 `;
 
@@ -66,7 +66,7 @@ const CategoryTags = styled.div`
 
 const Tag = styled.span`
   background: var(--light-orange);
-  color: white;
+  color: black;
   padding: 0.3125rem 0.625rem;
   border-radius: var(--border-radius);
   font-size: 0.875rem;

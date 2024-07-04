@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
+import { css } from "styled-components";
 
 export const StyledLink = styled(Link)`
   color: var(--text-color);
@@ -14,27 +15,35 @@ export const StyledBackLink = styled(StyledLink)`
   position: relative;
 `;
 
-export const StyledSmallLink = styled(Link)`
-  padding: 0.1rem 0.3rem;
-  margin: ${(props) =>
-    props.$variant === "delete" || props.$variant === "edit" ? "0" : "1rem 0"};
+const linkStyles = css`
+  padding: 0.8rem;
+  margin: 1rem 0;
   border-radius: 0.6rem;
   font-weight: bold;
   color: white;
-  border: ${(props) =>
-    props.$variant === "delete" || props.$variant === "edit" ? " " : "none"};
+  border: none;
   cursor: pointer;
-  background: ${(props) =>
-    props.$variant === "delete" || props.$variant === "edit"
-      ? "var(--button-background)"
-      : "var(--button-gradient1)"};
-
+  background: var(--button-gradient1);
   &:hover {
-    background: ${(props) =>
-      props.$variant === "delete" || props.$variant === "edit"
-        ? "var(--button-hover-background)"
-        : "var(--button-gradient2)"};
+    background: var(--button-gradient2);
   }
+  ${(props) =>
+    props.$variant === "edit" &&
+    css`
+      display: flex;
+      border-radius: 0.6rem;
+      margin: 0;
+      padding: 0.3rem 0.4rem;
+      border: 1px solid grey;
+      box-shadow: var(--box-shadow);
+      background: var(--button-background);
+      &:hover {
+        background: var(--button-hover-background);
+      }
+    `}
+`;
+export const StyledEditLink = styled(Link)`
+  ${linkStyles}
 `;
 
 export const TransparentBackLink = styled(Link)`
