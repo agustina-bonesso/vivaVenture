@@ -1,8 +1,13 @@
 import StyledImageComponent from "@/components/StyledImageComponent";
 import { StyledLink } from "@/components/StyledLinks";
 import styled from "styled-components";
+import { Icon } from "@/components/Icon";
 
-export default function ActivityCard({ activity }) {
+export default function ActivityCard({
+  activity,
+  onToggleFavorite,
+  isFavorite,
+}) {
   return (
     <StyledArticle>
       <StyledLink href={`/${activity.id}`}>
@@ -19,9 +24,17 @@ export default function ActivityCard({ activity }) {
           </CategoryTags>
         </CardContent>
       </StyledLink>
+
+      <StyledFavoriteButton onClick={() => onToggleFavorite(activity.id)}>
+        <Icon name="heart" fillColor={isFavorite ? "red" : "black"} />
+      </StyledFavoriteButton>
+
     </StyledArticle>
   );
 }
+
+const StyledFavoriteButton = styled.button`
+  width: 3.75rem;
 
 const StyledArticle = styled.article`
   max-width: 50rem;

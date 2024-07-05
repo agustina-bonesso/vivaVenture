@@ -5,14 +5,22 @@ import styled from "styled-components";
 import { StyledButton } from "../StyledButton";
 import { StyledEditLink } from "@/components/StyledLinks";
 
-export default function ActivityDetails({ activity, onDeleteActivity }) {
+export default function ActivityDetails({
+  activity,
+  onDeleteActivity,
+  isFavorite,
+  onToggleFavorite,
+}) {
   return (
+
     <StyledArticle>
       <ImageContainer>
         <TransparentBackLink href="/" title="Back to all Activities">
           <Icon name="chevronLeft" color="black" />
         </TransparentBackLink>
-        <StyledImageComponent src={activity.image} alt={activity.title} />
+        <StyledImageComponent src={activity.image} alt={activity.title} isFavorite={isFavorite}
+        onToggleFavorite={onToggleFavorite}
+        id={activity.id}/>
       </ImageContainer>
       <Content>
         <StyledDiv>
@@ -36,6 +44,10 @@ export default function ActivityDetails({ activity, onDeleteActivity }) {
             </StyledButton>
           </ActionIcons>
         </StyledDiv>
+
+<StyledFavoriteButton type="button" onClick={() => onToggleFavorite(activity.id)}>
+        <Icon name="heart" fillColor={isFavorite ? "red" : "black"} />
+      </StyledFavoriteButton>
 
         <Info>{`${activity.area}, ${activity.country}`}</Info>
         <Description>{activity.description}</Description>
@@ -107,4 +119,8 @@ const Tag = styled.span`
   color: black;
   padding: 0.3125rem 0.625rem;
   border-radius: var(--border-radius);
+`;
+
+const StyledFavoriteButton = styled.button`
+  width: 3.75rem;
 `;

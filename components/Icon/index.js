@@ -1,11 +1,13 @@
 const Icons = {
-  chevronLeft: (color) => (
+
+  chevronLeft: (color, fillColor) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
+
+      fill={fillColor}
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
@@ -16,13 +18,14 @@ const Icons = {
     </svg>
   ),
 
-  add: (color) => (
+  add: (color, fillColor) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="40"
       height="40"
       viewBox="0 0 24 24"
-      fill="white"
+
+      fill=(fillColor)
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
@@ -35,14 +38,17 @@ const Icons = {
     </svg>
   ),
 
-  edit: (color) => (
+  edit: (color, fillColor) => (
+
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
+
+      fill={fillColor}
       stroke={color}
+
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -53,14 +59,16 @@ const Icons = {
     </svg>
   ),
 
-  delete: (color) => (
+  delete: (color, fillColor) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
+
+      fill={fillColor}
       stroke={color}
+
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -72,9 +80,25 @@ const Icons = {
       <line x1="14" y1="11" x2="14" y2="17"></line>
     </svg>
   ),
+  heart: (fillColor) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill={fillColor}
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="feather feather-heart"
+    >
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+    </svg>
+  ),
 };
 
-export const Icon = ({ name, color = "var(--icon-color)" }) => {
+export const Icon = ({ name, color = "var(--icon-color)", fillColor = "none" }) => {
   const IconComponent = Icons[name];
-  return IconComponent(color);
+  return IconComponent(color, fillColor);
 };
