@@ -34,7 +34,7 @@ export default function ActivityDetails({
           </StyledButton>
         </div>
       </StyledDiv>
-      <StyledFavoriteButton onClick={() => onToggleFavorite(activity.id)}>
+      <StyledFavoriteButton type="button" onClick={() => onToggleFavorite(activity.id)}>
         <Icon name="heart" fillColor={isFavorite ? "red" : "black"} />
       </StyledFavoriteButton>
       <div>
