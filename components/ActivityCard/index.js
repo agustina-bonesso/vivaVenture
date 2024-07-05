@@ -28,13 +28,13 @@ export default function ActivityCard({
       <StyledFavoriteButton onClick={() => onToggleFavorite(activity.id)}>
         <Icon name="heart" fillColor={isFavorite ? "red" : "black"} />
       </StyledFavoriteButton>
-
     </StyledArticle>
   );
 }
 
 const StyledFavoriteButton = styled.button`
   width: 3.75rem;
+`;
 
 const StyledArticle = styled.article`
   max-width: 50rem;
