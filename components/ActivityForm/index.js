@@ -165,6 +165,7 @@ const StyledTextarea = styled.textarea`
   font-size: 1rem;
   color: var(--text-color);
   background: var(--background-color);
+  resize: vertical;
 `;
 
 const StyledLabel = styled.label`
