@@ -27,4 +27,6 @@ const StyledHeader = styled.header`
   top: 0;
   z-index: 1;
   padding-top: 0.7rem;
+  background-color: var(--header-footer-bg);
+  box-shadow: var(--box-shadow);
 `;

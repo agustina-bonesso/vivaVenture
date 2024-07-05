@@ -19,10 +19,6 @@ export default function Activity({
 
   return (
     <>
-      <StyledBackLink href={"/"}>
-        <Icon name="chevronLeft" />
-        Back to all Activities
-      </StyledBackLink>
       {activity ? (
         <ActivityDetails
           activity={activity}
