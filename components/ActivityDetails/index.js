@@ -1,42 +1,110 @@
 import StyledImageComponent from "@/components/StyledImageComponent";
-import { StyledLink } from "@/components/StyledLinks";
+import { TransparentBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import styled from "styled-components";
 import { StyledButton } from "../StyledButton";
+import { StyledEditLink } from "@/components/StyledLinks";
 
 export default function ActivityDetails({ activity, onDeleteActivity }) {
   return (
-    <article>
-      <StyledImageComponent src={activity.image} alt={activity.title} />
-      <StyledDiv>
-        <h2>{activity.title}</h2>
-        <div>
-          <StyledLink href={`/${activity.id}/edit`}>
-            <Icon name="edit" />
-          </StyledLink>
-          <StyledButton
-            type="button"
-            $variant="delete"
-            onClick={() => onDeleteActivity(activity.id)}
-          >
-            <Icon name="delete" />
-          </StyledButton>
-        </div>
-      </StyledDiv>
-      <div>
-        <p>
-          {activity.area}, {activity.country}
-        </p>
-        <p>{activity.category.join(", ")}</p>
-      </div>
-      <p>{activity.description}</p>
-    </article>
+    <StyledArticle>
+      <ImageContainer>
+        <TransparentBackLink href="/" title="Back to all Activities">
+          <Icon name="chevronLeft" color="black" />
+        </TransparentBackLink>
+        <StyledImageComponent src={activity.image} alt={activity.title} />
+      </ImageContainer>
+      <Content>
+        <StyledDiv>
+          <Title>{activity.title}</Title>
+          <ActionIcons>
+            <StyledEditLink
+              title="Edit activity"
+              type="button"
+              $variant="edit"
+              href={`/${activity.id}/edit`}
+            >
+              <Icon name="edit" />
+            </StyledEditLink>
+            <StyledButton
+              title="Delete activity"
+              type="button"
+              $variant="delete"
+              onClick={() => onDeleteActivity(activity.id)}
+            >
+              <Icon name="delete" />
+            </StyledButton>
+          </ActionIcons>
+        </StyledDiv>
+
+        <Info>{`${activity.area}, ${activity.country}`}</Info>
+        <Description>{activity.description}</Description>
+        <CategoryTags>
+          {activity.category.map((category, index) => (
+            <Tag key={index}>{category}</Tag>
+          ))}
+        </CategoryTags>
+      </Content>
+    </StyledArticle>
   );
 }
+
+const StyledArticle = styled.article`
+  max-width: 50rem;
+  margin: 2rem auto;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  background: var(--card-background);
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  height: 12.5rem;
+`;
+
+const ActionIcons = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+`;
+
+const Content = styled.div`
+  padding: 1.25rem;
+`;
+
+const Title = styled.h2`
+  font-size: 1.75rem;
+  color: var(--text-color);
+`;
 
 const StyledDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: -1rem;
+  align-items: baseline;
+`;
+
+const Info = styled.p`
+  font-size: 1rem;
+  color: var(--brown);
+  margin-top: 0.3125rem;
+`;
+
+const Description = styled.p`
+  margin-top: 0.625rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--teal);
+`;
+
+const CategoryTags = styled.div`
+  margin-top: 0.625rem;
+  display: flex;
+  gap: 0.3125rem;
+`;
+
+const Tag = styled.span`
+  background: var(--light-orange);
+  color: black;
+  padding: 0.3125rem 0.625rem;
+  border-radius: var(--border-radius);
 `;
