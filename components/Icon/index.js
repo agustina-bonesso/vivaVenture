@@ -1,12 +1,10 @@
 const Icons = {
-
   chevronLeft: (color, fillColor) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-
       fill={fillColor}
       stroke={color}
       strokeWidth="2"
@@ -24,8 +22,7 @@ const Icons = {
       width="40"
       height="40"
       viewBox="0 0 24 24"
-
-      fill=(fillColor)
+      fill={fillColor}
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
@@ -39,16 +36,13 @@ const Icons = {
   ),
 
   edit: (color, fillColor) => (
-
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
-
       fill={fillColor}
       stroke={color}
-
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -65,10 +59,8 @@ const Icons = {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-
       fill={fillColor}
       stroke={color}
-
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -98,7 +90,11 @@ const Icons = {
   ),
 };
 
-export const Icon = ({ name, color = "var(--icon-color)", fillColor = "none" }) => {
+export const Icon = ({
+  name,
+  color = "var(--icon-color)",
+  fillColor = "none",
+}) => {
   const IconComponent = Icons[name];
   return IconComponent(color, fillColor);
 };
