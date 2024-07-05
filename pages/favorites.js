@@ -6,13 +6,12 @@ export default function Favorites({
   favoriteActivitiesList,
   onToggleFavorite,
 }) {
-  const favoriteActivities = favoriteActivitiesList
-    .filter((activity) => activity.isFavorite)
-    .map((activity) => {
-      return activityData.find(
-        (filteredActivity) => filteredActivity.id === activity.id
-      );
-    });
+  const favoriteActivities = activityData.filter((activity) =>
+    favoriteActivitiesList.find(
+      (favorivedActivity) =>
+        favorivedActivity.id === activity.id && favorivedActivity.isFavorite
+    )
+  );
 
   return (
     <StyledList>
