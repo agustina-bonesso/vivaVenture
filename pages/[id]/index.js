@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
 import ActivityDetails from "@/components/ActivityDetails";
-import { StyledBackLink } from "@/components/StyledLinks";
-import { Icon } from "@/components/Icon";
 
 export default function Activity({
   activityData,
