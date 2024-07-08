@@ -31,3 +31,18 @@ const buttonStyles = css`
 export const StyledButton = styled.button`
   ${buttonStyles}
 `;
+
+
+export const TransparentFavoriteButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgb(255 255 255 / 50%);
+  padding: 0.3125rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 1;
+  cursor: pointer;
+`;

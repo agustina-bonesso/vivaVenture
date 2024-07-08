@@ -11,7 +11,7 @@ export const StyledLink = styled(Link)`
 export const StyledBackLink = styled(StyledLink)`
   display: flex;
   width: 12.5rem;
-  margin-top: 0.75rem;
+  margin-top: 1.5rem;
   position: relative;
 `;
 

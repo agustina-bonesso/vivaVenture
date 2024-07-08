@@ -72,14 +72,14 @@ const Icons = {
       <line x1="14" y1="11" x2="14" y2="17"></line>
     </svg>
   ),
-  heart: (fillColor) => (
+  heart: (color, fillColor) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
       viewBox="0 0 24 24"
       fill={fillColor}
-      stroke="currentColor"
+      stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
