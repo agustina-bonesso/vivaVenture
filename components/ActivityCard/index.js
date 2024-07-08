@@ -2,6 +2,7 @@ import StyledImageComponent from "@/components/StyledImageComponent";
 import { StyledLink } from "@/components/StyledLinks";
 import styled from "styled-components";
 import { Icon } from "@/components/Icon";
+import { TransparentFavoriteButton } from "@/components/StyledButton";
 
 export default function ActivityCard({
   activity,
@@ -13,6 +14,18 @@ export default function ActivityCard({
       <StyledLink href={`/${activity.id}`}>
         <ImageContainer>
           <StyledImageComponent src={activity.image} alt={activity.title} />
+          <StyledFavoriteButton
+            onClick={(event) => {
+              event.preventDefault();
+              onToggleFavorite(activity.id);
+            }}
+          >
+            <Icon
+              name="heart"
+              fillColor={isFavorite ? "red" : "white"}
+              color="black"
+            />
+          </StyledFavoriteButton>
         </ImageContainer>
         <CardContent>
           <Title>{activity.title}</Title>
@@ -24,17 +37,9 @@ export default function ActivityCard({
           </CategoryTags>
         </CardContent>
       </StyledLink>
-
-      <StyledFavoriteButton onClick={() => onToggleFavorite(activity.id)}>
-        <Icon name="heart" fillColor={isFavorite ? "red" : "black"} />
-      </StyledFavoriteButton>
     </StyledArticle>
   );
 }
-
-const StyledFavoriteButton = styled.button`
-  width: 3.75rem;
-`;
 
 const StyledArticle = styled.article`
   max-width: 50rem;
@@ -46,14 +51,23 @@ const StyledArticle = styled.article`
   transition: transform 0.2s;
   &:hover {
     transform: translateY(-0.3125rem);
+    button {
+      opacity: 1;
+    }
   }
 `;
 
 const ImageContainer = styled.div`
+  position: relative;
   height: 12.5rem;
   overflow: hidden;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
+`;
+
+const StyledFavoriteButton = styled(TransparentFavoriteButton)`
+  opacity: 0;
+  transition: opacity 0.3s ease;
 `;
 
 const CardContent = styled.div`
