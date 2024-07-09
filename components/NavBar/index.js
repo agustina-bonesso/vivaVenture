@@ -2,36 +2,37 @@ import styled from "styled-components";
 import { StyledLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function NavBar() {
+  const router = useRouter();
   return (
     <StyledFooter>
       <StyledLink href="/">
-        <StyledNavIcon>
-          <Icon name="home"  />
+        <StyledNavIcon active={router.pathname === "/"}>
+          <Icon name="home" />
           <StyledSubline>Home</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
       <StyledLink href="/createActivity">
-        <StyledNavIcon>
-          <Icon name="add" color="black" fillColor="none" />
+        <StyledNavIcon active={router.pathname === "/createActivity"}>
+          <Icon name="add" />
           <StyledSubline>Add</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
       <StyledLink href="">
-        <StyledNavIcon>
-          <Icon name="shuffle" color="black" fillColor="none" />
+        <StyledNavIcon active={router.pathname === "/spotlight"}>
+          <Icon name="shuffle" />
           <StyledSubline>Random</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
       <StyledLink href="/favorites">
-        <StyledNavIcon>
-          <Icon name="heart" color="black" fillColor="none" />
+        <StyledNavIcon active={router.pathname === "/favorites"}>
+          <Icon name="heart" />
           <StyledSubline>Saved</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
     </StyledFooter>
-    
   );
 }
 
@@ -45,10 +46,12 @@ const StyledNavIcon = styled.div`
   flex-direction: column;
   align-items: center;
   border: 0;
+  color: ${(props) => (props.active ? "var(--teal)" : "black")};
+  stroke: ${(props) => (props.active ? "var(--teal)" : "black")};
   &:hover {
     cursor: pointer;
     transform: scale(1.25);
-    color: var(--teal) ;
+    color: var(--teal);
     stroke: var(--teal);
   }
 `;
