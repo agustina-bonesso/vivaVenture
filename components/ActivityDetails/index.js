@@ -1,9 +1,9 @@
 import StyledImageComponent from "@/components/StyledImageComponent";
-import { TransparentBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import styled from "styled-components";
 import {
   StyledButton,
+  TransparentBackButton,
   TransparentFavoriteButton,
 } from "@/components/StyledButton";
 import { StyledEditLink } from "@/components/StyledLinks";
@@ -20,15 +20,14 @@ export default function ActivityDetails({
   return (
     <StyledArticle>
       <ImageContainer>
-        <button
-          onClick={(event) => {
-            event.preventDefault();
+        <TransparentBackButton
+          onClick={() => {
             router.back();
           }}
           title="Back to all Activities"
         >
           <Icon name="chevronLeft" color="black" />
-        </button>
+        </TransparentBackButton>
         <TransparentFavoriteButton
           onClick={() => onToggleFavorite(activity.id)}
         >

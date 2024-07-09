@@ -15,9 +15,10 @@ export default function App({ Component, pageProps }) {
       defaultValue: [],
     });
 
-  const [randomActivity, setRandomActivity] = useLocalStorageState("random", {
-    defaultValue: null,
-  });
+  const [randomActivity, setRandomActivity] = useLocalStorageState(
+    "randomActivity",
+    { defaultValue: null }
+  );
 
   function handleAddActivity(newActivity) {
     const newActivityWithId = { id: uuid(), ...newActivity };
@@ -70,12 +71,10 @@ export default function App({ Component, pageProps }) {
     }
   }
 
-  function getRandomIndex() {
-    return setRandomActivity(
-      activityData[Math.floor(Math.random() * activityData.length)]
-    );
+  function getRandomActivity() {
+    const randomIndex = Math.floor(Math.random() * activityData.length);
+    setRandomActivity(activityData[randomIndex]);
   }
-  console.log(randomActivity);
 
   return (
     <>
@@ -95,7 +94,7 @@ export default function App({ Component, pageProps }) {
         <button
           type="button"
           onClick={() => {
-            getRandomIndex(), router.push("/spotlight");
+            getRandomActivity(), router.push("/spotlight");
           }}
         >
           spotlight
