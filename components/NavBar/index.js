@@ -31,6 +31,7 @@ export default function NavBar() {
         </StyledNavIcon>
       </StyledLink>
     </StyledFooter>
+    
   );
 }
 
