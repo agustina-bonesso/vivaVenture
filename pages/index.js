@@ -9,7 +9,6 @@ export default function HomePage({
   favoriteActivitiesList,
 }) {
   return (
-    <>
       <StyledList>
         {activityData.map((activity) => {
           return (
@@ -27,14 +26,8 @@ export default function HomePage({
           );
         })}
       </StyledList>
-      <StyledLinkContainer>
-        <StyledFixLink href="/createActivity">
-
-          <Icon name="add" color="black" fillColor="white"/>
-
-        </StyledFixLink>
-      </StyledLinkContainer>
-    </>
+    
+    
   );
 }
 
@@ -46,12 +39,4 @@ const StyledList = styled.ul`
   padding: 0;
 `;
 
-const StyledLinkContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
 
-const StyledFixLink = styled(Link)`
-  position: fixed;
-  bottom: 1.875rem;
-`;

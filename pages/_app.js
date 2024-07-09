@@ -4,6 +4,7 @@ import { dummyData } from "@/lib/dummyData";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
+import NavBar from "@/components/NavBar";
 
 export default function App({ Component, pageProps }) {
   const [activityData, setActivityData] = useLocalStorageState(`activityData`, {
@@ -82,6 +83,7 @@ export default function App({ Component, pageProps }) {
           onToggleFavorite={handleToggleFavorite}
         />
       </main>
+      <NavBar/>
     </>
   );
 }
