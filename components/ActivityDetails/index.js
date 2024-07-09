@@ -7,6 +7,7 @@ import {
   TransparentFavoriteButton,
 } from "@/components/StyledButton";
 import { StyledEditLink } from "@/components/StyledLinks";
+import { useRouter } from "next/router";
 
 export default function ActivityDetails({
   activity,
@@ -14,16 +15,28 @@ export default function ActivityDetails({
   isFavorite,
   onToggleFavorite,
 }) {
+  const router = useRouter();
+
   return (
     <StyledArticle>
       <ImageContainer>
-        <TransparentBackLink href="/" title="Back to all Activities">
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            router.back();
+          }}
+          title="Back to all Activities"
+        >
           <Icon name="chevronLeft" color="black" />
-        </TransparentBackLink>
+        </button>
         <TransparentFavoriteButton
           onClick={() => onToggleFavorite(activity.id)}
         >
-          <Icon name="heart" fillColor={isFavorite ? "red" : "white"} color="black"/>
+          <Icon
+            name="heart"
+            fillColor={isFavorite ? "red" : "white"}
+            color="black"
+          />
         </TransparentFavoriteButton>
         <StyledImageComponent
           src={activity.image}

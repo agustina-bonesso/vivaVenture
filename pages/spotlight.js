@@ -6,26 +6,26 @@ export default function Spotlight({
   onToggleFavorite,
   favoriteActivitiesList,
 }) {
-  const [randomActivity, setRandomActivity] = useState(null);
+  // const [randomActivity, setRandomActivity] = useState(null);
 
-  useEffect(() => {
-    const index = Math.floor(Math.random() * activityData.length);
-    setRandomActivity(activityData[index]);
-    console.log(index);
-  }, [activityData]);
+  // useEffect(() => {
+  //   const index = Math.floor(Math.random() * activityData.length);
+  //   setRandomActivity(activityData[index]);
+  //   console.log(index);
+  // }, [activityData]);
 
-  if (!randomActivity) return null;
-  console.log(randomActivity);
+  // if (!randomActivity) return null;
+  // console.log(randomActivity);
 
   const isFavorite = favoriteActivitiesList.find(
-    (favActivity) => favActivity.id === randomActivity.id
+    (favActivity) => favActivity.id === activityData.id
   );
 
   return (
     <>
       <h1>Spotlight</h1>
       <ActivityCard
-        activity={randomActivity}
+        activity={activityData}
         onToggleFavorite={onToggleFavorite}
         isFavorite={isFavorite}
       />
