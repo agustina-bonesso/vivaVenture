@@ -68,6 +68,4 @@ const StyledFooter = styled.footer`
   height: 65px;
   background: var(--header-footer-bg);
   box-shadow: var(--box-shadow);
-
-  @media (max-width: );
 `;
