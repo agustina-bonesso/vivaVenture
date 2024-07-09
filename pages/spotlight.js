@@ -2,7 +2,6 @@ import ActivityCard from "@/components/ActivityCard";
 
 export default function Spotlight({
   randomActivity,
-  activityData,
   onToggleFavorite,
   favoriteActivitiesList,
 }) {
@@ -13,10 +12,10 @@ export default function Spotlight({
       <h1>Spotlight</h1>
       <ActivityCard
         activity={randomActivity}
-        onToggleFavorite={() => onToggleFavorite(activityData.id)}
+        onToggleFavorite={() => onToggleFavorite(randomActivity.id)}
         isFavorite={
           favoriteActivitiesList.find(
-            (favActivity) => favActivity.id === activityData.id
+            (favActivity) => favActivity.id === randomActivity.id
           )?.isFavorite
         }
       />

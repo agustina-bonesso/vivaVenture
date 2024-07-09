@@ -11,8 +11,9 @@ export default function Activity({
   const { id } = router.query;
 
   const activity = activityData.find((activity) => activity.id === id);
+
   const isFavorite = favoriteActivitiesList.find(
-    (activity) => activity.id === id
+    (favActivity) => favActivity.id === activity.id
   )?.isFavorite;
 
   return (
