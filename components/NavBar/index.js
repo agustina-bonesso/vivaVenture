@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { StyledLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function NavBar() {
@@ -16,19 +15,19 @@ export default function NavBar() {
       </StyledLink>
       <StyledLink href="/createActivity">
         <StyledNavIcon active={router.pathname === "/createActivity"}>
-          <Icon name="add" />
+          <Icon name="add" color="black" fillColor="transparent"/>
           <StyledSubline>Add</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
       <StyledLink href="">
         <StyledNavIcon active={router.pathname === "/spotlight"}>
-          <Icon name="shuffle" />
+          <Icon name="random" />
           <StyledSubline>Random</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
       <StyledLink href="/favorites">
         <StyledNavIcon active={router.pathname === "/favorites"}>
-          <Icon name="heart" />
+          <Icon name="navHeart" />
           <StyledSubline>Saved</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
@@ -45,9 +44,8 @@ const StyledNavIcon = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 0;
-  color: ${(props) => (props.active ? "var(--teal)" : "black")};
-  stroke: ${(props) => (props.active ? "var(--teal)" : "black")};
+  color: ${(props) => (props.active ? "var(--teal)" : "var(--icon-color)")};
+  stroke: ${(props) => (props.active ? "var(--teal)" : "var(--icon-color)")};
   &:hover {
     cursor: pointer;
     transform: scale(1.25);
@@ -68,4 +66,8 @@ const StyledFooter = styled.footer`
   height: 65px;
   background: var(--header-footer-bg);
   box-shadow: var(--box-shadow);
+
+  @media (min-width: 768px){
+    justify-content: space-evenly;
+  }
 `;
