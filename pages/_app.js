@@ -15,6 +15,11 @@ export default function App({ Component, pageProps }) {
       defaultValue: [],
     });
 
+  const [randomActivity, setRandomActivity] = useLocalStorageState(
+    "randomActivity",
+    { defaultValue: null }
+  );
+
   function handleAddActivity(newActivity) {
     const newActivityWithId = { id: uuid(), ...newActivity };
     setActivityData([newActivityWithId, ...activityData]);
@@ -58,14 +63,18 @@ export default function App({ Component, pageProps }) {
       });
       setFavoriteActivitiesList(updatedList);
     } else {
-        const newFavoriteActivity = { id: id, isFavorite: true };
-        setFavoriteActivitiesList([
-          newFavoriteActivity,
-          ...favoriteActivitiesList,
-        ]);
-      }
+      const newFavoriteActivity = { id: id, isFavorite: true };
+      setFavoriteActivitiesList([
+        newFavoriteActivity,
+        ...favoriteActivitiesList,
+      ]);
     }
-  
+  }
+
+  function getRandomActivity() {
+    const randomIndex = Math.floor(Math.random() * activityData.length);
+    setRandomActivity(activityData[randomIndex]);
+  }
 
   return (
     <>
@@ -74,6 +83,7 @@ export default function App({ Component, pageProps }) {
       <main>
         <Component
           {...pageProps}
+          randomActivity={randomActivity}
           activityData={activityData}
           favoriteActivitiesList={favoriteActivitiesList}
           onAddActivity={handleAddActivity}
@@ -81,6 +91,15 @@ export default function App({ Component, pageProps }) {
           onDeleteActivity={handleDeleteActivity}
           onToggleFavorite={handleToggleFavorite}
         />
+        <button
+          type="button"
+          onClick={() => {
+            getRandomActivity();
+            router.push("/spotlight");
+          }}
+        >
+          spotlight
+        </button>
       </main>
     </>
   );
