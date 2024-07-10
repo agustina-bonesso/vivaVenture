@@ -94,7 +94,8 @@ export default function App({ Component, pageProps }) {
         <button
           type="button"
           onClick={() => {
-            getRandomActivity(), router.push("/spotlight");
+            getRandomActivity();
+            router.push("/spotlight");
           }}
         >
           spotlight
