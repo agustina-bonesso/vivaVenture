@@ -56,6 +56,8 @@ export default createGlobalStyle`
 
     --icon-color: black;
 
+    --toastify-color: #fff;
+
     --border-radius: 0.5rem;
 
     --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -82,6 +84,7 @@ export default createGlobalStyle`
       --icon-color: white;
       --teal: #00A6AA; 
       --brown: #b9773e;
+      --toastify-color: #121212;
 
       /* Button */
       --button-background: #333;

@@ -4,6 +4,9 @@ import { dummyData } from "@/lib/dummyData";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { StyledToastContainer } from "@/components/Toast";
 
 export default function App({ Component, pageProps }) {
   const [activityData, setActivityData] = useLocalStorageState(`activityData`, {
@@ -18,6 +21,7 @@ export default function App({ Component, pageProps }) {
   function handleAddActivity(newActivity) {
     const newActivityWithId = { id: uuid(), ...newActivity };
     setActivityData([newActivityWithId, ...activityData]);
+    toast.success("Activity added succesfully !");
   }
 
   function handleEditActivity(updatedActivity) {
@@ -28,6 +32,7 @@ export default function App({ Component, pageProps }) {
       return updatedActivity;
     });
     setActivityData(updatedActivities);
+    toast.success("Activity updated succesfully !");
   }
 
   function handleDeleteActivity(id) {
@@ -58,19 +63,19 @@ export default function App({ Component, pageProps }) {
       });
       setFavoriteActivitiesList(updatedList);
     } else {
-        const newFavoriteActivity = { id: id, isFavorite: true };
-        setFavoriteActivitiesList([
-          newFavoriteActivity,
-          ...favoriteActivitiesList,
-        ]);
-      }
+      const newFavoriteActivity = { id: id, isFavorite: true };
+      setFavoriteActivitiesList([
+        newFavoriteActivity,
+        ...favoriteActivitiesList,
+      ]);
     }
-  
+  }
 
   return (
     <>
       <GlobalStyle />
       <Header />
+      <StyledToastContainer />
       <main>
         <Component
           {...pageProps}
