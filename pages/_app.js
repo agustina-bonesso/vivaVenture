@@ -70,17 +70,15 @@ export default function App({ Component, pageProps }) {
     <>
       <GlobalStyle />
       <Layout>
-        <main>
-          <Component
-            {...pageProps}
-            activityData={activityData}
-            favoriteActivitiesList={favoriteActivitiesList}
-            onAddActivity={handleAddActivity}
-            onEditActivity={handleEditActivity}
-            onDeleteActivity={handleDeleteActivity}
-            onToggleFavorite={handleToggleFavorite}
-          />
-        </main>
+        <Component
+          {...pageProps}
+          activityData={activityData}
+          favoriteActivitiesList={favoriteActivitiesList}
+          onAddActivity={handleAddActivity}
+          onEditActivity={handleEditActivity}
+          onDeleteActivity={handleDeleteActivity}
+          onToggleFavorite={handleToggleFavorite}
+        />
       </Layout>
     </>
   );
