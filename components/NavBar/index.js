@@ -3,7 +3,7 @@ import { StyledLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import { useRouter } from "next/router";
 
-export default function NavBar() {
+export default function NavBar({ getRandomActivity }) {
   const router = useRouter();
   return (
     <StyledFooter>
@@ -15,20 +15,27 @@ export default function NavBar() {
       </StyledLink>
       <StyledLink href="/createActivity">
         <StyledNavIcon active={router.pathname === "/createActivity"}>
-          <Icon name="add" color="black" fillColor="transparent"/>
+          <Icon name="add" color="black" fillColor="transparent" />
           <StyledSubline>Add</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
-      <StyledLink href="/spotlight">
+      <StyledNavButton
+        type="button"
+        onClick={() => {
+          getRandomActivity();
+          router.push("/spotlight");
+        }}
+      >
         <StyledNavIcon active={router.pathname === "/spotlight"}>
           <Icon name="random" />
           <StyledSubline>Random</StyledSubline>
         </StyledNavIcon>
-      </StyledLink>
+      </StyledNavButton>
+
       <StyledLink href="/favorites">
         <StyledNavIcon active={router.pathname === "/favorites"}>
           <Icon name="navHeart" />
-          <StyledSubline>Saved</StyledSubline>
+          <StyledSubline>Favorites</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
     </StyledFooter>
@@ -67,7 +74,13 @@ const StyledFooter = styled.footer`
   background: var(--header-footer-bg);
   box-shadow: var(--box-shadow);
 
-  @media (min-width: 768px){
+  @media (min-width: 768px) {
     justify-content: space-evenly;
   }
+`;
+
+const StyledNavButton = styled.button`
+  all: unset;
+  font-family: var(--styled-link);
+  font-size: 11px;
 `;

@@ -71,13 +71,19 @@ export default function App({ Component, pageProps }) {
     }
   }
 
+  function getRandomActivity() {
+    const randomIndex = Math.floor(Math.random() * activityData.length);
+    setRandomActivity(activityData[randomIndex]);
+  }
+
   return (
     <>
       <GlobalStyle />
-      <Layout>
+      <Layout getRandomActivity={getRandomActivity} >
         <Component
           {...pageProps}
           randomActivity={randomActivity}
+          getRandomActivity={getRandomActivity}
           activityData={activityData}
           favoriteActivitiesList={favoriteActivitiesList}
           onAddActivity={handleAddActivity}
