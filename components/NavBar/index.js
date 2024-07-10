@@ -19,7 +19,7 @@ export default function NavBar() {
           <StyledSubline>Add</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
-      <StyledLink href="">
+      <StyledLink href="/spotlight">
         <StyledNavIcon active={router.pathname === "/spotlight"}>
           <Icon name="random" />
           <StyledSubline>Random</StyledSubline>

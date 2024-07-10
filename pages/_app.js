@@ -1,10 +1,9 @@
-import Header from "@/components/Header";
 import GlobalStyle from "@/styles";
 import { dummyData } from "@/lib/dummyData";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
-import NavBar from "@/components/NavBar";
+import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps }) {
   const [activityData, setActivityData] = useLocalStorageState(`activityData`, {
@@ -59,31 +58,30 @@ export default function App({ Component, pageProps }) {
       });
       setFavoriteActivitiesList(updatedList);
     } else {
-        const newFavoriteActivity = { id: id, isFavorite: true };
-        setFavoriteActivitiesList([
-          newFavoriteActivity,
-          ...favoriteActivitiesList,
-        ]);
-      }
+      const newFavoriteActivity = { id: id, isFavorite: true };
+      setFavoriteActivitiesList([
+        newFavoriteActivity,
+        ...favoriteActivitiesList,
+      ]);
     }
-  
+  }
 
   return (
     <>
       <GlobalStyle />
-      <Header />
-      <main>
-        <Component
-          {...pageProps}
-          activityData={activityData}
-          favoriteActivitiesList={favoriteActivitiesList}
-          onAddActivity={handleAddActivity}
-          onEditActivity={handleEditActivity}
-          onDeleteActivity={handleDeleteActivity}
-          onToggleFavorite={handleToggleFavorite}
-        />
-      </main>
-      <NavBar/>
+      <Layout>
+        <main>
+          <Component
+            {...pageProps}
+            activityData={activityData}
+            favoriteActivitiesList={favoriteActivitiesList}
+            onAddActivity={handleAddActivity}
+            onEditActivity={handleEditActivity}
+            onDeleteActivity={handleDeleteActivity}
+            onToggleFavorite={handleToggleFavorite}
+          />
+        </main>
+      </Layout>
     </>
   );
 }
