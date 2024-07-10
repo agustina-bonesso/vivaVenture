@@ -1,9 +1,9 @@
-import Header from "@/components/Header";
 import GlobalStyle from "@/styles";
 import { dummyData } from "@/lib/dummyData";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
+import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps }) {
   const [activityData, setActivityData] = useLocalStorageState(`activityData`, {
@@ -79,11 +79,11 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Header />
-      <main>
+      <Layout getRandomActivity={getRandomActivity} >
         <Component
           {...pageProps}
           randomActivity={randomActivity}
+          getRandomActivity={getRandomActivity}
           activityData={activityData}
           favoriteActivitiesList={favoriteActivitiesList}
           onAddActivity={handleAddActivity}
@@ -91,16 +91,7 @@ export default function App({ Component, pageProps }) {
           onDeleteActivity={handleDeleteActivity}
           onToggleFavorite={handleToggleFavorite}
         />
-        <button
-          type="button"
-          onClick={() => {
-            getRandomActivity();
-            router.push("/spotlight");
-          }}
-        >
-          spotlight
-        </button>
-      </main>
+      </Layout>
     </>
   );
 }

@@ -35,6 +35,7 @@ export default createGlobalStyle`
     font-size: 1.2rem;
   }
 
+
   :root {
     --dark-gray: #0D0D0D;
     --teal: #0c7579;
