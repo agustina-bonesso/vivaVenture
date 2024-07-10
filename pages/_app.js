@@ -15,6 +15,11 @@ export default function App({ Component, pageProps }) {
       defaultValue: [],
     });
 
+  const [randomActivity, setRandomActivity] = useLocalStorageState(
+    "randomActivity",
+    { defaultValue: null }
+  );
+
   function handleAddActivity(newActivity) {
     const newActivityWithId = { id: uuid(), ...newActivity };
     setActivityData([newActivityWithId, ...activityData]);
@@ -72,6 +77,7 @@ export default function App({ Component, pageProps }) {
       <Layout>
         <Component
           {...pageProps}
+          randomActivity={randomActivity}
           activityData={activityData}
           favoriteActivitiesList={favoriteActivitiesList}
           onAddActivity={handleAddActivity}
