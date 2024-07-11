@@ -14,6 +14,8 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       .replace(/\b\s+\b/g, " ")
       .replace(/(\.)\s+/g, "$1 ");
     newActivity.category = formData.getAll("category");
+    newActivity.image = Array.from(formData.getAll("photos"));
+    console.log(newActivity.image);
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
       return false;
@@ -120,7 +122,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           placeholder="add description"
           defaultValue={initialData?.description}
         ></StyledTextarea>
-        <StyledLabel htmlFor="image">Image</StyledLabel>
+        {/* <StyledLabel htmlFor="image">Image</StyledLabel>
         <StyledInput
           id="image"
           name="image"
@@ -129,7 +131,10 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           defaultValue={
             isEditMode ? initialData?.image : "/images/default-image.jpg"
           }
-        />
+        /> */}
+        <StyledLabel htmlFor="photos">Add Photos</StyledLabel>
+        <StyledInput type='file' name='images[]' multiple></StyledInput>
+        <StyledFileInput name="photos" id="photos" accept="image/*" multiple />
         <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>
@@ -217,3 +222,6 @@ const StyledCheckbox = styled.input.attrs({ type: "checkbox" })`
     font-size: 16px;
   }
 `;
+const StyledFileInput = styled(StyledInput).attrs({
+  type: "file",
+})``;
