@@ -45,7 +45,6 @@ export default createGlobalStyle`
     --background-color: #f5f5f5;  
     --text-color: #0D0D0D;  
     --header-footer-bg: #F2E6DF;
-    --button-text-color: #ffffff;  
     --card-background: #ffffff;
     --form-background: #f9f9f9;
 
