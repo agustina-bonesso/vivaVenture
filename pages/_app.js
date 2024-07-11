@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import GlobalStyle from "@/styles";
 import { dummyData } from "@/lib/dummyData";
 import { v4 as uuid } from "uuid";
@@ -9,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { StyledToastContainer } from "@/components/Toast";
 import { useState } from "react";
 import { ConfirmModal } from "@/components/ConfirmModal";
+import Layout from "@/components/Layout";
 
 export default function App({ Component, pageProps }) {
   const [activityData, setActivityData] = useLocalStorageState(`activityData`, {
@@ -21,6 +21,11 @@ export default function App({ Component, pageProps }) {
     });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeId, setActiveId] = useState(null);
+
+  const [randomActivity, setRandomActivity] = useLocalStorageState(
+    "randomActivity",
+    { defaultValue: null }
+  );
 
   function handleAddActivity(newActivity) {
     const newActivityWithId = { id: uuid(), ...newActivity };
@@ -77,14 +82,21 @@ export default function App({ Component, pageProps }) {
     }
   }
 
+  function getRandomActivity() {
+    const randomIndex = Math.floor(Math.random() * activityData.length);
+    setRandomActivity(activityData[randomIndex]);
+  }
+
   return (
     <>
       <GlobalStyle />
       <Header />
       <StyledToastContainer />
-      <main>
+      <Layout getRandomActivity={getRandomActivity}>
         <Component
           {...pageProps}
+          randomActivity={randomActivity}
+          getRandomActivity={getRandomActivity}
           activityData={activityData}
           favoriteActivitiesList={favoriteActivitiesList}
           onAddActivity={handleAddActivity}
@@ -92,7 +104,7 @@ export default function App({ Component, pageProps }) {
           onDeleteActivity={handleDeleteActivity}
           onToggleFavorite={handleToggleFavorite}
         />
-      </main>
+      </Layout>
       <ConfirmModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

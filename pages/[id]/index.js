@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
 import ActivityDetails from "@/components/ActivityDetails";
-import { StyledBackLink } from "@/components/StyledLinks";
-import { Icon } from "@/components/Icon";
 
 export default function Activity({
   activityData,
@@ -13,8 +11,9 @@ export default function Activity({
   const { id } = router.query;
 
   const activity = activityData.find((activity) => activity.id === id);
+
   const isFavorite = favoriteActivitiesList.find(
-    (activity) => activity.id === id
+    (favActivity) => favActivity.id === activity.id
   )?.isFavorite;
 
   return (
