@@ -59,7 +59,8 @@ const StyledArticle = styled.article`
 
 const ImageContainer = styled.div`
   position: relative;
-  height: 12.5rem;
+  min-height: 12.5rem;
+  max-height: 25rem;
   overflow: hidden;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
@@ -75,12 +76,10 @@ const CardContent = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 1.75rem;
   color: var(--text-color);
 `;
 
 const Info = styled.p`
-  font-size: 1rem;
   color: var(--brown);
   margin: 0 0 0.625rem 0;
 `;
@@ -96,5 +95,4 @@ const Tag = styled.span`
   color: black;
   padding: 0.3125rem 0.625rem;
   border-radius: var(--border-radius);
-  font-size: 0.875rem;
 `;
