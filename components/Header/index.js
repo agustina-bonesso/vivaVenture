@@ -4,6 +4,7 @@ import Link from "next/link";
 import Hamburger from "hamburger-react";
 import { useState } from "react";
 import HamburgerMenu from "../HamburgerMenu";
+
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (

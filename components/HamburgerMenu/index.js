@@ -2,6 +2,35 @@ import React from "react";
 import { stack as Menu } from "react-burger-menu";
 import styled from "styled-components";
 import Link from "next/link";
+
+export default function HamburgerMenu({ menuOpen, setMenuOpen }) {
+  const handleStateChange = (state) => setMenuOpen(state.isOpen);
+  return (
+    <StyledMenu right isOpen={menuOpen} onStateChange={handleStateChange}>
+      <Link href="/" passHref>
+        <span className="bm-item" onClick={() => setMenuOpen(false)}>
+          Home
+        </span>
+      </Link>
+      <Link href="/createActivity" passHref>
+        <span className="bm-item" onClick={() => setMenuOpen(false)}>
+          Add
+        </span>
+      </Link>
+      <Link href="/spotlight" passHref>
+        <span className="bm-item" onClick={() => setMenuOpen(false)}>
+          Spotlight
+        </span>
+      </Link>
+      <Link href="/favorites" passHref>
+        <span className="bm-item" onClick={() => setMenuOpen(false)}>
+          Favorites
+        </span>
+      </Link>
+    </StyledMenu>
+  );
+}
+
 const StyledMenu = styled(Menu)`
   .bm-burger-button {
     position: fixed;
@@ -36,32 +65,7 @@ const StyledMenu = styled(Menu)`
   .bm-overlay {
     background: rgba(0, 0, 0, 0.3);
     width: 100%;
+    top: 0;
+    left: 0;
   }
 `;
-export default function HamburgerMenu({ menuOpen, setMenuOpen }) {
-  const handleStateChange = (state) => setMenuOpen(state.isOpen);
-  return (
-    <StyledMenu right isOpen={menuOpen} onStateChange={handleStateChange}>
-      <Link href="/" passHref>
-        <span className="bm-item" onClick={() => setMenuOpen(false)}>
-          Home
-        </span>
-      </Link>
-      <Link href="/createActivity" passHref>
-        <span className="bm-item" onClick={() => setMenuOpen(false)}>
-          Add
-        </span>
-      </Link>
-      <Link href="/spotlight" passHref>
-        <span className="bm-item" onClick={() => setMenuOpen(false)}>
-          Spotlight
-        </span>
-      </Link>
-      <Link href="/favorites" passHref>
-        <span className="bm-item" onClick={() => setMenuOpen(false)}>
-          Favorites
-        </span>
-      </Link>
-    </StyledMenu>
-  );
-}
