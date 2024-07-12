@@ -10,6 +10,7 @@ const buttonStyles = css`
   border: none;
   cursor: pointer;
   background: var(--button-gradient1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
   &:hover {
     background: var(--button-gradient2);
   }
@@ -28,6 +29,23 @@ const buttonStyles = css`
       }
     `}
 `;
+
+export const ModalButton = styled.button`
+  background: var(--background-color);
+  color: var(--text-color);
+  padding: 0.7rem 1.3rem;
+  margin-left: 0.625rem;
+  border: 2px solid #0d0d0d;
+  border-radius: 0.6rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    background: ${(props) =>
+      props.$variant === "modal-delete" ? "#c82333" : "#5a6268"};
+  }
+`;
+
 export const StyledButton = styled.button`
   ${buttonStyles}
 `;

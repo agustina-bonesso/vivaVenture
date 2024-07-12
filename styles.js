@@ -46,7 +46,6 @@ export default createGlobalStyle`
     --background-color: #f5f5f5;  
     --text-color: #0D0D0D;  
     --header-footer-bg: #F2E6DF;
-    --button-text-color: #ffffff;  
     --card-background: #ffffff;
     --form-background: #f9f9f9;
 
@@ -56,6 +55,8 @@ export default createGlobalStyle`
     --styled-link: 'Biryani', sans-serif;
 
     --icon-color: black;
+
+    --toastify-color: #fff;
 
     --border-radius: 0.5rem;
 
@@ -83,6 +84,7 @@ export default createGlobalStyle`
       --icon-color: white;
       --teal: #00A6AA; 
       --brown: #b9773e;
+      --toastify-color: #121212;
 
       /* Button */
       --button-background: #333;
