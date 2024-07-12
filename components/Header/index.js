@@ -18,12 +18,12 @@ export default function Header() {
           priority
         />
       </Link>
-      <DistanceDiv>
+      <div>
         <Hamburger toggled={menuOpen} toggle={setMenuOpen} size={20} />
         {menuOpen && (
           <HamburgerMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         )}
-      </DistanceDiv>
+      </div>
     </StyledHeader>
   );
 }
@@ -38,10 +38,4 @@ const StyledHeader = styled.header`
   padding-top: 0.7rem;
   background-color: var(--header-footer-bg);
   box-shadow: var(--box-shadow);
-`;
-
-const DistanceDiv = styled.div`
-  width: 100px;
-  position: absolute;
-  right: 0px;
 `;
