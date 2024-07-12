@@ -1,8 +1,11 @@
 import Image from "next/image";
 import styled from "styled-components";
 import Link from "next/link";
-
+import Hamburger from "hamburger-react";
+import { useState } from "react";
+import HamburgerMenu from "../HamburgerMenu";
 export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <StyledHeader>
       <Link href="/">
@@ -14,13 +17,16 @@ export default function Header() {
           priority
         />
       </Link>
+      <Hamburger toggled={menuOpen} toggle={setMenuOpen} size={20} />
+      {menuOpen && (
+        <HamburgerMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      )}
     </StyledHeader>
   );
 }
-
 const StyledHeader = styled.header`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
   position: fixed;
   background-color: white;

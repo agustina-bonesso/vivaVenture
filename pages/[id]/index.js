@@ -13,7 +13,7 @@ export default function Activity({
   const activity = activityData.find((activity) => activity.id === id);
 
   const isFavorite = favoriteActivitiesList.find(
-    (favActivity) => favActivity.id === activity.id
+    (favActivity) => favActivity.id === id
   )?.isFavorite;
 
   return (
