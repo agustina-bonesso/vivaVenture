@@ -17,7 +17,7 @@ const StyledMenu = styled(Menu)`
     background: #ffffff;
     padding: 2.5em 1.5em 0;
     font-size: 1.15em;
-    width: 280px;
+    max-height: 100%;
   }
   .bm-item-list {
     color: #373a47;
