@@ -75,7 +75,7 @@ const StyledFooter = styled.footer`
   box-shadow: var(--box-shadow);
 
   @media (min-width: 768px) {
-    justify-content: space-evenly;
+    display: none;
   }
 `;
 

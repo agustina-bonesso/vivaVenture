@@ -82,6 +82,9 @@ const Title = styled.h2`
 const Info = styled.p`
   color: var(--brown);
   margin: 0 0 0.625rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const CategoryTags = styled.div`
@@ -95,4 +98,19 @@ const Tag = styled.span`
   color: black;
   padding: 0.3125rem 0.625rem;
   border-radius: var(--border-radius);
+  font-size: 0.875rem;
+
+  @media (max-width: 767px) {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 1rem;
+    padding: 0.375rem 0.75rem;
+  }
 `;

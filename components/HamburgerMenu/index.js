@@ -1,28 +1,38 @@
-import React from "react";
-import { stack as Menu } from "react-burger-menu";
-import styled from "styled-components";
 import Link from "next/link";
+import styled from "styled-components";
+import { stack as Menu } from "react-burger-menu";
 
 export default function HamburgerMenu({ menuOpen, setMenuOpen }) {
-  const handleStateChange = (state) => setMenuOpen(state.isOpen);
+  function handleStateChange(state) {
+    setMenuOpen(state.isOpen);
+  }
+
   return (
-    <StyledMenu right isOpen={menuOpen} onStateChange={handleStateChange}>
-      <Link href="/" passHref>
+    <StyledMenu
+      width={"20%"}
+      right
+      isOpen={menuOpen}
+      onStateChange={handleStateChange}
+      disableOverlayClick={true}
+      customBurgerIcon={false}
+      customCrossIcon={false}
+    >
+      <Link href="/">
         <span className="bm-item" onClick={() => setMenuOpen(false)}>
           Home
         </span>
       </Link>
-      <Link href="/createActivity" passHref>
+      <Link href="/createActivity">
         <span className="bm-item" onClick={() => setMenuOpen(false)}>
           Add
         </span>
       </Link>
-      <Link href="/spotlight" passHref>
+      <Link href="/spotlight">
         <span className="bm-item" onClick={() => setMenuOpen(false)}>
           Spotlight
         </span>
       </Link>
-      <Link href="/favorites" passHref>
+      <Link href="/favorites">
         <span className="bm-item" onClick={() => setMenuOpen(false)}>
           Favorites
         </span>
@@ -32,40 +42,28 @@ export default function HamburgerMenu({ menuOpen, setMenuOpen }) {
 }
 
 const StyledMenu = styled(Menu)`
-  .bm-burger-button {
-    position: fixed;
-    width: 36px;
-    height: 30px;
-    left: 36px;
-    top: 36px;
-  }
-  .bm-burger-bars {
-    background: #373a47;
-  }
   .bm-menu {
-    background: #ffffff;
-    padding: 2.5em 1.5em 0;
-    font-size: 1.15em;
-    max-height: 100%;
+    background: var(--header-footer-bg);
+    padding: 1rem 0.5rem;
   }
+
   .bm-item-list {
-    color: #373a47;
-    padding: 0.8em;
+    color: var(--text-color);
+    padding: 0.8rem;
   }
+
   .bm-item {
-    display: inline-block;
+    display: block;
     text-decoration: none;
-    margin-bottom: 10px;
-    color: #373a47;
+    margin: 0 0 10px 10px;
+    font-size: 1.2rem;
     transition: color 0.2s;
+    color: var(--text-color);
     &:hover {
-      color: #d35400;
+      color: var(--teal);
     }
-  }
-  .bm-overlay {
-    background: rgba(0, 0, 0, 0.3);
-    width: 100%;
-    top: 0;
-    left: 0;
+    @media (min-width: 1200px) {
+      font-size: 1.5rem;
+    }
   }
 `;
