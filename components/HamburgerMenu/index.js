@@ -49,7 +49,7 @@ export default function HamburgerMenu({
           router.push("/spotlight");
         }}
       >
-        <StyledNavIcon active={router.pathname === "/spotlight"}>
+        <StyledNavIcon $isActive={router.pathname === "/spotlight"}>
           <Icon name="random" />
           <span className="bm-item" onClick={() => setMenuOpen(false)}>
             Random
