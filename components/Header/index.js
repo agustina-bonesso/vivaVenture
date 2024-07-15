@@ -58,7 +58,7 @@ const Overlay = styled.div`
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 999;
-  display: ${({ isActive }) => (isActive ? "block" : "none")};
+  display: ${({ $isActive }) => ($isActive ? "block" : "none")};
 `;
 
 const StyledDiv = styled.div`
