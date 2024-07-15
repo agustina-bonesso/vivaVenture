@@ -1,11 +1,44 @@
 import styled from "styled-components";
 import { StyledButton } from "@/components/StyledButton";
 import { useRouter } from "next/router";
+import ImageUploading from "react-images-uploading";
+import { useState } from "react";
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
+  const [images, setImages] = useState([]);
+  const maxNumber = 20;
 
-  function handleSubmit(event) {
+  const onChange = (imageList, addUpdateIndex) => {
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
+
+  const uploadImages = async (images) => {
+    const formData = new FormData();
+    images.forEach((image) => {
+      formData.append("images", image.file);
+    });
+
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Error uploading images");
+      }
+
+      const imageUrls = await response.json();
+      return imageUrls;
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      return [];
+    }
+  };
+
+  async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const newActivity = Object.fromEntries(formData);
@@ -14,13 +47,11 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       .replace(/\b\s+\b/g, " ")
       .replace(/(\.)\s+/g, "$1 ");
     newActivity.category = formData.getAll("category");
-    newActivity.image = Array.from(formData.getAll("photos"));
-    console.log(newActivity.image);
+    newActivity.images = await uploadImages(images);
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
       return false;
     }
-
     onSubmit(newActivity);
     router.push("/");
   }
@@ -132,10 +163,52 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             isEditMode ? initialData?.image : "/images/default-image.jpg"
           }
         /> */}
-        <StyledLabel htmlFor="photos">Add Photos</StyledLabel>
-        <StyledInput type='file' name='images[]' multiple></StyledInput>
-        <StyledFileInput name="photos" id="photos" accept="image/*" multiple />
-        <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
+        <ImageUploading
+          multiple
+          value={images}
+          onChange={onChange}
+          maxNumber={maxNumber}
+          dataURLKey="data_url"
+          acceptType={["jpg", "png", "jpeg"]}
+          maxFileSize={5242880} // 5MB
+        >
+          {({
+            imageList,
+            onImageUpload,
+            onImageRemoveAll,
+            onImageUpdate,
+            onImageRemove,
+            isDragging,
+            dragProps,
+          }) => (
+            // Schreiben Sie hier Ihren eigenen Layout und verwenden Sie die zugehörigen Methoden in den gewünschten Bereichen
+            <div className="upload__image-wrapper">
+              <button
+                style={isDragging ? { color: "red" } : undefined}
+                onClick={onImageUpload}
+                {...dragProps}
+              >
+                Bilder hochladen oder hierher ziehen
+              </button>
+              &nbsp;
+              <button onClick={onImageRemoveAll}>Alle Bilder entfernen</button>
+              {imageList.map((image, index) => (
+                <div key={index} className="image-item">
+                  <img src={image.data_url} alt="" width="200" />
+                  <div className="image-item__btn-wrapper">
+                    <button onClick={() => onImageUpdate(index)}>
+                      Aktualisieren
+                    </button>
+                    <button onClick={() => onImageRemove(index)}>
+                      Entfernen
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </ImageUploading>
+         <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>
   );

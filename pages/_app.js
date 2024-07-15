@@ -21,6 +21,7 @@ export default function App({ Component, pageProps }) {
   );
 
   function handleAddActivity(newActivity) {
+    console.log(newActivity);
     const newActivityWithId = { id: uuid(), ...newActivity };
     setActivityData([newActivityWithId, ...activityData]);
   }
@@ -79,7 +80,7 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Layout getRandomActivity={getRandomActivity} >
+      <Layout getRandomActivity={getRandomActivity}>
         <Component
           {...pageProps}
           randomActivity={randomActivity}

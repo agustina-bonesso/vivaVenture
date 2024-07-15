@@ -9,11 +9,14 @@ export default function ActivityCard({
   onToggleFavorite,
   isFavorite,
 }) {
+  console.log(activity.images);
+  const imagessrc = activity.images[0];
+  console.log(imagessrc);
   return (
     <StyledArticle>
       <StyledLink href={`/${activity.id}`}>
         <ImageContainer>
-          <StyledImageComponent src={activity.image} alt={activity.title} />
+          <StyledImageComponent src={imagessrc} alt={activity.title} />
           <StyledFavoriteButton
             onClick={(event) => {
               event.preventDefault();

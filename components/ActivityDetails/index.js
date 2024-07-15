@@ -16,6 +16,9 @@ export default function ActivityDetails({
   onToggleFavorite,
 }) {
   const router = useRouter();
+  console.log(activity.images);
+  const imagesrc = activity.images[0];
+  console.log(imagesrc);
 
   return (
     <StyledArticle>
@@ -38,7 +41,7 @@ export default function ActivityDetails({
           />
         </TransparentFavoriteButton>
         <StyledImageComponent
-          src={activity.image}
+          src={imagesrc}
           alt={activity.title}
           isFavorite={isFavorite}
           onToggleFavorite={onToggleFavorite}
