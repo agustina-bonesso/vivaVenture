@@ -27,7 +27,7 @@ export default function HamburgerMenu({
       noOverlay
     >
       <StyledLink href="/">
-        <StyledNavIcon active={router.pathname === "/"}>
+        <StyledNavIcon $isActive={router.pathname === "/"}>
           <Icon name="home" />
           <span className="bm-item" onClick={() => setMenuOpen(false)}>
             Home
