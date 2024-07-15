@@ -35,7 +35,7 @@ export default function HamburgerMenu({
         </StyledNavIcon>
       </StyledLink>
       <StyledLink href="/createActivity">
-        <StyledNavIcon active={router.pathname === "/createActivity"}>
+        <StyledNavIcon $isActive={router.pathname === "/createActivity"}>
           <Icon name="add" color="black" fillColor="transparent" />
           <span className="bm-item" onClick={() => setMenuOpen(false)}>
             Add
