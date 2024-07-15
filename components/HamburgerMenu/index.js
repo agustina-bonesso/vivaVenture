@@ -71,8 +71,8 @@ export default function HamburgerMenu({
 const StyledNavIcon = styled.div`
   display: flex;
   align-items: stretch;
-  color: ${(props) => (props.active ? "var(--teal)" : "var(--icon-color)")};
-  stroke: ${(props) => (props.active ? "var(--teal)" : "var(--icon-color)")};
+  color: ${(props) => (props.$isActive ? "var(--teal)" : "var(--icon-color)")};
+  stroke: ${(props) => (props.$isActive ? "var(--teal)" : "var(--icon-color)")};
   transition: color 0.2s;
 
   &:hover {
