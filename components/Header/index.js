@@ -5,7 +5,7 @@ import Hamburger from "hamburger-react";
 import { useState } from "react";
 import HamburgerMenu from "../HamburgerMenu";
 
-export default function Header() {
+export default function Header({ getRandomActivity }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -19,12 +19,16 @@ export default function Header() {
           priority
         />
       </StyledLink>
-      <div>
+      <StyledDiv>
         <Hamburger toggled={menuOpen} toggle={setMenuOpen} size={30} />
         {menuOpen && (
-          <HamburgerMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+          <HamburgerMenu
+            menuOpen={menuOpen}
+            setMenuOpen={setMenuOpen}
+            getRandomActivity={getRandomActivity}
+          />
         )}
-      </div>
+      </StyledDiv>
       <Overlay isActive={menuOpen} onClick={() => setMenuOpen(false)} />
     </StyledHeader>
   );
@@ -40,18 +44,6 @@ const StyledHeader = styled.header`
   z-index: 20;
   background-color: var(--header-footer-bg);
   box-shadow: var(--box-shadow);
-
-  @media (max-width: 768px) {
-    .hamburger-menu-container {
-      display: none;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .hamburger-menu-container {
-      display: block;
-    }
-  }
 `;
 
 const StyledLink = styled(Link)`
@@ -67,4 +59,14 @@ const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 999;
   display: ${({ isActive }) => (isActive ? "block" : "none")};
+`;
+
+const StyledDiv = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    display: block;
+  }
 `;

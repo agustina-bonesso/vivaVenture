@@ -1,45 +1,99 @@
-import Link from "next/link";
 import styled from "styled-components";
 import { stack as Menu } from "react-burger-menu";
+import { Icon } from "@/components/Icon";
+import { useRouter } from "next/router";
+import { StyledLink } from "@/components/StyledLinks";
 
-export default function HamburgerMenu({ menuOpen, setMenuOpen }) {
+export default function HamburgerMenu({
+  menuOpen,
+  setMenuOpen,
+  getRandomActivity,
+}) {
+  const router = useRouter();
+
   function handleStateChange(state) {
     setMenuOpen(state.isOpen);
   }
 
   return (
     <StyledMenu
-      width={"20%"}
+      width={"25%"}
       right
       isOpen={menuOpen}
       onStateChange={handleStateChange}
       disableOverlayClick={true}
       customBurgerIcon={false}
       customCrossIcon={false}
+      noOverlay
     >
-      <Link href="/">
-        <span className="bm-item" onClick={() => setMenuOpen(false)}>
-          Home
-        </span>
-      </Link>
-      <Link href="/createActivity">
-        <span className="bm-item" onClick={() => setMenuOpen(false)}>
-          Add
-        </span>
-      </Link>
-      <Link href="/spotlight">
-        <span className="bm-item" onClick={() => setMenuOpen(false)}>
-          Spotlight
-        </span>
-      </Link>
-      <Link href="/favorites">
-        <span className="bm-item" onClick={() => setMenuOpen(false)}>
-          Favorites
-        </span>
-      </Link>
+      <StyledLink href="/">
+        <StyledNavIcon active={router.pathname === "/"}>
+          <Icon name="home" />
+          <span className="bm-item" onClick={() => setMenuOpen(false)}>
+            Home
+          </span>
+        </StyledNavIcon>
+      </StyledLink>
+      <StyledLink href="/createActivity">
+        <StyledNavIcon active={router.pathname === "/createActivity"}>
+          <Icon name="add" color="black" fillColor="transparent" />
+          <span className="bm-item" onClick={() => setMenuOpen(false)}>
+            Add
+          </span>
+        </StyledNavIcon>
+      </StyledLink>
+      <StyledNavButton
+        type="button"
+        onClick={() => {
+          getRandomActivity();
+          router.push("/spotlight");
+        }}
+      >
+        <StyledNavIcon active={router.pathname === "/spotlight"}>
+          <Icon name="random" />
+          <span className="bm-item" onClick={() => setMenuOpen(false)}>
+            Random
+          </span>
+        </StyledNavIcon>
+      </StyledNavButton>
+      <StyledLink href="/favorites">
+        <StyledNavIcon active={router.pathname === "/favorites"}>
+          <Icon name="navHeart" />
+          <span className="bm-item" onClick={() => setMenuOpen(false)}>
+            Favorites
+          </span>
+        </StyledNavIcon>
+      </StyledLink>
     </StyledMenu>
   );
 }
+
+const StyledNavIcon = styled.div`
+  display: flex;
+  align-items: stretch;
+  color: ${(props) => (props.active ? "var(--teal)" : "var(--icon-color)")};
+  stroke: ${(props) => (props.active ? "var(--teal)" : "var(--icon-color)")};
+  transition: color 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    color: var(--teal);
+    stroke: var(--teal);
+  }
+  @media (min-width: 1200px) {
+    line-height: 1.6;
+    padding: 0 0 0.625rem 0.625rem;
+    gap: 0.5rem;
+    svg {
+      width: 40px;
+      height: 40px;
+    }
+  }
+`;
+
+const StyledNavButton = styled.button`
+  all: unset;
+`;
 
 const StyledMenu = styled(Menu)`
   .bm-menu {
@@ -48,22 +102,15 @@ const StyledMenu = styled(Menu)`
   }
 
   .bm-item-list {
-    color: var(--text-color);
     padding: 0.8rem;
   }
 
   .bm-item {
-    display: block;
-    text-decoration: none;
     margin: 0 0 10px 10px;
     font-size: 1.2rem;
-    transition: color 0.2s;
-    color: var(--text-color);
-    &:hover {
-      color: var(--teal);
-    }
+
     @media (min-width: 1200px) {
-      font-size: 1.5rem;
+      font-size: 2rem;
     }
   }
 `;
