@@ -57,7 +57,7 @@ export default function HamburgerMenu({
         </StyledNavIcon>
       </StyledNavButton>
       <StyledLink href="/favorites">
-        <StyledNavIcon active={router.pathname === "/favorites"}>
+        <StyledNavIcon $isActive={router.pathname === "/favorites"}>
           <Icon name="navHeart" />
           <span className="bm-item" onClick={() => setMenuOpen(false)}>
             Favorites
