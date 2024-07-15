@@ -225,7 +225,7 @@ const StyledFieldset = styled.fieldset`
   font-family: var(--font-h1);
   border-radius: var(--border-radius);
   border: 1px solid var(--dark-gray);
-  margin-top: .9375rem;
+  margin-top: 0.9375rem;
   background: var(--background-color);
 `;
 
