@@ -29,7 +29,7 @@ export default function Header({ getRandomActivity }) {
           />
         )}
       </StyledDiv>
-      <Overlay isActive={menuOpen} onClick={() => setMenuOpen(false)} />
+      <Overlay $isActive={menuOpen} onClick={() => setMenuOpen(false)} />
     </StyledHeader>
   );
 }
