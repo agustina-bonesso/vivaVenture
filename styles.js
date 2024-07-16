@@ -20,6 +20,11 @@ export default createGlobalStyle`
     padding: 6.25rem .625rem .625rem ;
     max-width: 35rem;
     margin: 0 auto;
+
+    @media (max-width: 768px) {
+      margin: 0 auto 3.75rem auto;
+
+  }
   }
 
   h1{
