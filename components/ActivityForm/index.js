@@ -5,7 +5,6 @@ import ImageUploading from "react-images-uploading";
 import { useState } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/Icon";
-import StyledImageComponent from "../StyledImageComponent";
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
@@ -175,41 +174,45 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             isDragging,
             dragProps,
           }) => (
-            <div className="upload__image-wrapper">
-              <StyledButton
-                type="button"
-                style={isDragging ? { color: "red" } : undefined}
-                onClick={onImageUpload}
-                {...dragProps}
-              >
-                Bilder hochladen oder hierher ziehen
-              </StyledButton>
-              <StyledButton type="button" onClick={onImageRemoveAll}>
-                Alle Bilder entfernen
-              </StyledButton>
+            <>
+              <StyledWrapDiv>
+                <StyledButton
+                  type="button"
+                  $variant="imageSelectOrDelete"
+                  style={isDragging ? { color: "red" } : undefined}
+                  onClick={onImageUpload}
+                  {...dragProps}
+                >
+                  Choose Images
+                </StyledButton>
+                <StyledButton
+                  type="button"
+                  $variant="imageSelectOrDelete"
+                  onClick={onImageRemoveAll}
+                >
+                  Remove all images
+                </StyledButton>
+              </StyledWrapDiv>
               <StyledWrapDiv>
                 {imageList.map((image, index) => (
-                  <div key={index}>
-                    <ImageContainer>
-                      <StyledImage
-                        src={image.data_url}
-                        alt={`picture ${index}`}
-                        height={200}
-                        width={200}
-                      />
-                      <StyledButton
-                        title="Remove"
-                        type="button"
-                        $variant="delete"
-                        onClick={() => onImageRemove(index)}
-                      >
-                        <Icon name="delete" />
-                      </StyledButton>
-                    </ImageContainer>
-                  </div>
+                  <ImageContainer key={index}>
+                    <Image
+                      src={image.data_url}
+                      alt={`picture ${index}`}
+                      height={200}
+                      width={200}
+                    />
+                    <TransparentDeleteButton
+                      title="Remove"
+                      type="button"
+                      onClick={() => onImageRemove(index)}
+                    >
+                      <Icon name="delete" />
+                    </TransparentDeleteButton>
+                  </ImageContainer>
                 ))}
               </StyledWrapDiv>
-            </div>
+            </>
           )}
         </ImageUploading>
          <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
@@ -217,25 +220,6 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     </>
   );
 }
-const ImageContainer = styled.div`
-  position: relative;
-  width: 200px;
-  height: 200px;
-`;
-
-const StyledImage = styled.img`
-  width: 100%;
-  height: 100%;
-  display: block;
-`;
-
-const StyledWrapDiv = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, auto);
-  gap: 10px;
-  justify-items: center;
-`;
 
 const StyledForm = styled.form`
   display: flex;
@@ -317,4 +301,32 @@ const StyledCheckbox = styled.input.attrs({ type: "checkbox" })`
     color: white;
     font-size: 16px;
   }
+`;
+
+const StyledWrapDiv = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(auto, auto);
+  gap: 10px;
+  justify-items: space-between;
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  width: 200px;
+  height: 200px;
+`;
+
+const TransparentDeleteButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgb(255 255 255 / 50%);
+  padding: 0.3125rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 1;
+  cursor: pointer;
 `;
