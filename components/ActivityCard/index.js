@@ -9,9 +9,7 @@ export default function ActivityCard({
   onToggleFavorite,
   isFavorite,
 }) {
-  console.log(activity.images);
-  const imagessrc = activity.images[0];
-  console.log(imagessrc);
+  const imagessrc = activity.images[0].data_url;
   return (
     <StyledArticle>
       <StyledLink href={`/${activity.id}`}>

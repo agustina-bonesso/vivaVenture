@@ -16,10 +16,7 @@ export default function ActivityDetails({
   onToggleFavorite,
 }) {
   const router = useRouter();
-  console.log(activity.images);
-  const imagesrc = activity.images[0];
-  console.log(imagesrc);
-
+  const imagesrc = activity.images[0].data_url;
   return (
     <StyledArticle>
       <ImageContainer>

@@ -18,7 +18,6 @@ export default async function handler(request, response) {
     response.status(400).json({ message: "Method not allowed" });
     return;
   }
-
   const form = formidable({ multiples: true });
   const [fields, files] = await form.parse(request);
   const fileUploadPromises = Object.values(files)
@@ -27,13 +26,11 @@ export default async function handler(request, response) {
       const { filepath, newFilename } = file;
       return cloudinary.v2.uploader.upload(filepath, {
         public_id: newFilename,
-        folder: "nf",
+        folder: "vivaVenture",
       });
     });
 
   const results = await Promise.all(fileUploadPromises);
-
   const modifiedResults = results.map((image) => image.secure_url);
-
   response.status(200).json(modifiedResults);
 }

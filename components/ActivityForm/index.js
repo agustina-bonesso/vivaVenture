@@ -3,11 +3,13 @@ import { StyledButton } from "@/components/StyledButton";
 import { useRouter } from "next/router";
 import ImageUploading from "react-images-uploading";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
-  const [images, setImages] = useState([]);
-  const maxNumber = 20;
+  const defaultImages = initialData ? initialData.images : [];
+  const [images, setImages] = useState(defaultImages);
+  const maxNumberOfImages = 20;
 
   const onChange = (imageList, addUpdateIndex) => {
     console.log(imageList, addUpdateIndex);
@@ -153,24 +155,14 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           placeholder="add description"
           defaultValue={initialData?.description}
         ></StyledTextarea>
-        {/* <StyledLabel htmlFor="image">Image</StyledLabel>
-        <StyledInput
-          id="image"
-          name="image"
-          type="text"
-          placeholder="https://example.com/image.jpg"
-          defaultValue={
-            isEditMode ? initialData?.image : "/images/default-image.jpg"
-          }
-        /> */}
         <ImageUploading
           multiple
           value={images}
           onChange={onChange}
-          maxNumber={maxNumber}
+          maxNumber={maxNumberOfImages}
           dataURLKey="data_url"
           acceptType={["jpg", "png", "jpeg"]}
-          maxFileSize={5242880} // 5MB
+          maxFileSize={5242880}
         >
           {({
             imageList,
@@ -181,27 +173,40 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             isDragging,
             dragProps,
           }) => (
-            // Schreiben Sie hier Ihren eigenen Layout und verwenden Sie die zugehörigen Methoden in den gewünschten Bereichen
             <div className="upload__image-wrapper">
-              <button
+              <StyledButton
+                type="button"
                 style={isDragging ? { color: "red" } : undefined}
                 onClick={onImageUpload}
                 {...dragProps}
               >
                 Bilder hochladen oder hierher ziehen
-              </button>
+              </StyledButton>
               &nbsp;
-              <button onClick={onImageRemoveAll}>Alle Bilder entfernen</button>
+              <StyledButton type="button" onClick={onImageRemoveAll}>
+                Alle Bilder entfernen
+              </StyledButton>
               {imageList.map((image, index) => (
                 <div key={index} className="image-item">
-                  <img src={image.data_url} alt="" width="200" />
+                  <Image
+                    src={image.data_url}
+                    alt={`picture ${index}`}
+                    height={200}
+                    width={200}
+                  />
                   <div className="image-item__btn-wrapper">
-                    <button onClick={() => onImageUpdate(index)}>
+                    <StyledButton
+                      type="button"
+                      onClick={() => onImageUpdate(index)}
+                    >
                       Aktualisieren
-                    </button>
-                    <button onClick={() => onImageRemove(index)}>
+                    </StyledButton>
+                    <StyledButton
+                      type="button"
+                      onClick={() => onImageRemove(index)}
+                    >
                       Entfernen
-                    </button>
+                    </StyledButton>
                   </div>
                 </div>
               ))}
@@ -295,6 +300,3 @@ const StyledCheckbox = styled.input.attrs({ type: "checkbox" })`
     font-size: 16px;
   }
 `;
-const StyledFileInput = styled(StyledInput).attrs({
-  type: "file",
-})``;
