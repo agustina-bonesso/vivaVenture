@@ -186,30 +186,32 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
               <StyledButton type="button" onClick={onImageRemoveAll}>
                 Alle Bilder entfernen
               </StyledButton>
-              {imageList.map((image, index) => (
-                <div key={index} className="image-item">
-                  <Image
-                    src={image.data_url}
-                    alt={`picture ${index}`}
-                    height={200}
-                    width={200}
-                  />
-                  <div className="image-item__btn-wrapper">
-                    <StyledButton
-                      type="button"
-                      onClick={() => onImageUpdate(index)}
-                    >
-                      Aktualisieren
-                    </StyledButton>
-                    <StyledButton
-                      type="button"
-                      onClick={() => onImageRemove(index)}
-                    >
-                      Entfernen
-                    </StyledButton>
+              <StyledWrapDiv>
+                {imageList.map((image, index) => (
+                  <div key={index} className="image-item">
+                    <Image
+                      src={image.data_url}
+                      alt={`picture ${index}`}
+                      height={200}
+                      width={200}
+                    />
+                    <div className="image-item__btn-wrapper">
+                      <StyledButton
+                        type="button"
+                        onClick={() => onImageUpdate(index)}
+                      >
+                        Aktualisieren
+                      </StyledButton>
+                      <StyledButton
+                        type="button"
+                        onClick={() => onImageRemove(index)}
+                      >
+                        Entfernen
+                      </StyledButton>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </StyledWrapDiv>
             </div>
           )}
         </ImageUploading>
@@ -218,6 +220,11 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     </>
   );
 }
+
+const StyledWrapDiv = styled.div`
+  display: grid;
+  grid-template-columns: 2fr;
+`;
 
 const StyledForm = styled.form`
   display: flex;

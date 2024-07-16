@@ -31,6 +31,8 @@ export default async function handler(request, response) {
     });
 
   const results = await Promise.all(fileUploadPromises);
-  const modifiedResults = results.map((image) => image.secure_url);
+  const modifiedResults = results.map((image) => {
+    return { data_url: image.secure_url };
+  });
   response.status(200).json(modifiedResults);
 }
