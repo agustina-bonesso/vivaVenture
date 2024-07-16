@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import ActivityCard from "@/components/ActivityCard";
+import { StyledList } from "@/styles";
 
 export default function Favorites({
   activityData,
@@ -30,10 +30,4 @@ export default function Favorites({
   );
 }
 
-const StyledList = styled.ul`
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0;
-`;
+

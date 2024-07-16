@@ -8,13 +8,13 @@ export default function NavBar({ getRandomActivity }) {
   return (
     <StyledFooter>
       <StyledLink href="/">
-        <StyledNavIcon active={router.pathname === "/"}>
+        <StyledNavIcon $isActive={router.pathname === "/"}>
           <Icon name="home" />
           <StyledSubline>Home</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
       <StyledLink href="/createActivity">
-        <StyledNavIcon active={router.pathname === "/createActivity"}>
+        <StyledNavIcon $isActive={router.pathname === "/createActivity"}>
           <Icon name="add" color="black" fillColor="transparent" />
           <StyledSubline>Add</StyledSubline>
         </StyledNavIcon>
@@ -26,14 +26,14 @@ export default function NavBar({ getRandomActivity }) {
           router.push("/spotlight");
         }}
       >
-        <StyledNavIcon active={router.pathname === "/spotlight"}>
+        <StyledNavIcon $isActive={router.pathname === "/spotlight"}>
           <Icon name="random" />
           <StyledSubline>Random</StyledSubline>
         </StyledNavIcon>
       </StyledNavButton>
 
       <StyledLink href="/favorites">
-        <StyledNavIcon active={router.pathname === "/favorites"}>
+        <StyledNavIcon $isActive={router.pathname === "/favorites"}>
           <Icon name="navHeart" />
           <StyledSubline>Favorites</StyledSubline>
         </StyledNavIcon>
@@ -51,8 +51,8 @@ const StyledNavIcon = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${(props) => (props.active ? "var(--teal)" : "var(--icon-color)")};
-  stroke: ${(props) => (props.active ? "var(--teal)" : "var(--icon-color)")};
+  color: ${(props) => (props.$isActive ? "var(--teal)" : "var(--icon-color)")};
+  stroke: ${(props) => (props.$isActive ? "var(--teal)" : "var(--icon-color)")};
   &:hover {
     cursor: pointer;
     transform: scale(1.25);
@@ -75,7 +75,7 @@ const StyledFooter = styled.footer`
   box-shadow: var(--box-shadow);
 
   @media (min-width: 768px) {
-    justify-content: space-evenly;
+    display: none;
   }
 `;
 

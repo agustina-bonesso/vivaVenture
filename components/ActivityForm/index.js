@@ -54,63 +54,65 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           defaultValue={initialData?.country}
           required
         />
-        <StyledLabel htmlFor="category">Category</StyledLabel>
-        <StyledCheckboxContainer>
-          <label>
-            <StyledCheckbox
-              type="checkbox"
-              id="outdoor"
-              name="category"
-              value="Outdoor"
-              defaultChecked={initialData?.category.includes("Outdoor")}
-            />
-            Outdoor
-          </label>
+        <StyledFieldset>
+          <StyledLegend>Please select your Categories</StyledLegend>
+          <StyledCheckboxContainer>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="outdoor"
+                name="category"
+                value="Outdoor"
+                defaultChecked={initialData?.category.includes("Outdoor")}
+              />
+              Outdoor
+            </label>
 
-          <label>
-            <StyledCheckbox
-              type="checkbox"
-              id="water"
-              name="category"
-              value="Water"
-              defaultChecked={initialData?.category.includes("Water")}
-            />
-            Water
-          </label>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="water"
+                name="category"
+                value="Water"
+                defaultChecked={initialData?.category.includes("Water")}
+              />
+              Water
+            </label>
 
-          <label>
-            <StyledCheckbox
-              type="checkbox"
-              id="sport"
-              name="category"
-              value="Sport"
-              defaultChecked={initialData?.category.includes("Sport")}
-            />
-            Sport
-          </label>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="sport"
+                name="category"
+                value="Sport"
+                defaultChecked={initialData?.category.includes("Sport")}
+              />
+              Sport
+            </label>
 
-          <label>
-            <StyledCheckbox
-              type="checkbox"
-              id="running"
-              name="category"
-              value="Running"
-              defaultChecked={initialData?.category.includes("Running")}
-            />
-            Running
-          </label>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="running"
+                name="category"
+                value="Running"
+                defaultChecked={initialData?.category.includes("Running")}
+              />
+              Running
+            </label>
 
-          <label>
-            <StyledCheckbox
-              type="checkbox"
-              id="cycling"
-              name="category"
-              value="Cycling"
-              defaultChecked={initialData?.category.includes("Cycling")}
-            />
-            Cycling
-          </label>
-        </StyledCheckboxContainer>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="cycling"
+                name="category"
+                value="Cycling"
+                defaultChecked={initialData?.category.includes("Cycling")}
+              />
+              Cycling
+            </label>
+          </StyledCheckboxContainer>
+        </StyledFieldset>
         <StyledLabel htmlFor="description">Description</StyledLabel>
         <StyledTextarea
           name="description"
@@ -179,7 +181,7 @@ const StyledCheckboxContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 
   label {
     display: flex;
@@ -216,4 +218,17 @@ const StyledCheckbox = styled.input.attrs({ type: "checkbox" })`
     color: white;
     font-size: 16px;
   }
+`;
+
+const StyledFieldset = styled.fieldset`
+  font-size: 1.125rem;
+  font-family: var(--font-h1);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--dark-gray);
+  margin-top: 0.9375rem;
+  background: var(--background-color);
+`;
+
+const StyledLegend = styled.legend`
+  text-align: center;
 `;
