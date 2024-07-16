@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import ImageUploading from "react-images-uploading";
 import { useState } from "react";
 import Image from "next/image";
+import { Icon } from "@/components/Icon";
+import StyledImageComponent from "../StyledImageComponent";
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
@@ -182,33 +184,28 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
               >
                 Bilder hochladen oder hierher ziehen
               </StyledButton>
-              &nbsp;
               <StyledButton type="button" onClick={onImageRemoveAll}>
                 Alle Bilder entfernen
               </StyledButton>
               <StyledWrapDiv>
                 {imageList.map((image, index) => (
-                  <div key={index} className="image-item">
-                    <Image
-                      src={image.data_url}
-                      alt={`picture ${index}`}
-                      height={200}
-                      width={200}
-                    />
-                    <div className="image-item__btn-wrapper">
+                  <div key={index}>
+                    <ImageContainer>
+                      <StyledImage
+                        src={image.data_url}
+                        alt={`picture ${index}`}
+                        height={200}
+                        width={200}
+                      />
                       <StyledButton
+                        title="Remove"
                         type="button"
-                        onClick={() => onImageUpdate(index)}
-                      >
-                        Aktualisieren
-                      </StyledButton>
-                      <StyledButton
-                        type="button"
+                        $variant="delete"
                         onClick={() => onImageRemove(index)}
                       >
-                        Entfernen
+                        <Icon name="delete" />
                       </StyledButton>
-                    </div>
+                    </ImageContainer>
                   </div>
                 ))}
               </StyledWrapDiv>
@@ -220,10 +217,24 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     </>
   );
 }
+const ImageContainer = styled.div`
+  position: relative;
+  width: 200px;
+  height: 200px;
+`;
+
+const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
+  display: block;
+`;
 
 const StyledWrapDiv = styled.div`
   display: grid;
-  grid-template-columns: 2fr;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 10px;
+  justify-items: center;
 `;
 
 const StyledForm = styled.form`
