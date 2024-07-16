@@ -1,14 +1,38 @@
 import ActivityCard from "@/components/ActivityCard";
+import SearchBar from "@/components/SearchBar";
 import { StyledList } from "@/styles";
+import { useState } from "react";
 
 export default function HomePage({
   activityData,
   onToggleFavorite,
   favoriteActivitiesList,
 }) {
+
+  const [searchTerm,setSearchTerm] = useState("");
+  const [results,setResults] = useState(activityData);
+
+  function handleSearchBar(event){
+    setSearchTerm(event.target.value)
+    const filteredData = activityData.filter((activity) => {
+      return activity.title.toLowerCase().includes(searchTerm.toLowerCase());
+    });
+
+    setResults(filteredData);
+    if (results ==="") {
+      setResults(activityData);
+
+    }
+    console.log("searchTerm:", searchTerm)
+    console.log("results: ",results);
+  }
+
+  
   return (
+    <>
+    <SearchBar onChange={handleSearchBar}/>
     <StyledList>
-      {activityData.map((activity) => {
+      {results.map((activity) => {
         return (
           <li key={activity.id}>
             <ActivityCard
@@ -24,5 +48,7 @@ export default function HomePage({
         );
       })}
     </StyledList>
+    </>
   );
+  
 }
