@@ -62,6 +62,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   }
 
   return (
+<<<<<<< Updated upstream
     <>
       <StyledForm onSubmit={handleSubmit}>
         <StyledLabel htmlFor="title">Activity</StyledLabel>
@@ -220,6 +221,159 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
          <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>
+=======
+    <StyledForm onSubmit={handleSubmit}>
+      <StyledLabel htmlFor="title">Activity</StyledLabel>
+      <StyledInput
+        id="title"
+        name="title"
+        type="text"
+        placeholder="add activity-title"
+        defaultValue={initialData?.title}
+        pattern="^\s*[A-Za-z0-9*][A-Za-z0-9\.\s]{1,34}[A-Za-z0-9\.]$"
+        required
+      />
+      <StyledLabel htmlFor="area">Area</StyledLabel>
+      <StyledInput
+        id="area"
+        name="area"
+        type="text"
+        placeholder="add area"
+        defaultValue={initialData?.area}
+        required
+      />
+      <StyledLabel htmlFor="country">Country</StyledLabel>
+      <StyledInput
+        id="country"
+        name="country"
+        type="text"
+        placeholder="add country"
+        defaultValue={initialData?.country}
+        required
+      />
+      <StyledLabel htmlFor="category">Category</StyledLabel>
+      <StyledCheckboxContainer>
+        <label>
+          <StyledCheckbox
+            type="checkbox"
+            id="outdoor"
+            name="category"
+            value="Outdoor"
+            defaultChecked={initialData?.category.includes("Outdoor")}
+          />
+          Outdoor
+        </label>
+        <label>
+          <StyledCheckbox
+            type="checkbox"
+            id="water"
+            name="category"
+            value="Water"
+            defaultChecked={initialData?.category.includes("Water")}
+          />
+          Water
+        </label>
+        <label>
+          <StyledCheckbox
+            type="checkbox"
+            id="sport"
+            name="category"
+            value="Sport"
+            defaultChecked={initialData?.category.includes("Sport")}
+          />
+          Sport
+        </label>
+        <label>
+          <StyledCheckbox
+            type="checkbox"
+            id="running"
+            name="category"
+            value="Running"
+            defaultChecked={initialData?.category.includes("Running")}
+          />
+          Running
+        </label>
+        <label>
+          <StyledCheckbox
+            type="checkbox"
+            id="cycling"
+            name="category"
+            value="Cycling"
+            defaultChecked={initialData?.category.includes("Cycling")}
+          />
+          Cycling
+        </label>
+      </StyledCheckboxContainer>
+      <StyledLabel htmlFor="description">Description</StyledLabel>
+      <StyledTextarea
+        name="description"
+        id="description"
+        cols="30"
+        rows="10"
+        placeholder="add description"
+        defaultValue={initialData?.description}
+      ></StyledTextarea>
+      <ImageUploading
+        multiple
+        value={images}
+        onChange={onChange}
+        maxNumber={maxNumberOfImages}
+        dataURLKey="data_url"
+        acceptType={["jpg", "png", "jpeg"]}
+        maxFileSize={5242880}
+      >
+        {({
+          imageList,
+          onImageUpload,
+          onImageRemoveAll,
+          onImageUpdate,
+          onImageRemove,
+          isDragging,
+          dragProps,
+        }) => (
+          <div className="upload__image-wrapper">
+            <StyledButton
+              type="button"
+              style={isDragging ? { color: "red" } : undefined}
+              onClick={onImageUpload}
+              {...dragProps}
+            >
+              Bilder hochladen oder hierher ziehen
+            </StyledButton>
+            &nbsp;
+            <StyledButton type="button" onClick={onImageRemoveAll}>
+              Alle Bilder entfernen
+            </StyledButton>
+            {imageList.map((image, index) => (
+              <div key={index} className="image-item">
+                <Image
+                  src={image.data_url}
+                  alt={`picture ${index}`}
+                  height={200}
+                  width={200}
+                />
+                <div className="image-item__btn-wrapper">
+                  <StyledButton
+                    type="button"
+                    onClick={() => onImageUpdate(index)}
+                  >
+                    Aktualisieren
+                  </StyledButton>
+                  <StyledButton
+                    type="button"
+                    onClick={() => onImageRemove(index)}
+                  >
+                    Entfernen
+                  </StyledButton>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </ImageUploading>
+       <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
+    </StyledForm>
+>>>>>>> Stashed changes
   );
 }
 
