@@ -10,12 +10,10 @@ export default function ActivityCard({
   onToggleFavorite,
   isFavorite,
 }) {
-  const images = activity.images;
-
   return (
     <StyledArticle>
       <ImageContainer>
-        <StyledImageComponent images={images} alt={activity.title} />
+        <StyledImageComponent images={activity.images} alt={activity.title} />
         <StyledFavoriteButton
           onClick={(event) => {
             event.preventDefault();

@@ -4,9 +4,18 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import styled from "styled-components";
 import Image from "next/image";
 
+const defaultImage = {
+  data_url:
+    "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+};
+
 export default function StyledImageComponent({ images, alt }) {
   if (!images || images.length === 0) {
-    return <p>No Picture available</p>;
+    return (
+      <ImageWrapper>
+        <StyledImage src={defaultImage.data_url} alt={alt} fill />
+      </ImageWrapper>
+    );
   }
 
   if (images.length > 1) {

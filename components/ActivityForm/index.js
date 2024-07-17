@@ -19,7 +19,11 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
 
   const uploadImages = async (images) => {
     const formData = new FormData();
+    const imageUrls = [];
     images.forEach((image) => {
+      if (!image.file) {
+        imageUrls.push({ data_url: image.data_url });
+      }
       formData.append("images", image.file);
     });
 
@@ -33,8 +37,8 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
         throw new Error("Error uploading images");
       }
 
-      const imageUrls = await response.json();
-      console.log("Uploaded image URLs:", imageUrls);
+      const uploadedImageUrls = await response.json();
+      imageUrls.push(...uploadedImageUrls);
       return imageUrls;
     } catch (error) {
       console.error("Error uploading images:", error);
