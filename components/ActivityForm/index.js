@@ -34,6 +34,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       }
 
       const imageUrls = await response.json();
+      console.log("Uploaded image URLs:", imageUrls);
       return imageUrls;
     } catch (error) {
       console.error("Error uploading images:", error);
@@ -55,6 +56,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       alert("Please select at least one category.");
       return false;
     }
+    console.log("New Activity:", newActivity);
     onSubmit(newActivity);
     router.push("/");
   }

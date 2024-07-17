@@ -1,3 +1,4 @@
+import React from "react";
 import StyledImageComponent from "@/components/StyledImageComponent";
 import { StyledLink } from "@/components/StyledLinks";
 import styled from "styled-components";
@@ -10,25 +11,25 @@ export default function ActivityCard({
   isFavorite,
 }) {
   const images = activity.images;
-  const imagessrc = images[0].data_url;
+
   return (
     <StyledArticle>
+      <ImageContainer>
+        <StyledImageComponent images={images} alt={activity.title} />
+        <StyledFavoriteButton
+          onClick={(event) => {
+            event.preventDefault();
+            onToggleFavorite(activity.id);
+          }}
+        >
+          <Icon
+            name="heart"
+            fillColor={isFavorite ? "red" : "white"}
+            color="black"
+          />
+        </StyledFavoriteButton>
+      </ImageContainer>
       <StyledLink href={`/${activity.id}`}>
-        <ImageContainer>
-          <StyledImageComponent src={imagessrc} alt={activity.title} />
-          <StyledFavoriteButton
-            onClick={(event) => {
-              event.preventDefault();
-              onToggleFavorite(activity.id);
-            }}
-          >
-            <Icon
-              name="heart"
-              fillColor={isFavorite ? "red" : "white"}
-              color="black"
-            />
-          </StyledFavoriteButton>
-        </ImageContainer>
         <CardContent>
           <Title>{activity.title}</Title>
           <Info>{`${activity.area}, ${activity.country}`}</Info>

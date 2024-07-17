@@ -1,13 +1,14 @@
+import React from "react";
+import { useRouter } from "next/router";
 import StyledImageComponent from "@/components/StyledImageComponent";
 import { Icon } from "@/components/Icon";
-import styled from "styled-components";
 import {
   StyledButton,
   TransparentBackButton,
   TransparentFavoriteButton,
 } from "@/components/StyledButton";
 import { StyledEditLink } from "@/components/StyledLinks";
-import { useRouter } from "next/router";
+import styled from "styled-components";
 
 export default function ActivityDetails({
   activity,
@@ -16,7 +17,8 @@ export default function ActivityDetails({
   onToggleFavorite,
 }) {
   const router = useRouter();
-  const imagesrc = activity.images[0].data_url;
+  const images = activity.images;
+
   return (
     <StyledArticle>
       <ImageContainer>
@@ -37,13 +39,7 @@ export default function ActivityDetails({
             color="black"
           />
         </TransparentFavoriteButton>
-        <StyledImageComponent
-          src={imagesrc}
-          alt={activity.title}
-          isFavorite={isFavorite}
-          onToggleFavorite={onToggleFavorite}
-          id={activity.id}
-        />
+        <StyledImageComponent images={images} alt={activity.title} />
       </ImageContainer>
       <Content>
         <StyledDiv>
