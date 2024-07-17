@@ -8,47 +8,44 @@ export default function HomePage({
   onToggleFavorite,
   favoriteActivitiesList,
 }) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [results, setResults] = useState(activityData);
 
-  const [searchTerm,setSearchTerm] = useState("");
-  const [results,setResults] = useState(activityData);
-
-  function handleSearchBar(event){
-    setSearchTerm(event.target.value)
+  function handleSearchBar(event) {
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
     const filteredData = activityData.filter((activity) => {
-      return activity.title.toLowerCase().includes(searchTerm.toLowerCase());
+      return activity.title.toLowerCase().includes(searchTerm);
     });
 
     setResults(filteredData);
-    if (results ==="") {
+    if (results === "") {
       setResults(activityData);
-
     }
-    console.log("searchTerm:", searchTerm)
-    console.log("results: ",results);
+    console.log("searchTerm:", searchTerm);
+    console.log("results: ", results);
   }
 
-  
   return (
     <>
-    <SearchBar onChange={handleSearchBar}/>
-    <StyledList>
-      {results.map((activity) => {
-        return (
-          <li key={activity.id}>
-            <ActivityCard
-              activity={activity}
-              onToggleFavorite={onToggleFavorite}
-              isFavorite={
-                favoriteActivitiesList.find(
-                  (favActivity) => favActivity.id === activity.id
-                )?.isFavorite
-              }
-            />
-          </li>
-        );
-      })}
-    </StyledList>
+      <SearchBar onChange={handleSearchBar} />
+      <StyledList>
+        {results.map((activity) => {
+          return (
+            <li key={activity.id}>
+              <ActivityCard
+                activity={activity}
+                onToggleFavorite={onToggleFavorite}
+                isFavorite={
+                  favoriteActivitiesList.find(
+                    (favActivity) => favActivity.id === activity.id
+                  )?.isFavorite
+                }
+              />
+            </li>
+          );
+        })}
+      </StyledList>
     </>
   );
-  
 }
