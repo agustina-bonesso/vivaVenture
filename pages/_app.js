@@ -21,7 +21,6 @@ export default function App({ Component, pageProps }) {
   );
 
   function handleAddActivity(newActivity) {
-    console.log(newActivity);
     const newActivityWithId = { id: uuid(), ...newActivity };
     setActivityData([newActivityWithId, ...activityData]);
   }

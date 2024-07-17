@@ -12,8 +12,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const [images, setImages] = useState(defaultImages);
   const maxNumberOfImages = 20;
 
-  const onChange = (imageList, addUpdateIndex) => {
-    console.log(imageList, addUpdateIndex);
+  const onChange = (imageList) => {
     setImages(imageList);
   };
 
@@ -60,7 +59,6 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       alert("Please select at least one category.");
       return false;
     }
-    console.log("New Activity:", newActivity);
     onSubmit(newActivity);
     router.push("/");
   }
@@ -175,7 +173,6 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             imageList,
             onImageUpload,
             onImageRemoveAll,
-            onImageUpdate,
             onImageRemove,
             isDragging,
             dragProps,
