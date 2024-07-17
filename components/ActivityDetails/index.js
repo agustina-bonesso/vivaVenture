@@ -86,7 +86,7 @@ const StyledArticle = styled.article`
 
 const ImageContainer = styled.div`
   position: relative;
-  height: 12.5rem;
+  max-height: 30rem;
 `;
 
 const ActionIcons = styled.div`
@@ -100,7 +100,6 @@ const Content = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 1.75rem;
   color: var(--text-color);
 `;
 
@@ -111,14 +110,12 @@ const StyledDiv = styled.div`
 `;
 
 const Info = styled.p`
-  font-size: 1rem;
   color: var(--brown);
   margin-top: 0.3125rem;
 `;
 
 const Description = styled.p`
   margin-top: 0.625rem;
-  font-size: 1rem;
   line-height: 1.6;
   color: var(--teal);
 `;
