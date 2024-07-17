@@ -308,7 +308,7 @@ const StyledWrapDiv = styled.div`
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(auto, auto);
   gap: 10px;
-  justify-items: space-between;
+  justify-items: center;
 `;
 
 const ImageContainer = styled.div`
