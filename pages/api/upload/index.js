@@ -2,9 +2,9 @@ import formidable from "formidable";
 import cloudinary from "cloudinary";
 
 cloudinary.config({
-  cloud_name: "diyryok0a",
-  api_key: "394396372342625",
-  api_secret: "F3ZQoTGUnCu7wpznmS_UvH8OY3o",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
 });
 
 export const config = {
