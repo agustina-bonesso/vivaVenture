@@ -15,8 +15,7 @@ export default function ActivityCard({
       <ImageContainer>
         <StyledImageComponent images={activity.images} alt={activity.title} />
         <StyledFavoriteButton
-          onClick={(event) => {
-            event.preventDefault();
+          onClick={() => {
             onToggleFavorite(activity.id);
           }}
         >

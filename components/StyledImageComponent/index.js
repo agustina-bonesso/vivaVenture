@@ -33,7 +33,7 @@ export default function StyledImageComponent({ images, alt }) {
   } else {
     return (
       <ImageWrapper>
-        <StyledImage src={images[0].data_url} alt={alt} layout="fill" />
+        <StyledImage src={images[0].data_url} alt={alt} fill />
       </ImageWrapper>
     );
   }
