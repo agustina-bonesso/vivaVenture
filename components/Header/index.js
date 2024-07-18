@@ -3,9 +3,10 @@ import styled from "styled-components";
 import Link from "next/link";
 import Hamburger from "hamburger-react";
 import { useState } from "react";
-import HamburgerMenu from "../HamburgerMenu";
+import HamburgerMenu from "@/components/HamburgerMenu";
+import SearchBar from "@/components/SearchBar";
 
-export default function Header({ getRandomActivity }) {
+export default function Header({ getRandomActivity, onChange }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -14,11 +15,15 @@ export default function Header({ getRandomActivity }) {
         <Image
           src="/images/logo.svg"
           alt="Logo"
-          width={100}
-          height={70}
+          width={90}
+          height={60}
           priority
         />
       </StyledLink>
+      <SearchBarContainer>
+        <SearchBar onChange={onChange} />
+      </SearchBarContainer>
+
       <StyledDiv>
         <Hamburger toggled={menuOpen} toggle={setMenuOpen} size={30} />
         {menuOpen && (
@@ -33,21 +38,21 @@ export default function Header({ getRandomActivity }) {
     </StyledHeader>
   );
 }
+
 const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   position: fixed;
-  background-color: white;
+  background-color: var(--header-footer-bg);
   top: 0;
   z-index: 20;
-  background-color: var(--header-footer-bg);
   box-shadow: var(--box-shadow);
 `;
 
 const StyledLink = styled(Link)`
-  padding: 0.625rem;
+  padding: 0.2rem;
 `;
 
 const Overlay = styled.div`
@@ -68,5 +73,14 @@ const StyledDiv = styled.div`
 
   @media (min-width: 768px) {
     display: block;
+  }
+`;
+
+const SearchBarContainer = styled.div`
+  margin: 0.6rem;
+  width: 60%;
+
+  @media (min-width: 768px) {
+    width: 50%;
   }
 `;

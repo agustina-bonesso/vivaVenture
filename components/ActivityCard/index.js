@@ -43,7 +43,7 @@ export default function ActivityCard({
 
 const StyledArticle = styled.article`
   max-width: 50rem;
-  margin: 2rem auto;
+  margin: 0.6rem auto;
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
   overflow: hidden;

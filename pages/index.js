@@ -1,34 +1,18 @@
 import ActivityCard from "@/components/ActivityCard";
-import SearchBar from "@/components/SearchBar";
 import { StyledList } from "@/styles";
-import { useState } from "react";
+import styled from "styled-components";
+import CategoryIcons from "@/components/CategoryIcons";
 
 export default function HomePage({
-  activityData,
   onToggleFavorite,
   favoriteActivitiesList,
+  results,
+  onSelect,
+  selectedCategory,
 }) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState(activityData);
-
-  function handleSearchBar(event) {
-    const searchTerm = event.target.value.toLowerCase();
-    setSearchTerm(searchTerm);
-    const filteredData = activityData.filter((activity) => {
-      return activity.title.toLowerCase().includes(searchTerm);
-    });
-
-    setResults(filteredData);
-    if (results === "") {
-      setResults(activityData);
-    }
-    console.log("searchTerm:", searchTerm);
-    console.log("results: ", results);
-  }
-
   return (
     <>
-      <SearchBar onChange={handleSearchBar} />
+      <CategoryIcons onSelect={onSelect} selectedCategory={selectedCategory} />
       <StyledList>
         {results.map((activity) => {
           return (
@@ -49,3 +33,13 @@ export default function HomePage({
     </>
   );
 }
+
+const SearchAndIconsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 600px;
+  margin: 1rem auto;
+`;
