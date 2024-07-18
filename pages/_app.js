@@ -91,7 +91,7 @@ export default function App({ Component, pageProps }) {
     <>
       <GlobalStyle />
       <StyledToastContainer />
-      <Layout getRandomActivity={getRandomActivity}>
+      <Layout getRandomActivity={getRandomActivity} >
         <Component
           {...pageProps}
           randomActivity={randomActivity}

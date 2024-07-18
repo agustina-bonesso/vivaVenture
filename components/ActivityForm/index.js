@@ -1,11 +1,51 @@
 import styled from "styled-components";
 import { StyledButton } from "@/components/StyledButton";
 import { useRouter } from "next/router";
+import ImageUploading from "react-images-uploading";
+import { useState } from "react";
+import Image from "next/image";
+import { Icon } from "@/components/Icon";
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
+  const defaultImages = initialData ? initialData.images : [];
+  const [images, setImages] = useState(defaultImages);
+  const maxNumberOfImages = 20;
 
-  function handleSubmit(event) {
+  const onChange = (imageList) => {
+    setImages(imageList);
+  };
+
+  const uploadImages = async (images) => {
+    const formData = new FormData();
+    const imageUrls = [];
+    images.forEach((image) => {
+      if (!image.file) {
+        imageUrls.push({ data_url: image.data_url });
+      }
+      formData.append("images", image.file);
+    });
+
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Error uploading images");
+      }
+
+      const uploadedImageUrls = await response.json();
+      imageUrls.push(...uploadedImageUrls);
+      return imageUrls;
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      return [];
+    }
+  };
+
+  async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const newActivity = Object.fromEntries(formData);
@@ -14,11 +54,11 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       .replace(/\b\s+\b/g, " ")
       .replace(/(\.)\s+/g, "$1 ");
     newActivity.category = formData.getAll("category");
+    newActivity.images = await uploadImages(images);
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
       return false;
     }
-
     onSubmit(newActivity);
     router.push("/");
   }
@@ -122,17 +162,65 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           placeholder="add description"
           defaultValue={initialData?.description}
         ></StyledTextarea>
-        <StyledLabel htmlFor="image">Image</StyledLabel>
-        <StyledInput
-          id="image"
-          name="image"
-          type="text"
-          placeholder="https://example.com/image.jpg"
-          defaultValue={
-            isEditMode ? initialData?.image : "/images/default-image.jpg"
-          }
-        />
-        <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
+        <ImageUploading
+          multiple
+          value={images}
+          onChange={onChange}
+          maxNumber={maxNumberOfImages}
+          dataURLKey="data_url"
+          acceptType={["jpg", "png", "jpeg"]}
+          maxFileSize={5242880}
+        >
+          {({
+            imageList,
+            onImageUpload,
+            onImageRemoveAll,
+            onImageRemove,
+            isDragging,
+            dragProps,
+          }) => (
+            <>
+              <StyledWrapDiv>
+                <StyledButton
+                  type="button"
+                  $variant="imageSelectOrDelete"
+                  style={isDragging ? { color: "red" } : undefined}
+                  onClick={onImageUpload}
+                  {...dragProps}
+                >
+                  Choose Images
+                </StyledButton>
+                <StyledButton
+                  type="button"
+                  $variant="imageSelectOrDelete"
+                  onClick={onImageRemoveAll}
+                >
+                  Remove all images
+                </StyledButton>
+              </StyledWrapDiv>
+              <StyledWrapDiv>
+                {imageList.map((image, index) => (
+                  <ImageContainer key={index}>
+                    <Image
+                      src={image.data_url}
+                      alt={`picture ${index}`}
+                      height={200}
+                      width={200}
+                    />
+                    <TransparentDeleteButton
+                      title="Remove"
+                      type="button"
+                      onClick={() => onImageRemove(index)}
+                    >
+                      <Icon name="delete" />
+                    </TransparentDeleteButton>
+                  </ImageContainer>
+                ))}
+              </StyledWrapDiv>
+            </>
+          )}
+        </ImageUploading>
+         <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>
   );
@@ -231,4 +319,32 @@ const StyledFieldset = styled.fieldset`
 
 const StyledLegend = styled.legend`
   text-align: center;
+`;
+
+const StyledWrapDiv = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(auto, auto);
+  gap: 10px;
+  justify-items: center;
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  width: 200px;
+  height: 200px;
+`;
+
+const TransparentDeleteButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgb(255 255 255 / 50%);
+  padding: 0.3125rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 1;
+  cursor: pointer;
 `;

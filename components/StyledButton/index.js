@@ -28,6 +28,23 @@ const buttonStyles = css`
         background: var(--button-hover-background);
       }
     `}
+  ${(props) =>
+    props.$variant === "imageSelectOrDelete" &&
+    css`
+      display: flex;
+      justify-content: center;
+      border-radius: 0.6rem;
+      margin: 0;
+      padding: 0.3rem 0.4rem;
+      border: 1px solid grey;
+      box-shadow: var(--box-shadow);
+      background: var(--button-gradient2);
+      color: var(--button-text-color);
+      &:hover {
+        background: var(--button-hover-background);
+        color: var(--text-color);
+      }
+    `}
 `;
 
 export const ModalButton = styled.button`
