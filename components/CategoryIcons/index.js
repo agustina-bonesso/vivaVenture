@@ -39,7 +39,7 @@ const IconContainer = styled.div`
   display: flex;
   position: sticky;
   background: var(--background-color);
-  z-index: 5000;
+  z-index: 10;
   top: 71px;
   gap: 1rem;
   overflow-x: auto;
