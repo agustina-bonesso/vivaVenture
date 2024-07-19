@@ -37,17 +37,25 @@ export default function CategoryIcons({ onSelect, selectedCategory }) {
 
 const IconContainer = styled.div`
   display: flex;
+  position: sticky;
+  background: var(--background-color);
+  z-index: 5000;
+  top: 71px;
   gap: 1rem;
   overflow-x: auto;
-  padding: 0.5rem 0;
-  justify-content: center;
+  padding: 0.5rem 1rem;
+  justify-content: space-between;
+
+  @media (min-width: 1024px) {
+    justify-content: center;
+  }
 `;
 
 const IconWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 50px;
+  min-width: 70px;
   cursor: pointer;
   position: relative;
   color: ${({ isActive }) => (isActive ? "var(--teal)" : "var(--text-color)")};
@@ -57,6 +65,10 @@ const IconWrapper = styled.div`
     .underline {
       transform: scaleX(1);
     }
+  }
+
+  @media (max-width: 1024px) {
+    min-width: 78px;
   }
 `;
 
