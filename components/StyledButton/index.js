@@ -38,10 +38,11 @@ const buttonStyles = css`
       padding: 0.3rem 0.4rem;
       border: 1px solid grey;
       box-shadow: var(--box-shadow);
-      background: var(--button-gradient2);
+      background: var(--background-color);
       color: var(--button-text-color);
       &:hover {
-        background: var(--button-hover-background);
+        background: none;
+        box-shadow: none;
         color: var(--text-color);
       }
     `}

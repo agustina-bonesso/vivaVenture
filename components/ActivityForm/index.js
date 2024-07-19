@@ -241,7 +241,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
                   $variant="imageSelectOrDelete"
                   onClick={onImageRemoveAll}
                 >
-                  Remove all images
+                  Remove all Images
                 </StyledButton>
               </StyledWrapDiv>
               <StyledWrapDiv>
@@ -385,7 +385,7 @@ const TransparentDeleteButton = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
-  background: rgb(255 255 255 / 50%);
+  background: rgb(255 255 255 / 80%);
   padding: 0.3125rem;
   border-radius: 999px;
   display: flex;
