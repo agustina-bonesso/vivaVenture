@@ -21,13 +21,13 @@ export default function CategoryIcons({ onSelect, selectedCategory }) {
         <IconWrapper
           key={index}
           onClick={() => onSelect(category.name)}
-          isActive={selectedCategory === category.name}
+          $isActive={selectedCategory === category.name}
         >
           <Icon name={category.icon} />
           <IconLabel>{category.name}</IconLabel>
           <Underline
             className="underline"
-            isActive={selectedCategory === category.name}
+            $isActive={selectedCategory === category.name}
           />
         </IconWrapper>
       ))}
@@ -51,14 +51,16 @@ const IconContainer = styled.div`
   }
 `;
 
-const IconWrapper = styled.div`
+const IconWrapper = styled.button`
+  all: unset;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 70px;
   cursor: pointer;
   position: relative;
-  color: ${({ isActive }) => (isActive ? "var(--teal)" : "var(--text-color)")};
+  color: ${({ $isActive }) =>
+    $isActive ? "var(--teal)" : "var(--text-color)"};
 
   &:hover {
     color: var(--teal);
@@ -85,7 +87,7 @@ const Underline = styled.div`
   position: absolute;
   bottom: -5px;
   left: 0;
-  transform: ${({ isActive }) => (isActive ? "scaleX(1)" : "scaleX(0)")};
+  transform: ${({ $isActive }) => ($isActive ? "scaleX(1)" : "scaleX(0)")};
   transform-origin: center;
   transition: transform 0.3s ease;
 `;
