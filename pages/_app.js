@@ -6,7 +6,7 @@ import useLocalStorageState from "use-local-storage-state";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledToastContainer } from "@/components/Toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ConfirmModal } from "@/components/ConfirmModal";
 import Layout from "@/components/Layout";
 import Fuse from "fuse.js";
@@ -145,6 +145,12 @@ export default function App({ Component, pageProps }) {
 
     setResults(filteredResults);
   }
+
+  useEffect(() => {
+    if (searchTerm && results.length === 0) {
+      toast.info("No matching results !");
+    }
+  }, [searchTerm, results]);
 
   return (
     <>

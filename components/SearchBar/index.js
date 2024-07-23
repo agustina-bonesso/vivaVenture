@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Icon } from "@/components/Icon";
 
-export default function SearchBar({ onChange }) {
+export default function SearchBar({ onChange, placeholder }) {
   return (
     <SearchBarContainer>
       <IconWrapper>
@@ -10,7 +10,7 @@ export default function SearchBar({ onChange }) {
       <StyledInput
         type="text"
         id="search"
-        placeholder="Search for activities, locations"
+        placeholder={placeholder}
         onChange={onChange}
       />
     </SearchBarContainer>

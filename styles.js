@@ -117,11 +117,10 @@ export const StyledList = styled.ul`
   flex-direction: column;
   gap: 1rem;
   padding: 0;
-  margin: 0 0 5rem 0;
+  margin: 5rem auto 4rem auto;
 
   @media (min-width: 768px) {
     display: grid;
-    margin: 0 auto;
     grid-template-columns: repeat(2, 360px);
     justify-content: center;
     gap: 1rem;
@@ -133,29 +132,21 @@ export const StyledList = styled.ul`
   }
 
   @media (min-width: 1200px) {
-    display: grid;
-    margin: 0 auto;
-    grid-template-columns: repeat(3, 420px);
+    grid-template-columns: repeat(3, 380px);
     gap: 1.25rem;
   }
 
   @media (min-width: 1600px) {
-    display: grid;
-    margin: 0 auto;
-    grid-template-columns: repeat(3, 520px);
+    grid-template-columns: repeat(3, 500px);
     gap: 1.25rem;
   }
 
   @media (min-width: 2000px) {
-    display: grid;
-    margin: 0 auto;
     grid-template-columns: repeat(3, 600px);
     gap: 1.25rem;
   }
 
   @media (min-width: 2500px) {
-    display: grid;
-    margin: 0 auto;
     grid-template-columns: repeat(3, 750px);
     gap: 1.5rem;
   }

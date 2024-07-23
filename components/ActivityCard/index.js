@@ -77,6 +77,9 @@ const CardContent = styled.div`
 
 const Title = styled.h2`
   color: var(--text-color);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const Info = styled.p`

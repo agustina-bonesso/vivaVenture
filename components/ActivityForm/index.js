@@ -313,7 +313,7 @@ const StyledLabel = styled.label`
 
 const StyledCheckboxContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin: 1rem 0;
 
@@ -326,6 +326,10 @@ const StyledCheckboxContainer = styled.div`
 
   input[type="checkbox"] {
     margin-right: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 `;
 

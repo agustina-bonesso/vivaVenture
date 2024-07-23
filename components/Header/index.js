@@ -5,9 +5,14 @@ import Hamburger from "hamburger-react";
 import { useState } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import SearchBar from "@/components/SearchBar";
+import { useRouter } from "next/router";
 
 export default function Header({ getRandomActivity, onChange }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const showSearchBar =
+    router.pathname === "/" || router.pathname === "/favorites";
 
   return (
     <StyledHeader>
@@ -20,9 +25,18 @@ export default function Header({ getRandomActivity, onChange }) {
           priority
         />
       </StyledLink>
-      <SearchBarContainer>
-        <SearchBar onChange={onChange} />
-      </SearchBarContainer>
+      {showSearchBar && (
+        <SearchBarContainer>
+          <SearchBar
+            onChange={onChange}
+            placeholder={
+              router.pathname === "/favorites"
+                ? "Search within favorites"
+                : "Search for activites, locations"
+            }
+          />
+        </SearchBarContainer>
+      )}
 
       <StyledDiv>
         <Hamburger toggled={menuOpen} toggle={setMenuOpen} size={30} />

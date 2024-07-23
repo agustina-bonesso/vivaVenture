@@ -37,10 +37,12 @@ export default function CategoryIcons({ onSelect, selectedCategory }) {
 
 const IconContainer = styled.div`
   display: flex;
-  position: sticky;
+  position: fixed;
+  left: 0;
+  width: 100vw;
   background: var(--background-color);
   z-index: 10;
-  top: 71px;
+  top: 70px;
   gap: 1rem;
   overflow-x: auto;
   padding: 0.5rem 1rem;
