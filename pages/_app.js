@@ -92,6 +92,10 @@ export default function App({ Component, pageProps }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState(activityData);
 
+  useEffect(() => {
+    setResults(activityData);
+  }, [activityData]);
+
   const categoryOptions = {
     keys: ["category"],
     threshold: 0.3,
