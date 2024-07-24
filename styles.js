@@ -17,14 +17,9 @@ export default createGlobalStyle`
   }
 
   main {
-    padding: 6.25rem .625rem .625rem ;
-    max-width: 35rem;
+    padding: 5rem .625rem .625rem ;
+    max-width: 90%;
     margin: 0 auto;
-
-    @media (max-width: 768px) {
-      margin: 0 auto 3.75rem auto;
-
-  }
   }
 
   h1{
@@ -122,26 +117,37 @@ export const StyledList = styled.ul`
   flex-direction: column;
   gap: 1rem;
   padding: 0;
+  margin: 5rem auto 4rem auto;
 
   @media (min-width: 768px) {
     display: grid;
-    margin: 0 auto;
     grid-template-columns: repeat(2, 360px);
     justify-content: center;
-    gap: 0.9375rem;
+    gap: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, 450px);
+    gap: 1.2rem;
   }
 
   @media (min-width: 1200px) {
-    display: grid;
-    margin: 0 auto;
     grid-template-columns: repeat(3, 380px);
     gap: 1.25rem;
   }
 
   @media (min-width: 1600px) {
-    display: grid;
-    margin: 0 auto;
-    grid-template-columns: repeat(3, 520px);
+    grid-template-columns: repeat(3, 500px);
     gap: 1.25rem;
+  }
+
+  @media (min-width: 2000px) {
+    grid-template-columns: repeat(3, 600px);
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 2500px) {
+    grid-template-columns: repeat(3, 750px);
+    gap: 1.5rem;
   }
 `;

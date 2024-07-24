@@ -43,7 +43,7 @@ export default function ActivityCard({
 
 const StyledArticle = styled.article`
   max-width: 50rem;
-  margin: 2rem auto;
+  margin: 0.6rem auto;
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
   overflow: hidden;
@@ -77,6 +77,9 @@ const CardContent = styled.div`
 
 const Title = styled.h2`
   color: var(--text-color);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const Info = styled.p`

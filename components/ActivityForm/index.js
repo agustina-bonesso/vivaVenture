@@ -100,47 +100,13 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             <label>
               <StyledCheckbox
                 type="checkbox"
-                id="outdoor"
+                id="ballSports"
                 name="category"
-                value="Outdoor"
-                defaultChecked={initialData?.category.includes("Outdoor")}
-              />
-              Outdoor
+                value="Ball Sports"
+                defaultChecked={initialData?.category.includes("Ball Sports")}
+              />{" "}
+              Ball Sports{" "}
             </label>
-
-            <label>
-              <StyledCheckbox
-                type="checkbox"
-                id="water"
-                name="category"
-                value="Water"
-                defaultChecked={initialData?.category.includes("Water")}
-              />
-              Water
-            </label>
-
-            <label>
-              <StyledCheckbox
-                type="checkbox"
-                id="sport"
-                name="category"
-                value="Sport"
-                defaultChecked={initialData?.category.includes("Sport")}
-              />
-              Sport
-            </label>
-
-            <label>
-              <StyledCheckbox
-                type="checkbox"
-                id="running"
-                name="category"
-                value="Running"
-                defaultChecked={initialData?.category.includes("Running")}
-              />
-              Running
-            </label>
-
             <label>
               <StyledCheckbox
                 type="checkbox"
@@ -148,8 +114,88 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
                 name="category"
                 value="Cycling"
                 defaultChecked={initialData?.category.includes("Cycling")}
-              />
-              Cycling
+              />{" "}
+              Cycling{" "}
+            </label>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="gymnastics"
+                name="category"
+                value="Gymnastics"
+                defaultChecked={initialData?.category.includes("Gymnastics")}
+              />{" "}
+              Gymnastics{" "}
+            </label>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="hiking"
+                name="category"
+                value="Hiking"
+                defaultChecked={initialData?.category.includes("Hiking")}
+              />{" "}
+              Hiking{" "}
+            </label>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="kayaking"
+                name="category"
+                value="Kayaking"
+                defaultChecked={initialData?.category.includes("Kayaking")}
+              />{" "}
+              Kayaking{" "}
+            </label>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="running"
+                name="category"
+                value="Running"
+                defaultChecked={initialData?.category.includes("Running")}
+              />{" "}
+              Running{" "}
+            </label>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="sailing"
+                name="category"
+                value="Sailing"
+                defaultChecked={initialData?.category.includes("Sailing")}
+              />{" "}
+              Sailing{" "}
+            </label>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="snowSports"
+                name="category"
+                value="Snow Sports"
+                defaultChecked={initialData?.category.includes("Snow Sports")}
+              />{" "}
+              Snow Sports{" "}
+            </label>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="surfing"
+                name="category"
+                value="Surfing"
+                defaultChecked={initialData?.category.includes("Surfing")}
+              />{" "}
+              Surfing{" "}
+            </label>
+            <label>
+              <StyledCheckbox
+                type="checkbox"
+                id="swimming"
+                name="category"
+                value="Swimming"
+                defaultChecked={initialData?.category.includes("Swimming")}
+              />{" "}
+              Swimming{" "}
             </label>
           </StyledCheckboxContainer>
         </StyledFieldset>
@@ -195,7 +241,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
                   $variant="imageSelectOrDelete"
                   onClick={onImageRemoveAll}
                 >
-                  Remove all images
+                  Remove all Images
                 </StyledButton>
               </StyledWrapDiv>
               <StyledWrapDiv>
@@ -267,7 +313,7 @@ const StyledLabel = styled.label`
 
 const StyledCheckboxContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin: 1rem 0;
 
@@ -280,6 +326,10 @@ const StyledCheckboxContainer = styled.div`
 
   input[type="checkbox"] {
     margin-right: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 `;
 
@@ -339,7 +389,7 @@ const TransparentDeleteButton = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
-  background: rgb(255 255 255 / 50%);
+  background: rgb(255 255 255 / 80%);
   padding: 0.3125rem;
   border-radius: 999px;
   display: flex;

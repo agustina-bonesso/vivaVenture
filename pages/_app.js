@@ -6,9 +6,10 @@ import useLocalStorageState from "use-local-storage-state";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledToastContainer } from "@/components/Toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ConfirmModal } from "@/components/ConfirmModal";
 import Layout from "@/components/Layout";
+import Fuse from "fuse.js";
 
 export default function App({ Component, pageProps }) {
   const [activityData, setActivityData] = useLocalStorageState(`activityData`, {
@@ -87,11 +88,79 @@ export default function App({ Component, pageProps }) {
     setRandomActivity(activityData[randomIndex]);
   }
 
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [results, setResults] = useState(activityData);
+
+  useEffect(() => {
+    setResults(activityData);
+  }, [activityData]);
+
+  const categoryOptions = {
+    keys: ["category"],
+    threshold: 0.3,
+  };
+  const searchOptions = {
+    keys: ["title", "area", "country"],
+    threshold: 0.3,
+  };
+
+  const fuseCategory = new Fuse(activityData, categoryOptions);
+  const fuseActivity = new Fuse(activityData, searchOptions);
+
+  function handleCategorySelect(activity) {
+    if (selectedCategory === activity) {
+      setSelectedCategory("");
+      updateResults("", searchTerm);
+    } else {
+      setSelectedCategory(activity);
+      updateResults(activity, searchTerm);
+    }
+  }
+
+  function handleSearch(event) {
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
+    updateResults(selectedCategory, searchTerm);
+  }
+
+  function updateResults(activityCategory, searchTerm) {
+    let filteredResults = activityData;
+
+    if (activityCategory) {
+      const categoryResults = fuseCategory
+        .search(activityCategory)
+        .map((result) => result.item);
+
+      filteredResults = filteredResults.filter((activity) =>
+        categoryResults.includes(activity)
+      );
+    }
+
+    if (searchTerm) {
+      const activityResults = fuseActivity
+        .search(searchTerm)
+        .map((result) => result.item);
+
+      filteredResults = filteredResults.filter((activity) =>
+        activityResults.includes(activity)
+      );
+    }
+
+    setResults(filteredResults);
+  }
+
+  useEffect(() => {
+    if (searchTerm && results.length === 0) {
+      toast.info("No matching results !");
+    }
+  }, [searchTerm, results]);
+
   return (
     <>
       <GlobalStyle />
       <StyledToastContainer />
-      <Layout getRandomActivity={getRandomActivity} >
+      <Layout getRandomActivity={getRandomActivity} onChange={handleSearch}>
         <Component
           {...pageProps}
           randomActivity={randomActivity}
@@ -102,6 +171,9 @@ export default function App({ Component, pageProps }) {
           onEditActivity={handleEditActivity}
           onDeleteActivity={handleDeleteActivity}
           onToggleFavorite={handleToggleFavorite}
+          onSelect={handleCategorySelect}
+          selectedCategory={selectedCategory}
+          results={results}
         />
       </Layout>
       <ConfirmModal

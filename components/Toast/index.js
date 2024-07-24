@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Flip, ToastContainer } from "react-toastify";
 
 export const StyledToastContainer = styled(ToastContainer).attrs({
-  position: "top-right",
+  position: "bottom-right",
   autoClose: 2000,
   hideProgressBar: false,
   closeOnClick: true,
