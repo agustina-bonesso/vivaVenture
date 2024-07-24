@@ -9,6 +9,7 @@ import {
 } from "@/components/StyledButton";
 import { StyledEditLink } from "@/components/StyledLinks";
 import styled from "styled-components";
+import Map from "@/components/Map";
 
 export default function ActivityDetails({
   activity,
@@ -71,6 +72,7 @@ export default function ActivityDetails({
             <Tag key={index}>{category}</Tag>
           ))}
         </CategoryTags>
+        <Map lat={activity.lat} lng={activity.lng} />
       </Content>
     </StyledArticle>
   );
