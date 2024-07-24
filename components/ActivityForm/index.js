@@ -15,14 +15,16 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const [images, setImages] = useState(defaultImages);
   const maxNumberOfImages = 20;
 
-  
   const [countryCode, setCountryCode] = useState("DE");
   const [cities, setCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState(null);
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
-  useEffect(() => {
-    fetchGeoData(countryCode).then(setCities);
-  }, [countryCode]);
+  // useEffect(() => {
+  //   fetchGeoData(countryCode).then(setCities);
+  // }, [countryCode]);
+  fetchGeoData("DE");
 
   const cityOptions = cities.map((city) => ({
     value: city,
@@ -287,17 +289,16 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           )}
         </ImageUploading>
         <div>
-          <h1>Stadt auswählen</h1>{" "}
-          <Select options={cityOptions} onChange={handleCityChange} />{" "}
+          {/* <h1>Stadt auswählen</h1>{" "}
+          <Select options={cityOptions} onChange={handleCityChange} />
           {selectedCity && (
             <div>
-              {" "}
               <h2>{selectedCity.name}</h2> <p>Land: {selectedCity.country}</p>{" "}
               <p>
                 Koordinaten: {selectedCity.lat}, {selectedCity.lon}
               </p>{" "}
             </div>
-          )}{" "}
+          )}{" "} */}
         </div>
          <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
