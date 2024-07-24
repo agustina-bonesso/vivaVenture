@@ -10,7 +10,7 @@ export default function Map({ lat, lng }) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[lat, lng]} icon={IconMarker} />
+      <Marker position={[lat, lng]} icon={MapMarker} />
     </StyledMapContainer>
   );
 }
@@ -19,7 +19,7 @@ const StyledMapContainer = styled(MapContainer)`
   width: 90%;
 `;
 
-const IconMarker = new Icon({
+const MapMarker = new Icon({
   iconUrl: "/icons/mapMarker.svg",
   iconSize: [32, 32],
 });

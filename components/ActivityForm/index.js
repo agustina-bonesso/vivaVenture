@@ -5,12 +5,32 @@ import ImageUploading from "react-images-uploading";
 import { useState } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/Icon";
+import { useEffect } from "react";
+import { fetchGeoData } from "@/pages/api/geoData";
+import Select from "react-select";
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
   const defaultImages = initialData ? initialData.images : [];
   const [images, setImages] = useState(defaultImages);
   const maxNumberOfImages = 20;
+
+  
+  const [countryCode, setCountryCode] = useState("DE");
+  const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState(null);
+
+  useEffect(() => {
+    fetchGeoData(countryCode).then(setCities);
+  }, [countryCode]);
+
+  const cityOptions = cities.map((city) => ({
+    value: city,
+    label: `${city.name}, ${city.country}`,
+  }));
+  const handleCityChange = (selectedOption) => {
+    setSelectedCity(selectedOption.value);
+  };
 
   const onChange = (imageList) => {
     setImages(imageList);
@@ -80,7 +100,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
         <StyledInput
           id="area"
           name="area"
-          type="text"
+          type="select"
           placeholder="add area"
           defaultValue={initialData?.area}
           required
@@ -266,6 +286,19 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             </>
           )}
         </ImageUploading>
+        <div>
+          <h1>Stadt auswählen</h1>{" "}
+          <Select options={cityOptions} onChange={handleCityChange} />{" "}
+          {selectedCity && (
+            <div>
+              {" "}
+              <h2>{selectedCity.name}</h2> <p>Land: {selectedCity.country}</p>{" "}
+              <p>
+                Koordinaten: {selectedCity.lat}, {selectedCity.lon}
+              </p>{" "}
+            </div>
+          )}{" "}
+        </div>
          <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>

@@ -25,6 +25,7 @@
     "react-leaflet": "^4.2.1",
     "react-modal": "^3.16.1",
     "react-responsive-carousel": "^3.2.23",
+    "react-select": "^5.8.0",
     "react-toastify": "^10.0.5",
     "styled-components": "^6.0.2",
     "use-local-storage-state": "^19.3.1",
