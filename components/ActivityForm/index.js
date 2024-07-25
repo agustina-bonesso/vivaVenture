@@ -281,7 +281,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             dragProps,
           }) => (
             <>
-              <StyledWrapDiv>
+              <StyledImageUploadButtonContainer>
                 <StyledButton
                   type="button"
                   $variant="imageSelectOrDelete"
@@ -298,8 +298,8 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
                 >
                   Remove all Images
                 </StyledButton>
-              </StyledWrapDiv>
-              <StyledWrapDiv>
+              </StyledImageUploadButtonContainer>
+              <StyledImageListContainer>
                 {imageList.map((image, index) => (
                   <ImageContainer key={index}>
                     <Image
@@ -313,11 +313,11 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
                       type="button"
                       onClick={() => onImageRemove(index)}
                     >
-                      <Icon name="delete" />
+                      <Icon name="delete" color="black" />
                     </TransparentDeleteButton>
                   </ImageContainer>
                 ))}
-              </StyledWrapDiv>
+              </StyledImageListContainer>
             </>
           )}
         </ImageUploading>
@@ -349,25 +349,33 @@ const StyledForm = styled.form`
 `;
 const StyledInput = styled.input`
   padding: 0.75rem;
-  border: 1px solid var(--dark-gray);
+  border: 1px solid var(--form-border);
   border-radius: var(--border-radius);
   font-size: 1rem;
   color: var(--text-color);
   background: var(--background-color);
   &:hover {
-    border-color: var(--teal);
+    border-color: var(--light-orange);
+  }
+  &:focus-within {
+    border-color: var(--light-orange);
+    outline: none;
   }
 `;
 const StyledTextarea = styled.textarea`
   padding: 0.75rem;
-  border: 1px solid var(--dark-gray);
+  border: 1px solid var(--form-border);
   border-radius: var(--border-radius);
   font-size: 1rem;
   color: var(--text-color);
   background: var(--background-color);
   resize: vertical;
   &:hover {
-    border-color: var(--teal);
+    border-color: var(--light-orange);
+  }
+  &:focus-within {
+    border-color: var(--light-orange);
+    outline: none;
   }
 `;
 const StyledLabel = styled.label`
@@ -417,34 +425,47 @@ const StyledCheckbox = styled.input.attrs({ type: "checkbox" })`
     font-size: 16px;
   }
   &:hover {
-    border-color: var(--teal);
+    border-color: var(--light-orange);
+  }
+  &:focus-within {
+    border-color: var(--light-orange);
+    outline: none;
   }
 `;
 const StyledFieldset = styled.fieldset`
   font-size: 1.125rem;
   font-family: var(--font-h1);
   border-radius: var(--border-radius);
-  border: 1px solid var(--dark-gray);
+  border: 1px solid var(--form-border);
   margin-top: 0.9375rem;
   background: var(--background-color);
   &:hover {
-    border-color: var(--teal);
+    border-color: var(--light-orange);
   }
 `;
 const StyledLegend = styled.legend`
   text-align: center;
 `;
-const StyledWrapDiv = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(auto, auto);
-  gap: 10px;
-  justify-items: center;
+const StyledImageUploadButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1rem 0;
+`;
+
+const StyledImageListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
 `;
 const ImageContainer = styled.div`
   position: relative;
   width: 200px;
   height: 200px;
+  border: 1px solid var(--form-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
 `;
 const TransparentDeleteButton = styled.button`
   position: absolute;
@@ -461,13 +482,19 @@ const TransparentDeleteButton = styled.button`
 `;
 const StyledSelect = styled(Select)`
   .react-select__control {
-    border: 1px solid var(--dark-gray);
+    border: 1px solid var(--form-border);
     border-radius: var(--border-radius);
     font-size: 1rem;
     color: var(--text-color);
     background: var(--background-color);
+    height: 50px;
+    box-shadow: none;
+    cursor: pointer;
     &:hover {
-      border-color: var(--teal);
+      border-color: var(--light-orange);
+    }
+    &:focus-within {
+      border-color: var(--light-orange);
     }
   }
   .react-select__menu {
@@ -477,20 +504,13 @@ const StyledSelect = styled(Select)`
     background-color: var(--form-background);
     color: var(--text-color);
     &:hover {
-      background-color: var(--teal);
-      color: var(--text-color);
+      background-color: var(--light-orange);
     }
+  }
+  .react-select__input-container {
+    color: var(--text-color);
   }
   .react-select__single-value {
     color: var(--text-color);
-    font-family: var(--font-p);
-  }
-  .react-select__value-container {
-    padding: 0.5rem;
-  }
-  .react-select_placeholder {
-  }
-  .react-select_input {
-    font-family: var(--font-p);
   }
 `;
