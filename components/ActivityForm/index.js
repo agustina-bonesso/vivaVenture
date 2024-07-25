@@ -129,21 +129,25 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
         <StyledSelect
           id="country"
           name="country"
+          placeholder="select Country"
           options={countries}
           onChange={handleCountryChange}
           value={selectedCountry}
           defaultValue={initialData?.country}
           required
+          classNamePrefix="react-select"
         />
         <StyledLabel htmlFor="city">City</StyledLabel>
         <StyledSelect
           id="city"
           name="city"
+          placeholder="select City"
           options={cities}
           onChange={handleCityChange}
           value={selectedCity}
           defaultValue={initialData?.selectedOption}
           required
+          classNamePrefix="react-select"
         />
         <StyledFieldset>
           <StyledLegend>Please select your Categories</StyledLegend>
@@ -343,7 +347,6 @@ const StyledForm = styled.form`
   background: var(--form-background);
   color: var(--text-color);
 `;
-
 const StyledInput = styled.input`
   padding: 0.75rem;
   border: 1px solid var(--dark-gray);
@@ -351,8 +354,10 @@ const StyledInput = styled.input`
   font-size: 1rem;
   color: var(--text-color);
   background: var(--background-color);
+  &:hover {
+    border-color: var(--teal);
+  }
 `;
-
 const StyledTextarea = styled.textarea`
   padding: 0.75rem;
   border: 1px solid var(--dark-gray);
@@ -361,32 +366,30 @@ const StyledTextarea = styled.textarea`
   color: var(--text-color);
   background: var(--background-color);
   resize: vertical;
+  &:hover {
+    border-color: var(--teal);
+  }
 `;
-
 const StyledLabel = styled.label`
   font-weight: bold;
   margin-top: 0.8rem;
   font-family: var(--font-h1);
   font-size: 1.125rem;
 `;
-
 const StyledCheckboxContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin: 1rem 0;
-
   label {
     display: flex;
     align-items: flex-start;
     font-family: var(--font-p);
     font-size: 15px;
   }
-
   input[type="checkbox"] {
     margin-right: 0.5rem;
   }
-
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -400,12 +403,10 @@ const StyledCheckbox = styled.input.attrs({ type: "checkbox" })`
   border-radius: 4px;
   cursor: pointer;
   position: relative;
-
   &:checked {
     background-color: green;
     border-color: green;
   }
-
   &:checked::after {
     content: "✓";
     position: absolute;
@@ -415,8 +416,10 @@ const StyledCheckbox = styled.input.attrs({ type: "checkbox" })`
     color: white;
     font-size: 16px;
   }
+  &:hover {
+    border-color: var(--teal);
+  }
 `;
-
 const StyledFieldset = styled.fieldset`
   font-size: 1.125rem;
   font-family: var(--font-h1);
@@ -424,12 +427,13 @@ const StyledFieldset = styled.fieldset`
   border: 1px solid var(--dark-gray);
   margin-top: 0.9375rem;
   background: var(--background-color);
+  &:hover {
+    border-color: var(--teal);
+  }
 `;
-
 const StyledLegend = styled.legend`
   text-align: center;
 `;
-
 const StyledWrapDiv = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -437,13 +441,11 @@ const StyledWrapDiv = styled.div`
   gap: 10px;
   justify-items: center;
 `;
-
 const ImageContainer = styled.div`
   position: relative;
   width: 200px;
   height: 200px;
 `;
-
 const TransparentDeleteButton = styled.button`
   position: absolute;
   top: 10px;
@@ -457,12 +459,38 @@ const TransparentDeleteButton = styled.button`
   z-index: 1;
   cursor: pointer;
 `;
-
 const StyledSelect = styled(Select)`
   .react-select__control {
-    background-color: #e0e0e0;
+    border: 1px solid var(--dark-gray);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    color: var(--text-color);
+    background: var(--background-color);
+    &:hover {
+      border-color: var(--teal);
+    }
   }
   .react-select__menu {
-    background-color: #f5f5f5;
+    background-color: var(--form-background);
+  }
+  .react-select__option {
+    background-color: var(--form-background);
+    color: var(--text-color);
+    &:hover {
+      background-color: var(--teal);
+      color: var(--text-color);
+    }
+  }
+  .react-select__single-value {
+    color: var(--text-color);
+    font-family: var(--font-p);
+  }
+  .react-select__value-container {
+    padding: 0.5rem;
+  }
+  .react-select_placeholder {
+  }
+  .react-select_input {
+    font-family: var(--font-p);
   }
 `;
