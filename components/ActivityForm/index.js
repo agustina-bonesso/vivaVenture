@@ -6,10 +6,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/Icon";
 import Select from "react-select";
-import dynamic from "next/dynamic";
 import { fetchCitiesData, fetchCountriesData } from "@/pages/api/geoData";
-
-const MapWithNoSSR = dynamic(() => import("@/components/Map"), { ssr: false });
+import Map from "@/components/Map";
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
@@ -19,9 +17,21 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
 
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null);
-  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
+  const [selectedCountry, setSelectedCountry] = useState(
+    initialData?.country
+      ? { value: initialData.country, label: initialData.country }
+      : null
+  );
+  const [selectedCity, setSelectedCity] = useState(
+    initialData?.city
+      ? { value: initialData.city, label: initialData.city }
+      : null
+  );
+  const [coordinates, setCoordinates] = useState(
+    initialData && initialData.lat && initialData.lng
+      ? { lat: initialData.lat, lng: initialData.lng }
+      : { lat: 0, lng: 0 }
+  );
 
   useEffect(() => {
     async function fetchCountries() {
@@ -121,6 +131,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           options={countries}
           onChange={handleCountryChange}
           value={selectedCountry}
+          defaultValue={initialData?.country}
           required
         />
         <StyledLabel htmlFor="city">City</StyledLabel>
@@ -130,6 +141,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           options={cities}
           onChange={handleCityChange}
           value={selectedCity}
+          defaultValue={initialData?.selectedOption}
           required
         />
         <StyledFieldset>
@@ -304,8 +316,9 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             </>
           )}
         </ImageUploading>
-        <StyledLabel htmlFor="map">Map</StyledLabel>
-        <MapWithNoSSR lat={coordinates.lat} lng={coordinates.lng}/>
+        {selectedCity && coordinates.lat !== 0 && coordinates.lng !== 0 && (
+          <Map lat={coordinates.lat} lng={coordinates.lng} />
+        )}
         <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>

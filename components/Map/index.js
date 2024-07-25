@@ -1,7 +1,20 @@
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import styled from "styled-components";
 import { Icon } from "leaflet";
+import { useEffect } from "react";
+
+const UpdateMapView = ({ lat, lng }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    if (lat && lng) {
+      map.setView([lat, lng], 13);
+    }
+  }, [lat, lng, map]);
+
+  return null;
+};
 
 export default function Map({ lat, lng }) {
   return (
@@ -11,6 +24,7 @@ export default function Map({ lat, lng }) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={[lat, lng]} icon={MapMarker} />
+      <UpdateMapView lat={lat} lng={lng} />
     </StyledMapContainer>
   );
 }
