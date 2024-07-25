@@ -18,17 +18,15 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(
-    initialData?.country
-      ? { value: initialData.country, label: initialData.country }
+    initialData
+      ? { value: initialData?.country, label: initialData?.country }
       : null
   );
   const [selectedCity, setSelectedCity] = useState(
-    initialData?.city
-      ? { value: initialData.city, label: initialData.city }
-      : null
+    initialData ? { value: initialData?.city, label: initialData?.city } : null
   );
   const [coordinates, setCoordinates] = useState(
-    initialData && initialData.lat && initialData.lng
+    initialData
       ? { lat: initialData.lat, lng: initialData.lng }
       : { lat: 0, lng: 0 }
   );
@@ -316,9 +314,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             </>
           )}
         </ImageUploading>
-        {selectedCity && coordinates.lat !== 0 && coordinates.lng !== 0 && (
-          <Map lat={coordinates.lat} lng={coordinates.lng} />
-        )}
+        {selectedCity && <Map lat={coordinates.lat} lng={coordinates.lng} />}
         <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>
