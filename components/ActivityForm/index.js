@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Icon } from "@/components/Icon";
 import Select from "react-select";
 import dynamic from "next/dynamic";
+import { fetchCitiesData, fetchCountriesData } from "@/pages/api/geoData";
 
 const MapWithNoSSR = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -23,67 +24,19 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
 
   useEffect(() => {
-    fetch("http://api.geonames.org/countryInfoJSON?username=2lf0305aa")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Fetched countries data:", data);
-        if (data.geonames) {
-          setCountries(
-            data.geonames.map((country) => ({
-              value: country.countryCode,
-              label: country.countryName,
-            }))
-          );
-        } else {
-          throw new Error("Data format is not correct");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching countries:", error);
-      });
+    async function fetchCountries() {
+      const countriesNames = await fetchCountriesData();
+      setCountries(countriesNames);
+    }
+    fetchCountries();
   }, []);
 
-  const fetchCities = (countryCode) => {
-    fetch(
-      `http://api.geonames.org/searchJSON?country=${countryCode}&featureClass=P&maxRows=1000&username=2lf0305aa`
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Fetched cities data:", data);
-        if (data.geonames) {
-          setCities(
-            data.geonames.map((city) => ({
-              value: city.name,
-              label: city.name,
-              lat: city.lat,
-              lng: city.lng,
-            }))
-          );
-        } else {
-          throw new Error("Data format is not correct");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching cities:", error);
-      });
-  };
-
-  const handleCountryChange = (selectedOption) => {
+  const handleCountryChange = async (selectedOption) => {
     setSelectedCountry(selectedOption);
     setSelectedCity(null);
     setCoordinates({ lat: 0, lng: 0 });
-    fetchCities(selectedOption.value);
-    console.log(selectedOption);
+    const citiesNames = await fetchCitiesData(selectedOption.value);
+    setCities(citiesNames);
   };
 
   const handleCityChange = (selectedOption) => {
@@ -168,6 +121,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           options={countries}
           onChange={handleCountryChange}
           value={selectedCountry}
+          required
         />
         <StyledLabel htmlFor="city">City</StyledLabel>
         <StyledSelect
@@ -176,6 +130,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           options={cities}
           onChange={handleCityChange}
           value={selectedCity}
+          required
         />
         <StyledFieldset>
           <StyledLegend>Please select your Categories</StyledLegend>
@@ -350,7 +305,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           )}
         </ImageUploading>
         <StyledLabel htmlFor="map">Map</StyledLabel>
-        <MapWithNoSSR lat={coordinates.lat} lng={coordinates.lng} />
+        <MapWithNoSSR lat={coordinates.lat} lng={coordinates.lng}/>
         <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>
