@@ -65,7 +65,7 @@ export default function ActivityDetails({
           </ActionIcons>
         </StyledDiv>
 
-        <Info>{`${activity.area}, ${activity.country}`}</Info>
+        <Info>{`${activity.city}, ${activity.country}`}</Info>
         <Description>{activity.description}</Description>
         <CategoryTags>
           {activity.category.map((category, index) => (

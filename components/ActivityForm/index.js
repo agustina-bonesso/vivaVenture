@@ -2,12 +2,13 @@ import styled from "styled-components";
 import { StyledButton } from "@/components/StyledButton";
 import { useRouter } from "next/router";
 import ImageUploading from "react-images-uploading";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/Icon";
-import { useEffect } from "react";
-import { fetchGeoData } from "@/pages/api/geoData";
 import Select from "react-select";
+import dynamic from "next/dynamic";
+
+const MapWithNoSSR = dynamic(() => import("@/components/Map"), { ssr: false });
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
@@ -15,23 +16,79 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const [images, setImages] = useState(defaultImages);
   const maxNumberOfImages = 20;
 
-  const [countryCode, setCountryCode] = useState("DE");
-  const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(null);
   const [countries, setCountries] = useState([]);
+  const [cities, setCities] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [coordinates, setCoordinates] = useState({ lat: 0, lng: 0 });
 
-  // useEffect(() => {
-  //   fetchGeoData(countryCode).then(setCities);
-  // }, [countryCode]);
-  fetchGeoData("DE");
+  useEffect(() => {
+    fetch("http://api.geonames.org/countryInfoJSON?username=2lf0305aa")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Fetched countries data:", data);
+        if (data.geonames) {
+          setCountries(
+            data.geonames.map((country) => ({
+              value: country.countryCode,
+              label: country.countryName,
+            }))
+          );
+        } else {
+          throw new Error("Data format is not correct");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching countries:", error);
+      });
+  }, []);
 
-  const cityOptions = cities.map((city) => ({
-    value: city,
-    label: `${city.name}, ${city.country}`,
-  }));
+  const fetchCities = (countryCode) => {
+    fetch(
+      `http://api.geonames.org/searchJSON?country=${countryCode}&featureClass=P&maxRows=1000&username=2lf0305aa`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Fetched cities data:", data);
+        if (data.geonames) {
+          setCities(
+            data.geonames.map((city) => ({
+              value: city.name,
+              label: city.name,
+              lat: city.lat,
+              lng: city.lng,
+            }))
+          );
+        } else {
+          throw new Error("Data format is not correct");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching cities:", error);
+      });
+  };
+
+  const handleCountryChange = (selectedOption) => {
+    setSelectedCountry(selectedOption);
+    setSelectedCity(null);
+    setCoordinates({ lat: 0, lng: 0 });
+    fetchCities(selectedOption.value);
+    console.log(selectedOption);
+  };
+
   const handleCityChange = (selectedOption) => {
-    setSelectedCity(selectedOption.value);
+    setSelectedCity(selectedOption);
+    setCoordinates({ lat: selectedOption.lat, lng: selectedOption.lng });
   };
 
   const onChange = (imageList) => {
@@ -77,6 +134,12 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       .replace(/(\.)\s+/g, "$1 ");
     newActivity.category = formData.getAll("category");
     newActivity.images = await uploadImages(images);
+    newActivity.lat = coordinates.lat;
+    newActivity.lng = coordinates.lng;
+    newActivity.city = selectedCity ? selectedCity.value : initialData?.city;
+    newActivity.country = selectedCountry
+      ? selectedCountry.label
+      : initialData?.country;
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
       return false;
@@ -98,23 +161,21 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           pattern="^\s*[A-Za-z0-9*][A-Za-z0-9\.\s]{1,34}[A-Za-z0-9\.]$"
           required
         />
-        <StyledLabel htmlFor="area">Area</StyledLabel>
-        <StyledInput
-          id="area"
-          name="area"
-          type="select"
-          placeholder="add area"
-          defaultValue={initialData?.area}
-          required
-        />
         <StyledLabel htmlFor="country">Country</StyledLabel>
-        <StyledInput
+        <StyledSelect
           id="country"
           name="country"
-          type="text"
-          placeholder="add country"
-          defaultValue={initialData?.country}
-          required
+          options={countries}
+          onChange={handleCountryChange}
+          value={selectedCountry}
+        />
+        <StyledLabel htmlFor="city">City</StyledLabel>
+        <StyledSelect
+          id="city"
+          name="city"
+          options={cities}
+          onChange={handleCityChange}
+          value={selectedCity}
         />
         <StyledFieldset>
           <StyledLegend>Please select your Categories</StyledLegend>
@@ -288,19 +349,9 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             </>
           )}
         </ImageUploading>
-        <div>
-          {/* <h1>Stadt auswählen</h1>{" "}
-          <Select options={cityOptions} onChange={handleCityChange} />
-          {selectedCity && (
-            <div>
-              <h2>{selectedCity.name}</h2> <p>Land: {selectedCity.country}</p>{" "}
-              <p>
-                Koordinaten: {selectedCity.lat}, {selectedCity.lon}
-              </p>{" "}
-            </div>
-          )}{" "} */}
-        </div>
-         <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
+        <StyledLabel htmlFor="map">Map</StyledLabel>
+        <MapWithNoSSR lat={coordinates.lat} lng={coordinates.lng} />
+        <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>
   );
@@ -431,4 +482,13 @@ const TransparentDeleteButton = styled.button`
   gap: 5px;
   z-index: 1;
   cursor: pointer;
+`;
+
+const StyledSelect = styled(Select)`
+  .react-select__control {
+    background-color: #e0e0e0;
+  }
+  .react-select__menu {
+    background-color: #f5f5f5;
+  }
 `;

@@ -101,7 +101,7 @@ export default function App({ Component, pageProps }) {
     threshold: 0.3,
   };
   const searchOptions = {
-    keys: ["title", "area", "country"],
+    keys: ["title", "city", "country"],
     threshold: 0.3,
   };
 

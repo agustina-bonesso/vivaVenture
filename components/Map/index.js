@@ -14,12 +14,13 @@ export default function Map({ lat, lng }) {
     </StyledMapContainer>
   );
 }
+
 const StyledMapContainer = styled(MapContainer)`
   height: 40vh;
-  width: 90%;
+  width: 100%;
 `;
 
 const MapMarker = new Icon({
   iconUrl: "/icons/mapMarker.svg",
-  iconSize: [32, 32],
+  iconSize: [42, 42],
 });
