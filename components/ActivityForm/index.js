@@ -51,6 +51,9 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     setSelectedCity(selectedOption);
     setCoordinates({ lat: selectedOption.lat, lng: selectedOption.lng });
   };
+  const handleMarkerDragEnd = (newLat, newLong) => {
+    setCoordinates({ lat: newLat, lng: newLong });
+  };
 
   const onChange = (imageList) => {
     setImages(imageList);
@@ -314,7 +317,14 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             </>
           )}
         </ImageUploading>
-        {selectedCity && <Map lat={coordinates.lat} lng={coordinates.lng} />}
+        {selectedCity && (
+          <Map
+            lat={coordinates.lat}
+            lng={coordinates.lng}
+            onMarkerDragEnd={handleMarkerDragEnd}
+            draggable
+          />
+        )}
         <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>
