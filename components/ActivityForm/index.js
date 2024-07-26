@@ -11,7 +11,9 @@ import {
   fetchCoordinatesData,
   fetchCountriesData,
 } from "@/pages/api/geoData";
-import Map from "@/components/Map";
+import dynamic from "next/dynamic";
+
+const Map = dynamic(() => import("@/components/Map"), { ssr: false });
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();

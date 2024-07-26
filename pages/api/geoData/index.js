@@ -38,6 +38,7 @@ export const fetchCoordinatesData = async (lat, lng) => {
       `http://api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lng}&username=agustina.bonesso`
     );
     const data = await response.json();
+    console.log(data);
     const placeData = await fetchGeoId(data.geonames[0].geonameId);
     return placeData;
   } catch (error) {
@@ -52,7 +53,9 @@ const fetchGeoId = async (geoID) => {
       `http://api.geonames.org/hierarchyJSON?geonameId=${geoID}&username=agustina.bonesso`
     );
     const data = await response.json();
-    const placeName = data.geonames[5].name;
+    console.log(data);
+    const placeName =
+      data.geonames.length > 7 ? data.geonames[7].name : data.geonames[5].name;
     const placeCountry = data.geonames[5].countryName;
     return { cityName: placeName, countryName: placeCountry };
   } catch (error) {
