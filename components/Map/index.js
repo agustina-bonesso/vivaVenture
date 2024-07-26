@@ -31,7 +31,6 @@ export default function Map({ lat, lng, draggable, onMarkerDragEnd }) {
           eventHandlers={{
             dragend: (event) => {
               const { lat, lng } = event.target.getLatLng();
-              console.log(lat, lng);
               onMarkerDragEnd(lat, lng);
             },
           }}

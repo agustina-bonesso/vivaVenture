@@ -17,10 +17,9 @@ export const fetchCountriesData = async () => {
 export const fetchCitiesData = async (countryCode) => {
   try {
     const response = await fetch(
-      `http://api.geonames.org/searchJSON?country=${countryCode}&username=agustina.bonesso`
+      `http://api.geonames.org/searchJSON?country=${countryCode}&maxRows=1000&username=agustina.bonesso`
     );
     const data = await response.json();
-    console.log(data);
     return data.geonames.map((city) => ({
       value: city.name,
       label: city.name,
@@ -35,16 +34,29 @@ export const fetchCitiesData = async (countryCode) => {
 
 export const fetchCoordinatesData = async (lat, lng) => {
   try {
-    console.log(lat, lng);
     const response = await fetch(
       `http://api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lng}&username=agustina.bonesso`
     );
     const data = await response.json();
-    console.log(data.geonames);
-    console.log(data.geonames[0].adminName1);
-    return data;
+    const placeData = await fetchGeoId(data.geonames[0].geonameId);
+    return placeData;
   } catch (error) {
-    console.error("Error fetching coordinates!:", error);
+    console.error("Error fetching coordinates:", error);
+    return [];
+  }
+};
+
+const fetchGeoId = async (geoID) => {
+  try {
+    const response = await fetch(
+      `http://api.geonames.org/hierarchyJSON?geonameId=${geoID}&username=agustina.bonesso`
+    );
+    const data = await response.json();
+    const placeName = data.geonames[5].name;
+    const placeCountry = data.geonames[5].countryName;
+    return { cityName: placeName, countryName: placeCountry };
+  } catch (error) {
+    console.error("Error fetching geonameID:", error);
     return [];
   }
 };

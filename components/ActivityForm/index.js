@@ -57,7 +57,12 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   };
   const handleMarkerDragEnd = async (newLat, newLong) => {
     setCoordinates({ lat: newLat, lng: newLong });
-    fetchCoordinatesData(newLat, newLong);
+    const placeData = await fetchCoordinatesData(newLat, newLong);
+    setSelectedCountry({
+      value: placeData.countryName,
+      label: placeData.countryName,
+    });
+    setSelectedCity({ value: placeData.cityName, label: placeData.cityName });
   };
 
   const onChange = (imageList) => {
@@ -105,10 +110,8 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     newActivity.images = await uploadImages(images);
     newActivity.lat = coordinates.lat;
     newActivity.lng = coordinates.lng;
-    newActivity.city = selectedCity ? selectedCity.value : initialData?.city;
-    newActivity.country = selectedCountry
-      ? selectedCountry.label
-      : initialData?.country;
+    newActivity.city = selectedCity.value;
+    newActivity.country = selectedCountry.value;
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
       return false;
@@ -139,8 +142,8 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           onChange={handleCountryChange}
           value={selectedCountry}
           defaultValue={initialData?.country}
-          required
           classNamePrefix="react-select"
+          required
         />
         <StyledLabel htmlFor="city">City</StyledLabel>
         <StyledSelect
@@ -151,8 +154,8 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           onChange={handleCityChange}
           value={selectedCity}
           defaultValue={initialData?.selectedOption}
-          required
           classNamePrefix="react-select"
+          required
         />
         <StyledFieldset>
           <StyledLegend>Please select your Categories</StyledLegend>
