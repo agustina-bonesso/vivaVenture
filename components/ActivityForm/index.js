@@ -6,7 +6,11 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/Icon";
 import Select from "react-select";
-import { fetchCitiesData, fetchCountriesData } from "@/pages/api/geoData";
+import {
+  fetchCitiesData,
+  fetchCoordinatesData,
+  fetchCountriesData,
+} from "@/pages/api/geoData";
 import Map from "@/components/Map";
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
@@ -51,8 +55,9 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     setSelectedCity(selectedOption);
     setCoordinates({ lat: selectedOption.lat, lng: selectedOption.lng });
   };
-  const handleMarkerDragEnd = (newLat, newLong) => {
+  const handleMarkerDragEnd = async (newLat, newLong) => {
     setCoordinates({ lat: newLat, lng: newLong });
+    fetchCoordinatesData(newLat, newLong);
   };
 
   const onChange = (imageList) => {
