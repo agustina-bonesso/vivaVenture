@@ -1,7 +1,7 @@
 export const fetchCountriesData = async () => {
   try {
     const response = await fetch(
-      `http://api.geonames.org/countryInfoJSON?username=agustina.bonesso`
+      `https://secure.geonames.org/countryInfoJSON?username=agustina.bonesso`
     );
     const data = await response.json();
     return data.geonames.map((country) => ({
@@ -17,7 +17,7 @@ export const fetchCountriesData = async () => {
 export const fetchCitiesData = async (countryCode) => {
   try {
     const response = await fetch(
-      `http://api.geonames.org/searchJSON?country=${countryCode}&maxRows=1000&username=agustina.bonesso`
+      `https://secure.geonames.org/searchJSON?country=${countryCode}&maxRows=1000&username=agustina.bonesso`
     );
     const data = await response.json();
     return data.geonames.map((city) => ({
@@ -35,7 +35,7 @@ export const fetchCitiesData = async (countryCode) => {
 export const fetchCoordinatesData = async (lat, lng) => {
   try {
     const response = await fetch(
-      `http://api.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lng}&username=agustina.bonesso`
+      `https://secure.geonames.org/findNearbyPlaceNameJSON?lat=${lat}&lng=${lng}&username=agustina.bonesso`
     );
     const data = await response.json();
     console.log(data);
@@ -50,7 +50,7 @@ export const fetchCoordinatesData = async (lat, lng) => {
 const fetchGeoId = async (geoID) => {
   try {
     const response = await fetch(
-      `http://api.geonames.org/hierarchyJSON?geonameId=${geoID}&username=agustina.bonesso`
+      `https://secure.geonames.org/hierarchyJSON?geonameId=${geoID}&username=agustina.bonesso`
     );
     const data = await response.json();
     console.log(data);
