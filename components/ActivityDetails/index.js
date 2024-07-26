@@ -9,7 +9,9 @@ import {
 } from "@/components/StyledButton";
 import { StyledEditLink } from "@/components/StyledLinks";
 import styled from "styled-components";
-import Map from "@/components/Map";
+import dynamic from "next/dynamic";
+
+const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
 export default function ActivityDetails({
   activity,
@@ -72,7 +74,7 @@ export default function ActivityDetails({
             <Tag key={index}>{category}</Tag>
           ))}
         </CategoryTags>
-        <Map lat={activity.lat} lng={activity.lng} />
+        <MapComponent lat={activity.lat} lng={activity.lng} />
       </Content>
     </StyledArticle>
   );

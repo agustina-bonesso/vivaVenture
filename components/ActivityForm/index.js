@@ -13,7 +13,7 @@ import {
 } from "@/pages/api/geoData";
 import dynamic from "next/dynamic";
 
-const Map = dynamic(() => import("@/components/Map"), { ssr: false });
+const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
@@ -332,7 +332,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           )}
         </ImageUploading>
         {selectedCity && (
-          <Map
+          <MapComponent
             lat={coordinates.lat}
             lng={coordinates.lng}
             onMarkerDragEnd={handleMarkerDragEnd}
