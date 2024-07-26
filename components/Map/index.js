@@ -47,7 +47,8 @@ const MapWrapper = styled.div`
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: var(--box-shadow);
-  margin-top: 1rem;
+  margin: 1rem 0;
+  z-index: 1;
 `;
 
 const StyledMapContainer = styled(MapContainer)`

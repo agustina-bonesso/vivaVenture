@@ -359,6 +359,8 @@ const StyledInput = styled.input`
   padding: 0.75rem;
   border: 1px solid var(--form-border);
   border-radius: var(--border-radius);
+  font-family: var(--font-p);
+  height: 3.3rem;
   font-size: 1rem;
   color: var(--text-color);
   background: var(--background-color);
@@ -492,11 +494,14 @@ const StyledSelect = styled(Select)`
   .react-select__control {
     border: 1px solid var(--form-border);
     border-radius: var(--border-radius);
+    font-family: var(--font-p);
     font-size: 1rem;
     color: var(--text-color);
     background: var(--background-color);
     height: 50px;
     box-shadow: none;
+    line-height: 2.6;
+
     cursor: pointer;
     &:hover {
       border-color: var(--light-orange);

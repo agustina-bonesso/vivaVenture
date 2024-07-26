@@ -80,7 +80,7 @@ export default function ActivityDetails({
 
 const StyledArticle = styled.article`
   max-width: 50rem;
-  margin: 2rem auto;
+  margin: 2rem auto 5rem auto;
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
   background: var(--card-background);

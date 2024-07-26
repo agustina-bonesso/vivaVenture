@@ -73,6 +73,7 @@ const StyledFooter = styled.footer`
   height: 65px;
   background: var(--header-footer-bg);
   box-shadow: var(--box-shadow);
+  z-index: 500;
 
   @media (min-width: 768px) {
     display: none;
