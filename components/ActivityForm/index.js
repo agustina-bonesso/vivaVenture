@@ -8,10 +8,10 @@ import { Icon } from "@/components/Icon";
 import Select from "react-select";
 import {
   fetchCitiesData,
-  fetchCoordinatesData,
-  fetchCountriesData,
-} from "@/pages/api/geoData";
+  fetchCoordinatesData
+} from "@/lib/utils/geoData";
 import dynamic from "next/dynamic";
+import { countriesData } from "@/lib/countriesData";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -20,8 +20,9 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const defaultImages = initialData ? initialData.images : [];
   const [images, setImages] = useState(defaultImages);
   const maxNumberOfImages = 20;
-
-  const [countries, setCountries] = useState([]);
+  const countries = countriesData.map((country) => {
+    return { value: country.countryCode, label: country.countryName };
+  });
   const [cities, setCities] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(
     initialData
@@ -36,14 +37,6 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       ? { lat: initialData.lat, lng: initialData.lng }
       : { lat: 0, lng: 0 }
   );
-
-  useEffect(() => {
-    async function fetchCountries() {
-      const countriesNames = await fetchCountriesData();
-      setCountries(countriesNames);
-    }
-    fetchCountries();
-  }, []);
 
   const handleCountryChange = async (selectedOption) => {
     setSelectedCountry(selectedOption);
@@ -67,7 +60,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     setSelectedCity({ value: placeData.cityName, label: placeData.cityName });
   };
 
-  const onChange = (imageList) => {
+  const onChangeImage = (imageList) => {
     setImages(imageList);
   };
 
@@ -102,18 +95,18 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    console.log(selectedCountry);
     const formData = new FormData(event.target);
     const newActivity = Object.fromEntries(formData);
     newActivity.title = newActivity.title
       .trim()
       .replace(/\b\s+\b/g, " ")
       .replace(/(\.)\s+/g, "$1 ");
+    newActivity.country = selectedCountry.label;
     newActivity.category = formData.getAll("category");
     newActivity.images = await uploadImages(images);
     newActivity.lat = coordinates.lat;
     newActivity.lng = coordinates.lng;
-    newActivity.city = selectedCity.value;
-    newActivity.country = selectedCountry.value;
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
       return false;
@@ -276,7 +269,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
         <ImageUploading
           multiple
           value={images}
-          onChange={onChange}
+          onChange={onChangeImage}
           maxNumber={maxNumberOfImages}
           dataURLKey="data_url"
           acceptType={["jpg", "png", "jpeg"]}
