@@ -95,7 +95,6 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log(selectedCountry);
     const formData = new FormData(event.target);
     const newActivity = Object.fromEntries(formData);
     newActivity.title = newActivity.title
