@@ -27,7 +27,7 @@ export default function ActivityDetails({
       <ImageContainer>
         <TransparentBackButton
           onClick={() => {
-            router.back();
+            router.push("/");
           }}
           title="Back to all Activities"
         >

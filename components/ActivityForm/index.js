@@ -6,10 +6,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/Icon";
 import Select from "react-select";
-import {
-  fetchCitiesData,
-  fetchCoordinatesData
-} from "@/lib/utils/geoData";
+import { fetchCitiesData, fetchCoordinatesData } from "@/lib/utils/geoData";
 import dynamic from "next/dynamic";
 import { countriesData } from "@/lib/countriesData";
 
@@ -24,11 +21,17 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     return { value: country.countryCode, label: country.countryName };
   });
   const [cities, setCities] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState(
-    initialData
-      ? { value: initialData?.country, label: initialData?.country }
-      : null
-  );
+  const [selectedCountry, setSelectedCountry] = useState(() => {
+    if (!initialData) return null;
+
+    const country = countriesData.find(
+      (country) => country.countryName === initialData?.country
+    );
+
+    return country
+      ? { value: country.countryCode, label: country.countryName }
+      : null;
+  });
   const [selectedCity, setSelectedCity] = useState(
     initialData ? { value: initialData?.city, label: initialData?.city } : null
   );
@@ -37,6 +40,18 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       ? { lat: initialData.lat, lng: initialData.lng }
       : { lat: 0, lng: 0 }
   );
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      if (initialData && selectedCountry) {
+        const citiesNames = await fetchCitiesData(selectedCountry.value);
+        setCities(citiesNames);
+      } else {
+        setCities([]);
+      }
+    };
+    fetchCities();
+  }, [initialData, selectedCountry]);
 
   const handleCountryChange = async (selectedOption) => {
     setSelectedCountry(selectedOption);

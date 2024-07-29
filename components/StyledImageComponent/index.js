@@ -13,7 +13,13 @@ export default function StyledImageComponent({ images, alt }) {
   if (!images || images.length === 0) {
     return (
       <ImageWrapper>
-        <StyledImage src={defaultImage.data_url} alt={alt} fill />
+        <StyledImage
+          src={defaultImage.data_url}
+          alt={alt}
+          fill
+          sizes="(max-width: 600px) 480px, (max-width: 1200px) 800px, 100vw"
+          priority
+        />
       </ImageWrapper>
     );
   }
@@ -24,7 +30,13 @@ export default function StyledImageComponent({ images, alt }) {
         <Carousel showStatus={false} showThumbs={false}>
           {images.map((image, index) => (
             <ImageWrapper key={index}>
-              <StyledImage src={image.data_url} alt={alt} fill />
+              <StyledImage
+                src={image.data_url}
+                alt={alt}
+                sizes="(max-width: 600px) 480px, (max-width: 1200px) 800px, 100vw"
+                fill
+                priority={index === 0} // Nur für das erste Bild im Karussell setzen
+              />
             </ImageWrapper>
           ))}
         </Carousel>
@@ -33,7 +45,13 @@ export default function StyledImageComponent({ images, alt }) {
   } else {
     return (
       <ImageWrapper>
-        <StyledImage src={images[0].data_url} alt={alt} fill />
+        <StyledImage
+          src={images[0].data_url}
+          alt={alt}
+          fill
+          sizes="(max-width: 600px) 480px, (max-width: 1200px) 800px, 100vw"
+          priority
+        />
       </ImageWrapper>
     );
   }
