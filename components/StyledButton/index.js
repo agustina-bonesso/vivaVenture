@@ -36,13 +36,12 @@ const buttonStyles = css`
       border-radius: 0.6rem;
       margin: 0;
       padding: 0.3rem 0.4rem;
-      border: 1px solid grey;
-      box-shadow: var(--box-shadow);
+      border: 1.5px solid grey;
       background: var(--background-color);
       color: var(--button-text-color);
       &:hover {
         background: none;
-        box-shadow: none;
+        border-color: var(--light-orange);
         color: var(--text-color);
       }
     `}

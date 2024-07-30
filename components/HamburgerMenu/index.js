@@ -81,7 +81,7 @@ const StyledNavIcon = styled.div`
     stroke: var(--teal);
   }
   @media (min-width: 1200px) {
-    line-height: 1.6;
+    line-height: 2.1;
     padding: 0 0 0.625rem 0.625rem;
     gap: 0.5rem;
     svg {
@@ -110,7 +110,7 @@ const StyledMenu = styled(Menu)`
     font-size: 1.2rem;
 
     @media (min-width: 1200px) {
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
   }
 `;

@@ -29,7 +29,7 @@ export default function ActivityCard({
       <StyledLink href={`/${activity.id}`}>
         <CardContent>
           <Title>{activity.title}</Title>
-          <Info>{`${activity.area}, ${activity.country}`}</Info>
+          <Info>{`${activity.city}, ${activity.country}`}</Info>
           <CategoryTags>
             {activity.category.map((category, index) => (
               <Tag key={index}>{category}</Tag>

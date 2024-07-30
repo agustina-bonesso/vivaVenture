@@ -68,7 +68,9 @@ export default createGlobalStyle`
     --font-p: 'Biryani', sans-serif;
     --styled-link: 'Biryani', sans-serif;
 
-    --icon-color: black;
+    --form-border: #888888;
+
+    --icon-color: #000000;
 
     --toastify-color: #fff;
 
@@ -95,7 +97,7 @@ export default createGlobalStyle`
       --card-background: #1e1e1e;
       --form-background: #1e1e1e;
       --box-shadow:0 2px 4px rgba(255, 255, 255, 0.5);
-      --icon-color: white;
+      --icon-color: #ffffff;
       --teal: #00A6AA; 
       --brown: #b9773e;
       --toastify-color: #121212;

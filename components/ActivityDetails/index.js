@@ -9,6 +9,9 @@ import {
 } from "@/components/StyledButton";
 import { StyledEditLink } from "@/components/StyledLinks";
 import styled from "styled-components";
+import dynamic from "next/dynamic";
+
+const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
 export default function ActivityDetails({
   activity,
@@ -18,13 +21,12 @@ export default function ActivityDetails({
 }) {
   const router = useRouter();
   const images = activity.images;
-
   return (
     <StyledArticle>
       <ImageContainer>
         <TransparentBackButton
           onClick={() => {
-            router.back();
+            router.push("/");
           }}
           title="Back to all Activities"
         >
@@ -64,13 +66,14 @@ export default function ActivityDetails({
           </ActionIcons>
         </StyledDiv>
 
-        <Info>{`${activity.area}, ${activity.country}`}</Info>
+        <Info>{`${activity.city}, ${activity.country}`}</Info>
         <Description>{activity.description}</Description>
         <CategoryTags>
           {activity.category.map((category, index) => (
             <Tag key={index}>{category}</Tag>
           ))}
         </CategoryTags>
+        <MapComponent lat={activity.lat} lng={activity.lng} />
       </Content>
     </StyledArticle>
   );
@@ -78,7 +81,7 @@ export default function ActivityDetails({
 
 const StyledArticle = styled.article`
   max-width: 50rem;
-  margin: 2rem auto;
+  margin: 2rem auto 5rem auto;
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
   background: var(--card-background);

@@ -2,17 +2,82 @@ import styled from "styled-components";
 import { StyledButton } from "@/components/StyledButton";
 import { useRouter } from "next/router";
 import ImageUploading from "react-images-uploading";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/Icon";
+import Select from "react-select";
+import { fetchCitiesData, fetchCoordinatesData } from "@/lib/utils/geoData";
+import dynamic from "next/dynamic";
+import { countriesData } from "@/lib/countriesData";
+
+const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
   const defaultImages = initialData ? initialData.images : [];
   const [images, setImages] = useState(defaultImages);
   const maxNumberOfImages = 20;
+  const countries = countriesData.map((country) => {
+    return { value: country.countryCode, label: country.countryName };
+  });
+  const [cities, setCities] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(() => {
+    if (!initialData) return null;
 
-  const onChange = (imageList) => {
+    const country = countriesData.find(
+      (country) => country.countryName === initialData?.country
+    );
+
+    return country
+      ? { value: country.countryCode, label: country.countryName }
+      : null;
+  });
+  const [selectedCity, setSelectedCity] = useState(
+    initialData ? { value: initialData?.city, label: initialData?.city } : null
+  );
+  const [coordinates, setCoordinates] = useState(
+    initialData
+      ? { lat: initialData.lat, lng: initialData.lng }
+      : { lat: 0, lng: 0 }
+  );
+
+  useEffect(() => {
+    const fetchCities = async () => {
+      if (initialData && selectedCountry) {
+        const citiesNames = await fetchCitiesData(selectedCountry.value);
+        setCities(citiesNames);
+      } else {
+        setCities([]);
+      }
+    };
+    fetchCities();
+  }, [initialData, selectedCountry]);
+
+  const handleCountryChange = async (selectedOption) => {
+    setSelectedCountry(selectedOption);
+    setSelectedCity(null);
+    setCoordinates({ lat: 0, lng: 0 });
+    const citiesNames = await fetchCitiesData(selectedOption.value);
+    setCities(citiesNames);
+  };
+
+  const handleCityChange = (selectedOption) => {
+    setSelectedCity(selectedOption);
+    setCoordinates({ lat: selectedOption.lat, lng: selectedOption.lng });
+  };
+  const handleMarkerDragEnd = async (newLat, newLong) => {
+    setCoordinates({ lat: newLat, lng: newLong });
+    const placeData = await fetchCoordinatesData(newLat, newLong);
+    setSelectedCountry({
+      value: placeData.countryCode,
+      label: placeData.countryName,
+    });
+    const citiesNames = await fetchCitiesData(selectedCountry.value);
+    setCities(citiesNames);
+    setSelectedCity({ value: placeData.cityName, label: placeData.cityName });
+  };
+
+  const onChangeImage = (imageList) => {
     setImages(imageList);
   };
 
@@ -53,8 +118,11 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       .trim()
       .replace(/\b\s+\b/g, " ")
       .replace(/(\.)\s+/g, "$1 ");
+    newActivity.country = selectedCountry.label;
     newActivity.category = formData.getAll("category");
     newActivity.images = await uploadImages(images);
+    newActivity.lat = coordinates.lat;
+    newActivity.lng = coordinates.lng;
     if (newActivity.category.length === 0) {
       alert("Please select at least one category.");
       return false;
@@ -76,22 +144,28 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
           pattern="^\s*[A-Za-z0-9*][A-Za-z0-9\.\s]{1,34}[A-Za-z0-9\.]$"
           required
         />
-        <StyledLabel htmlFor="area">Area</StyledLabel>
-        <StyledInput
-          id="area"
-          name="area"
-          type="text"
-          placeholder="add area"
-          defaultValue={initialData?.area}
-          required
-        />
         <StyledLabel htmlFor="country">Country</StyledLabel>
-        <StyledInput
+        <StyledSelect
           id="country"
           name="country"
-          type="text"
-          placeholder="add country"
+          placeholder="select Country"
+          options={countries}
+          onChange={handleCountryChange}
+          value={selectedCountry}
           defaultValue={initialData?.country}
+          classNamePrefix="react-select"
+          required
+        />
+        <StyledLabel htmlFor="city">City</StyledLabel>
+        <StyledSelect
+          id="city"
+          name="city"
+          placeholder="select City"
+          options={cities}
+          onChange={handleCityChange}
+          value={selectedCity}
+          defaultValue={initialData?.selectedOption}
+          classNamePrefix="react-select"
           required
         />
         <StyledFieldset>
@@ -211,7 +285,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
         <ImageUploading
           multiple
           value={images}
-          onChange={onChange}
+          onChange={onChangeImage}
           maxNumber={maxNumberOfImages}
           dataURLKey="data_url"
           acceptType={["jpg", "png", "jpeg"]}
@@ -226,7 +300,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
             dragProps,
           }) => (
             <>
-              <StyledWrapDiv>
+              <StyledImageUploadButtonContainer>
                 <StyledButton
                   type="button"
                   $variant="imageSelectOrDelete"
@@ -243,8 +317,8 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
                 >
                   Remove all Images
                 </StyledButton>
-              </StyledWrapDiv>
-              <StyledWrapDiv>
+              </StyledImageUploadButtonContainer>
+              <StyledImageListContainer>
                 {imageList.map((image, index) => (
                   <ImageContainer key={index}>
                     <Image
@@ -258,15 +332,23 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
                       type="button"
                       onClick={() => onImageRemove(index)}
                     >
-                      <Icon name="delete" />
+                      <Icon name="delete" color="black" />
                     </TransparentDeleteButton>
                   </ImageContainer>
                 ))}
-              </StyledWrapDiv>
+              </StyledImageListContainer>
             </>
           )}
         </ImageUploading>
-         <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
+        {selectedCity && (
+          <MapComponent
+            lat={coordinates.lat}
+            lng={coordinates.lng}
+            onMarkerDragEnd={handleMarkerDragEnd}
+            draggable
+          />
+        )}
+        <StyledButton>{isEditMode ? "Save" : "Add"}</StyledButton>
       </StyledForm>
     </>
   );
@@ -284,50 +366,59 @@ const StyledForm = styled.form`
   background: var(--form-background);
   color: var(--text-color);
 `;
-
 const StyledInput = styled.input`
   padding: 0.75rem;
-  border: 1px solid var(--dark-gray);
+  border: 1px solid var(--form-border);
   border-radius: var(--border-radius);
+  font-family: var(--font-p);
+  height: 3.3rem;
   font-size: 1rem;
   color: var(--text-color);
   background: var(--background-color);
+  &:hover {
+    border-color: var(--light-orange);
+  }
+  &:focus-within {
+    border-color: var(--light-orange);
+    outline: none;
+  }
 `;
-
 const StyledTextarea = styled.textarea`
   padding: 0.75rem;
-  border: 1px solid var(--dark-gray);
+  border: 1px solid var(--form-border);
   border-radius: var(--border-radius);
   font-size: 1rem;
   color: var(--text-color);
   background: var(--background-color);
   resize: vertical;
+  &:hover {
+    border-color: var(--light-orange);
+  }
+  &:focus-within {
+    border-color: var(--light-orange);
+    outline: none;
+  }
 `;
-
 const StyledLabel = styled.label`
   font-weight: bold;
   margin-top: 0.8rem;
   font-family: var(--font-h1);
   font-size: 1.125rem;
 `;
-
 const StyledCheckboxContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin: 1rem 0;
-
   label {
     display: flex;
     align-items: flex-start;
     font-family: var(--font-p);
     font-size: 15px;
   }
-
   input[type="checkbox"] {
     margin-right: 0.5rem;
   }
-
   @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -341,12 +432,10 @@ const StyledCheckbox = styled.input.attrs({ type: "checkbox" })`
   border-radius: 4px;
   cursor: pointer;
   position: relative;
-
   &:checked {
     background-color: green;
     border-color: green;
   }
-
   &:checked::after {
     content: "✓";
     position: absolute;
@@ -356,35 +445,49 @@ const StyledCheckbox = styled.input.attrs({ type: "checkbox" })`
     color: white;
     font-size: 16px;
   }
+  &:hover {
+    border-color: var(--light-orange);
+  }
+  &:focus-within {
+    border-color: var(--light-orange);
+    outline: none;
+  }
 `;
-
 const StyledFieldset = styled.fieldset`
   font-size: 1.125rem;
   font-family: var(--font-h1);
   border-radius: var(--border-radius);
-  border: 1px solid var(--dark-gray);
+  border: 1px solid var(--form-border);
   margin-top: 0.9375rem;
   background: var(--background-color);
+  &:hover {
+    border-color: var(--light-orange);
+  }
 `;
-
 const StyledLegend = styled.legend`
   text-align: center;
 `;
-
-const StyledWrapDiv = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(auto, auto);
-  gap: 10px;
-  justify-items: center;
+const StyledImageUploadButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1rem 0;
 `;
 
+const StyledImageListContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+`;
 const ImageContainer = styled.div`
   position: relative;
   width: 200px;
   height: 200px;
+  border: 1px solid var(--form-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
 `;
-
 const TransparentDeleteButton = styled.button`
   position: absolute;
   top: 10px;
@@ -397,4 +500,41 @@ const TransparentDeleteButton = styled.button`
   gap: 5px;
   z-index: 1;
   cursor: pointer;
+`;
+const StyledSelect = styled(Select)`
+  .react-select__control {
+    border: 1px solid var(--form-border);
+    border-radius: var(--border-radius);
+    font-family: var(--font-p);
+    font-size: 1rem;
+    color: var(--text-color);
+    background: var(--background-color);
+    height: 50px;
+    box-shadow: none;
+    line-height: 2.6;
+
+    cursor: pointer;
+    &:hover {
+      border-color: var(--light-orange);
+    }
+    &:focus-within {
+      border-color: var(--light-orange);
+    }
+  }
+  .react-select__menu {
+    background-color: var(--form-background);
+  }
+  .react-select__option {
+    background-color: var(--form-background);
+    color: var(--text-color);
+    &:hover {
+      background-color: var(--light-orange);
+    }
+  }
+  .react-select__input-container {
+    color: var(--text-color);
+  }
+  .react-select__single-value {
+    color: var(--text-color);
+  }
 `;
