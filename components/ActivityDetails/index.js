@@ -21,7 +21,6 @@ export default function ActivityDetails({
 }) {
   const router = useRouter();
   const images = activity.images;
-
   return (
     <StyledArticle>
       <ImageContainer>

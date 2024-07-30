@@ -69,9 +69,11 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     setCoordinates({ lat: newLat, lng: newLong });
     const placeData = await fetchCoordinatesData(newLat, newLong);
     setSelectedCountry({
-      value: placeData.countryName,
+      value: placeData.countryCode,
       label: placeData.countryName,
     });
+    const citiesNames = await fetchCitiesData(selectedCountry.value);
+    setCities(citiesNames);
     setSelectedCity({ value: placeData.cityName, label: placeData.cityName });
   };
 
