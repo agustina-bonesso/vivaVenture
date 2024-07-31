@@ -1,28 +1,17 @@
-import ReactWeather, { useOpenWeather } from "react-open-weather";
 import styled from "styled-components";
+const OPENWEATHER_USER = process.env.REACT_APP_OPENWEATHER_ID;
 
 export default function WeatherInformation({ activity }) {
-  const { data, isLoading, errorMessage } = useOpenWeather({
-    key: "d96e39731c822f21ac8dc394bdfad639",
-    lat: activity.lat,
-    lon: activity.lng,
-    lang: "en",
-    unit: "metric",
-  });
-
-  return (
-    <WeatherContainer>
-      <ReactWeather
-        isLoading={isLoading}
-        errorMessage={errorMessage}
-        data={data}
-        lang="en"
-        locationLabel={activity.city}
-        unitsLabels={{ temperature: "C", windSpeed: "Km/h" }}
-        showForecast
-      />
-    </WeatherContainer>
-  );
+  async function fetchWeather() {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${activity.lat}&lon=${activity.lng}&appid=${OPENWEATHER_USER}`
+    );
+    const data = await response.json();
+    console.log(OPENWEATHER_USER);
+    console.log(data);
+  }
+  fetchWeather();
+  return <WeatherContainer></WeatherContainer>;
 }
 
 const WeatherContainer = styled.div`
