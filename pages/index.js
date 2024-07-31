@@ -16,13 +16,13 @@ export default function HomePage({
       <StyledList>
         {results.map((activity) => {
           return (
-            <li key={activity.id}>
+            <li key={activity._id}>
               <ActivityCard
                 activity={activity}
                 onToggleFavorite={onToggleFavorite}
                 isFavorite={
                   favoriteActivitiesList.find(
-                    (favActivity) => favActivity.id === activity.id
+                    (favActivity) => favActivity._id === activity._id
                   )?.isFavorite
                 }
               />

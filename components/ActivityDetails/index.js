@@ -33,7 +33,7 @@ export default function ActivityDetails({
           <Icon name="chevronLeft" color="black" />
         </TransparentBackButton>
         <TransparentFavoriteButton
-          onClick={() => onToggleFavorite(activity.id)}
+          onClick={() => onToggleFavorite(activity._id)}
         >
           <Icon
             name="heart"
@@ -51,7 +51,7 @@ export default function ActivityDetails({
               title="Edit activity"
               type="button"
               $variant="edit"
-              href={`/${activity.id}/edit`}
+              href={`/${activity._id}/edit`}
             >
               <Icon name="edit" />
             </StyledEditLink>
@@ -59,7 +59,7 @@ export default function ActivityDetails({
               title="Delete activity"
               type="button"
               $variant="delete"
-              onClick={() => onDeleteActivity(activity.id)}
+              onClick={() => onDeleteActivity(activity._id)}
             >
               <Icon name="delete" />
             </StyledButton>
