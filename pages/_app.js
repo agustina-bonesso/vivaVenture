@@ -10,16 +10,22 @@ import { useEffect, useState } from "react";
 import { ConfirmModal } from "@/components/ConfirmModal";
 import Layout from "@/components/Layout";
 import Fuse from "fuse.js";
+import useSWR from "swr";
+
+const URL = "api/activities";
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function App({ Component, pageProps }) {
+  const { data, error, isLoading } = useSWR(URL, fetcher);
   const [activityData, setActivityData] = useLocalStorageState(`activityData`, {
-    defaultValue: dummyData,
-  });
+    defaultValue: data,
+  }); 
   const router = useRouter();
   const [favoriteActivitiesList, setFavoriteActivitiesList] =
     useLocalStorageState("favorites", {
       defaultValue: [],
     });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeId, setActiveId] = useState(null);
 
@@ -155,7 +161,8 @@ export default function App({ Component, pageProps }) {
       toast.info("No matching results !");
     }
   }, [searchTerm, results]);
-
+  if (error) return <div>failed to load</div>;
+  if (isLoading) return <div>loading...</div>;
   return (
     <>
       <GlobalStyle />
