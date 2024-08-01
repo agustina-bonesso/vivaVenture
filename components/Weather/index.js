@@ -38,7 +38,7 @@ export default function WeatherInformation({ activity }) {
       }
     }
     fetchWeather();
-  }, [activity.lat, activity.lng]);
+  }, [activity.lat, activity.lng, apiKey]);
 
   if (!weatherData) {
     return <div>Loading...</div>;
