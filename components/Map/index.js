@@ -48,6 +48,7 @@ const MapWrapper = styled.div`
   overflow: hidden;
   box-shadow: var(--box-shadow);
   margin: 1rem 0;
+  position: relative;
   z-index: 1;
 `;
 
