@@ -6,13 +6,13 @@ export default function WeatherInformation({ activity }) {
   const [forecastData, setForecastData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const OPENWEATHER_USER = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+  const OPENWEATHER_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 
   useEffect(() => {
     async function fetchWeather() {
       try {
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${activity.lat}&lon=${activity.lng}&appid=${OPENWEATHER_USER}&units=metric`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${activity.lat}&lon=${activity.lng}&appid=${OPENWEATHER_KEY}&units=metric`
         );
         const data = await response.json();
         if (response.ok) {
@@ -22,7 +22,7 @@ export default function WeatherInformation({ activity }) {
         }
 
         const forecastResponse = await fetch(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${activity.lat}&lon=${activity.lng}&appid=${OPENWEATHER_USER}&units=metric`
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${activity.lat}&lon=${activity.lng}&appid=${OPENWEATHER_KEY}&units=metric`
         );
         const forecastData = await forecastResponse.json();
         if (forecastResponse.ok) {
@@ -38,7 +38,7 @@ export default function WeatherInformation({ activity }) {
       }
     }
     fetchWeather();
-  }, [activity.lat, activity.lng, OPENWEATHER_USER]);
+  }, [activity.lat, activity.lng, OPENWEATHER_KEY]);
 
   if (!weatherData) {
     return <div>Loading...</div>;
