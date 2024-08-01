@@ -6,11 +6,13 @@ export default function WeatherInformation({ activity }) {
   const [forecastData, setForecastData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
+  const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+
   useEffect(() => {
     async function fetchWeather() {
       try {
         const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${activity.lat}&lon=${activity.lng}&appid=897e1bd2bf62c4c4bc7e17751c0e4ae4&units=metric`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${activity.lat}&lon=${activity.lng}&appid=${apiKey}&units=metric`
         );
         const data = await response.json();
         if (response.ok) {
@@ -20,7 +22,7 @@ export default function WeatherInformation({ activity }) {
         }
 
         const forecastResponse = await fetch(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${activity.lat}&lon=${activity.lng}&appid=897e1bd2bf62c4c4bc7e17751c0e4ae4&units=metric`
+          `https://api.openweathermap.org/data/2.5/forecast?lat=${activity.lat}&lon=${activity.lng}&appid=${apiKey}&units=metric`
         );
         const forecastData = await forecastResponse.json();
         if (forecastResponse.ok) {
