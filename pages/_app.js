@@ -1,13 +1,10 @@
 import GlobalStyle from "@/styles";
-import { dummyData } from "@/lib/dummyData";
-import { v4 as uuid } from "uuid";
 import { useRouter } from "next/router";
 import useLocalStorageState from "use-local-storage-state";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledToastContainer } from "@/components/Toast";
-import { useEffect, useState } from "react";
-import { ConfirmModal } from "@/components/ConfirmModal";
+import { useEffect, useState, useMemo } from "react";
 import Layout from "@/components/Layout";
 import Fuse from "fuse.js";
 import useSWR from "swr";
@@ -16,75 +13,50 @@ const URL = "api/activities";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function App({ Component, pageProps }) {
-  const { data, error, isLoading } = useSWR(URL, fetcher);
-  const [activityData, setActivityData] = useLocalStorageState(`activityData`, {
-    defaultValue: data,
-  }); 
+  const { data: activityData, error, isLoading } = useSWR(URL, fetcher);
   const router = useRouter();
   const [favoriteActivitiesList, setFavoriteActivitiesList] =
     useLocalStorageState("favorites", {
       defaultValue: [],
     });
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeId, setActiveId] = useState(null);
-
   const [randomActivity, setRandomActivity] = useLocalStorageState(
     "randomActivity",
     { defaultValue: null }
   );
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  function handleAddActivity(newActivity) {
-    const newActivityWithId = { id: uuid(), ...newActivity };
-    setActivityData([newActivityWithId, ...activityData]);
-    toast.success("Activity added succesfully !");
-  }
+  const fuseCategory = useMemo(
+    () =>
+      new Fuse(activityData, {
+        keys: ["category"],
+        threshold: 0.3,
+      }),
+    [activityData]
+  );
 
-  function handleEditActivity(updatedActivity) {
-    const updatedActivities = activityData.map((activity) => {
-      if (activity.id !== updatedActivity.id) {
-        return activity;
-      }
-      return updatedActivity;
-    });
-    setActivityData(updatedActivities);
-    toast.success("Activity updated succesfully !");
-  }
-
-  function handleDeleteActivity(id) {
-    setIsModalOpen(true);
-    setActiveId(id);
-  }
-
-  function confirmDeleteActivity() {
-    const updatedActivities = activityData.filter(
-      (activity) => activity.id !== activeId
-    );
-    setActivityData(updatedActivities);
-    setIsModalOpen(false);
-    setActiveId(null);
-    router.push("/");
-    toast.success("Activity deleted successfully !");
-  }
+  const fuseActivity = useMemo(
+    () =>
+      new Fuse(activityData, {
+        keys: ["title", "city", "country"],
+        threshold: 0.3,
+      }),
+    [activityData]
+  );
 
   function handleToggleFavorite(id) {
-    const isSaved = favoriteActivitiesList.find(
-      (activity) => activity.id === id
+    const isFavorite = favoriteActivitiesList.some(
+      (activity) => activity._id === id
     );
-
-    if (isSaved) {
-      const updatedList = favoriteActivitiesList.map((activity) => {
-        if (activity.id !== id) {
-          return activity;
-        }
-        return { ...activity, isFavorite: !activity.isFavorite };
-      });
-      setFavoriteActivitiesList(updatedList);
+    if (isFavorite) {
+      setFavoriteActivitiesList(
+        favoriteActivitiesList.filter((activity) => activity._id !== id)
+      );
     } else {
-      const newFavoriteActivity = { id: id, isFavorite: true };
+      const activity = activityData.find((activity) => activity._id === id);
       setFavoriteActivitiesList([
-        newFavoriteActivity,
         ...favoriteActivitiesList,
+        { ...activity, isFavorite: true },
       ]);
     }
   }
@@ -94,75 +66,42 @@ export default function App({ Component, pageProps }) {
     setRandomActivity(activityData[randomIndex]);
   }
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [results, setResults] = useState(activityData);
-
-  useEffect(() => {
-    setResults(activityData);
-  }, [activityData]);
-
-  const categoryOptions = {
-    keys: ["category"],
-    threshold: 0.3,
-  };
-  const searchOptions = {
-    keys: ["title", "city", "country"],
-    threshold: 0.3,
-  };
-
-  const fuseCategory = new Fuse(activityData, categoryOptions);
-  const fuseActivity = new Fuse(activityData, searchOptions);
-
-  function handleCategorySelect(activity) {
-    if (selectedCategory === activity) {
-      setSelectedCategory("");
-      updateResults("", searchTerm);
-    } else {
-      setSelectedCategory(activity);
-      updateResults(activity, searchTerm);
-    }
+  function handleCategorySelect(category) {
+    setSelectedCategory(selectedCategory === category ? "" : category);
   }
 
   function handleSearch(event) {
-    const searchTerm = event.target.value.toLowerCase();
-    setSearchTerm(searchTerm);
-    updateResults(selectedCategory, searchTerm);
+    setSearchTerm(event.target.value.toLowerCase());
   }
 
-  function updateResults(activityCategory, searchTerm) {
-    let filteredResults = activityData;
-
-    if (activityCategory) {
+  const filteredResults = useMemo(() => {
+    let results = activityData;
+    if (selectedCategory) {
       const categoryResults = fuseCategory
-        .search(activityCategory)
+        .search(selectedCategory)
         .map((result) => result.item);
-
-      filteredResults = filteredResults.filter((activity) =>
+      results = results.filter((activity) =>
         categoryResults.includes(activity)
       );
     }
-
     if (searchTerm) {
-      const activityResults = fuseActivity
+      const searchResults = fuseActivity
         .search(searchTerm)
         .map((result) => result.item);
-
-      filteredResults = filteredResults.filter((activity) =>
-        activityResults.includes(activity)
-      );
+      results = results.filter((activity) => searchResults.includes(activity));
     }
-
-    setResults(filteredResults);
-  }
+    return results;
+  }, [activityData, selectedCategory, searchTerm, fuseCategory, fuseActivity]);
 
   useEffect(() => {
-    if (searchTerm && results.length === 0) {
-      toast.info("No matching results !");
+    if (searchTerm && filteredResults.length === 0) {
+      toast.info("No matching results!");
     }
-  }, [searchTerm, results]);
-  if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  }, [searchTerm, filteredResults]);
+
+  if (error) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <>
       <GlobalStyle />
@@ -174,22 +113,12 @@ export default function App({ Component, pageProps }) {
           getRandomActivity={getRandomActivity}
           activityData={activityData}
           favoriteActivitiesList={favoriteActivitiesList}
-          onAddActivity={handleAddActivity}
-          onEditActivity={handleEditActivity}
-          onDeleteActivity={handleDeleteActivity}
           onToggleFavorite={handleToggleFavorite}
           onSelect={handleCategorySelect}
           selectedCategory={selectedCategory}
-          results={results}
+          results={filteredResults}
         />
       </Layout>
-      <ConfirmModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onConfirm={confirmDeleteActivity}
-      >
-        Are you sure you want to delete this activity?
-      </ConfirmModal>
     </>
   );
 }

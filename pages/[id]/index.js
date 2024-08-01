@@ -1,14 +1,17 @@
 import { useRouter } from "next/router";
 import ActivityDetails from "@/components/ActivityDetails";
+import { ConfirmModal } from "@/components/ConfirmModal";
+import { toast } from "react-toastify";
+import { useState } from "react";
 
 export default function Activity({
   activityData,
-  onDeleteActivity,
   onToggleFavorite,
   favoriteActivitiesList,
 }) {
   const router = useRouter();
   const { id } = router.query;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const activity = activityData.find((activity) => activity._id === id);
 
@@ -16,18 +19,40 @@ export default function Activity({
     (favActivity) => favActivity._id === id
   )?.isFavorite;
 
+  async function confirmDeleteActivity() {
+    setIsModalOpen(false);
+    const response = await fetch(`/api/activities/${id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      router.push("/");
+    }
+    toast.success("Activity deleted successfully!");
+  }
+
+  async function handleDeleteActivity() {
+    setIsModalOpen(true);
+  }
+
   return (
     <>
       {activity ? (
         <ActivityDetails
           activity={activity}
-          onDeleteActivity={onDeleteActivity}
+          onDeleteActivity={handleDeleteActivity}
           isFavorite={isFavorite}
           onToggleFavorite={onToggleFavorite}
         />
       ) : (
         <p>Activity not found</p>
       )}
+      <ConfirmModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={confirmDeleteActivity}
+      >
+        Are you sure you want to delete this activity?
+      </ConfirmModal>
     </>
   );
 }

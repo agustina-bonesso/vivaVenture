@@ -7,11 +7,20 @@ export default async function handler(request, response) {
 
   if (request.method === "GET") {
     const activity = await Activity.findById(id);
-
     if (!activity) {
       return response.status(404).json({ status: "Not Found" });
     }
-
     response.status(200).json(activity);
+  }
+  if (request.method === "PUT") {
+    const activityData = request.body;
+    await Activity.findByIdAndUpdate(id, activityData);
+    return response.status(200).json({ status: `Activity ${id} updated!` });
+  }
+  if (request.method === "DELETE") {
+    await Activity.findByIdAndDelete(id);
+    response
+      .status(200)
+      .json({ status: `Activity ${id} successfully deleted.` });
   }
 }

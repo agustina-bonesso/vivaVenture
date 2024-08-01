@@ -59,7 +59,7 @@ export default function ActivityDetails({
               title="Delete activity"
               type="button"
               $variant="delete"
-              onClick={() => onDeleteActivity(activity._id)}
+              onClick={onDeleteActivity}
             >
               <Icon name="delete" />
             </StyledButton>

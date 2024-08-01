@@ -3,15 +3,14 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const activitySchema = new Schema({
-  id: { type: String, required: true },
   title: { type: String, required: true },
   category: [{ type: String, required: true }],
   city: { type: String, required: true },
   country: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String },
   images: [
     {
-      data_url: { type: String, required: true },
+      data_url: { type: String },
     },
   ],
   lat: { type: Number, required: true },

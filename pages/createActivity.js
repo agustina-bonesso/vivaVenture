@@ -1,15 +1,35 @@
 import ActivityForm from "@/components/ActivityForm";
 import { StyledBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
+import useSWR from "swr";
+import { toast } from "react-toastify";
 
-export default function CreateActivity({ onAddActivity, activity }) {
+
+export default function CreateActivity({ activity }) {
+  const { mutate } = useSWR("/api/activities");
+
+  async function handleAddActivity(newActivityData) {
+    console.log("hier create activity Page");
+    const response = await fetch("/api/activities", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newActivityData),
+    });
+
+    if (response.ok) {
+      mutate();
+    }
+    toast.success("Activity added successfully!");
+  }
   return (
     <>
       <StyledBackLink href="/">
         <Icon name="chevronLeft" />
         Back to all Activities
       </StyledBackLink>
-      <ActivityForm onSubmit={onAddActivity} initialData={activity} />
+      <ActivityForm onSubmit={handleAddActivity} initialData={activity} />
     </>
   );
 }
