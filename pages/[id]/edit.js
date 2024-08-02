@@ -23,8 +23,8 @@ export default function EditPage({ activityData }) {
 
     if (response.ok) {
       mutate();
+      toast.success("Activity updated successfully!");
     }
-    toast.success("Activity updated successfully!");
   }
   return (
     <>

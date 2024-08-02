@@ -26,8 +26,8 @@ export default function Activity({
     });
     if (response.ok) {
       router.push("/");
+      toast.success("Activity deleted successfully!");
     }
-    toast.success("Activity deleted successfully!");
   }
 
   async function handleDeleteActivity() {

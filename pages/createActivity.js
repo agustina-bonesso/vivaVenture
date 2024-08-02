@@ -16,11 +16,12 @@ export default function CreateActivity({ activity }) {
       },
       body: JSON.stringify(newActivityData),
     });
-
+    
     if (response.ok) {
       mutate();
+      toast.success("Activity added successfully!");
     }
-    toast.success("Activity added successfully!");
+    
   }
   return (
     <>
