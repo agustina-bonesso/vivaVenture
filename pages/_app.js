@@ -5,13 +5,9 @@ import { StyledToastContainer } from "@/components/Toast";
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import Fuse from "fuse.js";
-import useSWR from "swr";
 
-const URL = "api/activities";
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function App({ Component, pageProps }) {
-  const { data: activityData, error, isLoading } = useSWR(URL, fetcher);
   const [favoriteActivitiesList, setFavoriteActivitiesList] =
     useLocalStorageState("favorites", {
       defaultValue: [],
@@ -44,20 +40,30 @@ export default function App({ Component, pageProps }) {
     const randomIndex = Math.floor(Math.random() * activityData.length);
     setRandomActivity(activityData[randomIndex]);
   }
-  const filteredActivities = selectedCategory
-    ? activityData.filter((activity) =>
+
+  const onFilterActivities = (data) => {
+    if (selectedCategory) {
+      return data.filter((activity) =>
         activity.category.includes(selectedCategory)
-      )
-    : activityData;
+      );
+    } else {
+      return data;
+    }
+  };
+
+  const onSearchActivities = (data) => {
+    const fuseActivity = new Fuse(data, searchOptions);
+    if (searchTerm) {
+      return fuseActivity.search(searchTerm).map((res) => res.item);
+    } else {
+      return data;
+    }
+  };
 
   const searchOptions = {
     keys: ["title", "city", "country"],
     threshold: 0.3,
   };
-  const fuseActivity = new Fuse(filteredActivities, searchOptions);
-  const results = searchTerm
-    ? fuseActivity.search(searchTerm).map((res) => res.item)
-    : filteredActivities;
 
   function handleCategorySelect(newCategory) {
     if (selectedCategory === newCategory) setSelectedCategory("");
@@ -68,8 +74,6 @@ export default function App({ Component, pageProps }) {
     const searchTerm = event.target.value.toLowerCase();
     setSearchTerm(searchTerm);
   }
-  if (error) return <div>Failed to load</div>;
-  if (isLoading) return <div>Loading...</div>;
 
   return (
     <>
@@ -80,12 +84,12 @@ export default function App({ Component, pageProps }) {
           {...pageProps}
           randomActivity={randomActivity}
           getRandomActivity={getRandomActivity}
-          activityData={activityData}
           favoriteActivitiesList={favoriteActivitiesList}
           onToggleFavorite={handleToggleFavorite}
           onSelect={handleCategorySelect}
           selectedCategory={selectedCategory}
-          results={results}
+          onFilterActivities={onFilterActivities}
+          onSearchActivities={onSearchActivities}
         />
       </Layout>
     </>

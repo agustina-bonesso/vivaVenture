@@ -5,7 +5,7 @@ import { Icon } from "@/components/Icon";
 import useSWR from "swr";
 import { toast } from "react-toastify";
 
-export default function EditPage({ activityData }) {
+export default function EditPage() {
   const router = useRouter();
   const { id } = router.query;
   const { data: activity, mutate } = useSWR(`/api/activities/${id}`);
@@ -24,6 +24,7 @@ export default function EditPage({ activityData }) {
       return;
     }
     mutate();
+    router.back();
     toast.success("Activity updated successfully!");
   }
   return (

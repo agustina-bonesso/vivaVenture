@@ -4,9 +4,9 @@ import { StyledList } from "@/styles";
 export default function Favorites({
   favoriteActivitiesList,
   onToggleFavorite,
-  results,
+  activityData,
 }) {
-  const favoriteActivities = results.filter((activity) =>
+  const favoriteActivities = activityData.filter((activity) =>
     favoriteActivitiesList.find(
       (favorivedActivity) =>
         favorivedActivity._id === activity._id && favorivedActivity.isFavorite
