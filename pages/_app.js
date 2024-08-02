@@ -24,24 +24,6 @@ export default function App({ Component, pageProps }) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const fuseCategory = useMemo(
-    () =>
-      new Fuse(activityData, {
-        keys: ["category"],
-        threshold: 0.3,
-      }),
-    [activityData]
-  );
-
-  const fuseActivity = useMemo(
-    () =>
-      new Fuse(activityData, {
-        keys: ["title", "city", "country"],
-        threshold: 0.3,
-      }),
-    [activityData]
-  );
-
   function handleToggleFavorite(id) {
     const isFavorite = favoriteActivitiesList.some(
       (activity) => activity._id === id
@@ -63,40 +45,28 @@ export default function App({ Component, pageProps }) {
     const randomIndex = Math.floor(Math.random() * activityData.length);
     setRandomActivity(activityData[randomIndex]);
   }
+  const filteredActivities = selectedCategory
+    ? activityData.filter((activity) => activity.category.includes(selectedCategory))
+    : activityData;
 
-  function handleCategorySelect(category) {
-    setSelectedCategory(selectedCategory === category ? "" : category);
+  const searchOptions = {
+    keys: ["title", "city", "country"],
+    threshold: 0.3,
+  };
+  const fuseActivity = new Fuse(filteredActivities, searchOptions);
+  const results = searchTerm
+    ? fuseActivity.search(searchTerm).map((res) => res.item)
+    : filteredActivities;
+
+  function handleCategorySelect(newCategory) {
+    if (selectedCategory === newCategory) setSelectedCategory("");
+    else setSelectedCategory(newCategory);
   }
 
   function handleSearch(event) {
-    setSearchTerm(event.target.value.toLowerCase());
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
   }
-
-  const filteredResults = useMemo(() => {
-    let results = activityData;
-    if (selectedCategory) {
-      const categoryResults = fuseCategory
-        .search(selectedCategory)
-        .map((result) => result.item);
-      results = results.filter((activity) =>
-        categoryResults.includes(activity)
-      );
-    }
-    if (searchTerm) {
-      const searchResults = fuseActivity
-        .search(searchTerm)
-        .map((result) => result.item);
-      results = results.filter((activity) => searchResults.includes(activity));
-    }
-    return results;
-  }, [activityData, selectedCategory, searchTerm, fuseCategory, fuseActivity]);
-
-  useEffect(() => {
-    if (searchTerm && filteredResults.length === 0) {
-      toast.info("No matching results!");
-    }
-  }, [searchTerm, filteredResults]);
-
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
 
@@ -114,7 +84,7 @@ export default function App({ Component, pageProps }) {
           onToggleFavorite={handleToggleFavorite}
           onSelect={handleCategorySelect}
           selectedCategory={selectedCategory}
-          results={filteredResults}
+          results={results}
         />
       </Layout>
     </>

@@ -3,6 +3,7 @@ import ActivityDetails from "@/components/ActivityDetails";
 import { ConfirmModal } from "@/components/ConfirmModal";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import useSWR from "swr";
 
 export default function Activity({
   activityData,
@@ -11,6 +12,12 @@ export default function Activity({
 }) {
   const router = useRouter();
   const { id } = router.query;
+  const {
+    data,
+    isLoading,
+    error,
+    mutate,
+  } = useSWR(`/api/activities/${id}`);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const activity = activityData.find((activity) => activity._id === id);
@@ -25,6 +32,7 @@ export default function Activity({
       method: "DELETE",
     });
     if (response.ok) {
+      mutate();
       router.push("/");
       toast.success("Activity deleted successfully!");
     }
@@ -33,7 +41,8 @@ export default function Activity({
   async function handleDeleteActivity() {
     setIsModalOpen(true);
   }
-
+  if (error) return <div>Failed to load</div>;
+  if (isLoading) return <div>Loading...</div>;
   return (
     <>
       {activity ? (

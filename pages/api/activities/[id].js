@@ -4,9 +4,11 @@ import Activity from "@/db/models/Activity";
 export default async function handler(request, response) {
   await dbConnect();
   const { id } = request.query;
-
+  console.log("hier [id].js");
   if (request.method === "GET") {
+    console.log("HIER in der api/[id].js");
     const activity = await Activity.findById(id);
+    console.log(activity);
     if (!activity) {
       return response.status(404).json({ status: "Not Found" });
     }
