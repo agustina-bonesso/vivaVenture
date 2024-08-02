@@ -6,39 +6,32 @@ export default function WeatherInformation({ activity }) {
   const [forecastData, setForecastData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const OPENWEATHER_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
-
   useEffect(() => {
     async function fetchWeather() {
       try {
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${activity.lat}&lon=${activity.lng}&appid=${OPENWEATHER_KEY}&units=metric`
-        );
+        const response = await fetch("/api/weather", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ lat: activity.lat, lng: activity.lng }),
+        });
         const data = await response.json();
         if (response.ok) {
-          setWeatherData(data);
-        } else {
-          console.error("Error fetching weather data:", data);
-        }
-
-        const forecastResponse = await fetch(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${activity.lat}&lon=${activity.lng}&appid=${OPENWEATHER_KEY}&units=metric`
-        );
-        const forecastData = await forecastResponse.json();
-        if (forecastResponse.ok) {
-          const dailyForecast = forecastData.list
+          setWeatherData(data.weather);
+          const dailyForecast = data.forecast.list
             .filter((forecast) => new Date(forecast.dt_txt).getHours() === 12)
             .slice(1, 5);
           setForecastData(dailyForecast);
         } else {
-          console.error("Error fetching forecast data:", forecastData);
+          console.error("Error fetching weather data:", data);
         }
       } catch (error) {
         console.error("Failed to fetch weather data:", error);
       }
     }
     fetchWeather();
-  }, [activity.lat, activity.lng, OPENWEATHER_KEY]);
+  }, [activity.lat, activity.lng]);
 
   if (!weatherData) {
     return <div>Loading...</div>;
