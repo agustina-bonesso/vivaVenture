@@ -14,7 +14,6 @@ export default function HomePage({
   onSearchActivities,
 }) {
   const { data: activityData, error, isLoading } = useSWR(URL, fetcher);
-  const results = onSearchActivities(onFilterActivities(activityData));
 
   if (error) return <div>Failed to load</div>;
   if (isLoading) return <div>Loading...</div>;
