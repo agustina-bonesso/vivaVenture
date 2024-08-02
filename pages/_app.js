@@ -1,9 +1,8 @@
 import GlobalStyle from "@/styles";
 import useLocalStorageState from "use-local-storage-state";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledToastContainer } from "@/components/Toast";
-import { useEffect, useState, useMemo } from "react";
+import { useState } from "react";
 import Layout from "@/components/Layout";
 import Fuse from "fuse.js";
 import useSWR from "swr";
@@ -46,7 +45,9 @@ export default function App({ Component, pageProps }) {
     setRandomActivity(activityData[randomIndex]);
   }
   const filteredActivities = selectedCategory
-    ? activityData.filter((activity) => activity.category.includes(selectedCategory))
+    ? activityData.filter((activity) =>
+        activity.category.includes(selectedCategory)
+      )
     : activityData;
 
   const searchOptions = {

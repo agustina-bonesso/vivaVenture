@@ -8,12 +8,10 @@ import { toast } from "react-toastify";
 export default function EditPage({ activityData }) {
   const router = useRouter();
   const { id } = router.query;
-  const { mutate } = useSWR(`/api/activities/${id}`);
-
-  const activity = activityData.find((activity) => activity._id === id);
+  const { data: activity, mutate } = useSWR(`/api/activities/${id}`);
 
   async function handleEditActivity(updatedActivity) {
-    const response = await fetch(`/api/activities/${activity._id}`, {
+    const response = await fetch(`/api/activities/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -21,10 +19,12 @@ export default function EditPage({ activityData }) {
       body: JSON.stringify(updatedActivity),
     });
 
-    if (response.ok) {
-      mutate();
-      toast.success("Activity updated successfully!");
+    if (!response.ok) {
+      console.error(response.status);
+      return;
     }
+    mutate();
+    toast.success("Activity updated successfully!");
   }
   return (
     <>

@@ -4,7 +4,6 @@ import { Icon } from "@/components/Icon";
 import useSWR from "swr";
 import { toast } from "react-toastify";
 
-
 export default function CreateActivity({ activity }) {
   const { mutate } = useSWR("/api/activities");
 
@@ -16,12 +15,12 @@ export default function CreateActivity({ activity }) {
       },
       body: JSON.stringify(newActivityData),
     });
-    
-    if (response.ok) {
-      mutate();
-      toast.success("Activity added successfully!");
+    if (!response.ok) {
+      console.error(response.status);
+      return;
     }
-    
+    mutate();
+    toast.success("Activity added successfully!");
   }
   return (
     <>

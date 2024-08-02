@@ -5,22 +5,19 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import useSWR from "swr";
 
-export default function Activity({
-  activityData,
-  onToggleFavorite,
-  favoriteActivitiesList,
-}) {
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+export default function Activity({ onToggleFavorite, favoriteActivitiesList }) {
   const router = useRouter();
   const { id } = router.query;
+
   const {
-    data,
+    data: activity,
     isLoading,
     error,
     mutate,
-  } = useSWR(`/api/activities/${id}`);
+  } = useSWR(`/api/activities/${id}`, fetcher);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const activity = activityData.find((activity) => activity._id === id);
 
   const isFavorite = favoriteActivitiesList.find(
     (favActivity) => favActivity._id === id
@@ -31,11 +28,14 @@ export default function Activity({
     const response = await fetch(`/api/activities/${id}`, {
       method: "DELETE",
     });
-    if (response.ok) {
-      mutate();
-      router.push("/");
-      toast.success("Activity deleted successfully!");
+
+    if (!response.ok) {
+      console.error(response.status);
+      return;
     }
+    mutate();
+    router.push("/");
+    toast.success("Activity deleted successfully!");
   }
 
   async function handleDeleteActivity() {
