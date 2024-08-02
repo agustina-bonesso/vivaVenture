@@ -9,7 +9,6 @@ export default function CreateActivity({ activity }) {
   const { mutate } = useSWR("/api/activities");
 
   async function handleAddActivity(newActivityData) {
-    console.log("hier create activity Page");
     const response = await fetch("/api/activities", {
       method: "POST",
       headers: {
