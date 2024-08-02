@@ -6,7 +6,7 @@ export default function WeatherInformation({ activity }) {
   const [forecastData, setForecastData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const OPENWEATHER_KEY = process.env.OPENWEATHER_KEY;
+  const OPENWEATHER_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
 
   useEffect(() => {
     async function fetchWeather() {
