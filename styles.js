@@ -76,7 +76,10 @@ export default createGlobalStyle`
 
     --border-radius: 0.5rem;
 
-    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    --weathercard-primary: #E0F7FA;
+    --weathercard-secondary: #B2EBF2;
 
     /* Button */
     --button-background: #fff;
@@ -101,6 +104,8 @@ export default createGlobalStyle`
       --teal: #00A6AA; 
       --brown: #b9773e;
       --toastify-color: #121212;
+      --weathercard-primary: #263238;
+      --weathercard-secondary: #37474F;
 
       /* Button */
       --button-background: #333;

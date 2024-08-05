@@ -10,6 +10,7 @@ import {
 import { StyledEditLink } from "@/components/StyledLinks";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
+import WeatherInformation from "@/components/Weather";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -74,6 +75,7 @@ export default function ActivityDetails({
           ))}
         </CategoryTags>
         <MapComponent lat={activity.lat} lng={activity.lng} />
+        <WeatherInformation activity={activity} />
       </Content>
     </StyledArticle>
   );
