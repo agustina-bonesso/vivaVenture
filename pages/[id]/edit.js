@@ -5,10 +5,10 @@ import { Icon } from "@/components/Icon";
 import useSWR from "swr";
 import { toast } from "react-toastify";
 
-export default function EditPage() {
+export default function EditPage({ mutate }) {
   const router = useRouter();
   const { id } = router.query;
-  const { data: activity, mutate } = useSWR(`/api/activities/${id}`);
+  const { data: activity } = useSWR(`/api/activities/${id}`);
 
   async function handleEditActivity(updatedActivity) {
     const response = await fetch(`/api/activities/${id}`, {

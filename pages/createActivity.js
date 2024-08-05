@@ -1,14 +1,11 @@
 import ActivityForm from "@/components/ActivityForm";
 import { StyledBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
-import useSWR from "swr";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
-export default function CreateActivity({ activity }) {
-  const { mutate } = useSWR("/api/activities");
+export default function CreateActivity({ activity, mutate }) {
   const router = useRouter();
-
   async function handleAddActivity(newActivityData) {
     const response = await fetch("/api/activities", {
       method: "POST",

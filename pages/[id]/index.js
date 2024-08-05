@@ -5,18 +5,15 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import useSWR from "swr";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
-export default function Activity({ onToggleFavorite, favoriteActivitiesList }) {
+export default function Activity({
+  onToggleFavorite,
+  favoriteActivitiesList,
+  mutate,
+}) {
   const router = useRouter();
   const { id } = router.query;
 
-  const {
-    data: activity,
-    isLoading,
-    error,
-    mutate,
-  } = useSWR(`/api/activities/${id}`, fetcher);
+  const { data: activity, isLoading, error } = useSWR(`/api/activities/${id}`);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isFavorite = favoriteActivitiesList.find(
