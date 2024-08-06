@@ -5,29 +5,27 @@ import CategoryIcons from "@/components/CategoryIcons";
 export default function HomePage({
   onToggleFavorite,
   favoriteActivitiesList,
-  results,
   onSelect,
   selectedCategory,
+  activityData,
 }) {
   return (
     <>
       <CategoryIcons onSelect={onSelect} selectedCategory={selectedCategory} />
       <StyledList>
-        {results.map((activity) => {
-          return (
-            <li key={activity.id}>
-              <ActivityCard
-                activity={activity}
-                onToggleFavorite={onToggleFavorite}
-                isFavorite={
-                  favoriteActivitiesList.find(
-                    (favActivity) => favActivity.id === activity.id
-                  )?.isFavorite
-                }
-              />
-            </li>
-          );
-        })}
+        {activityData.map((activity) => (
+          <li key={activity._id}>
+            <ActivityCard
+              activity={activity}
+              onToggleFavorite={onToggleFavorite}
+              isFavorite={
+                favoriteActivitiesList.find(
+                  (favActivity) => favActivity._id === activity._id
+                )?.isFavorite
+              }
+            />
+          </li>
+        ))}
       </StyledList>
     </>
   );

@@ -12,10 +12,10 @@ export default function Spotlight({
       <h1>Spotlight</h1>
       <ActivityCard
         activity={randomActivity}
-        onToggleFavorite={() => onToggleFavorite(randomActivity.id)}
+        onToggleFavorite={() => onToggleFavorite(randomActivity._id)}
         isFavorite={
           favoriteActivitiesList.find(
-            (favActivity) => favActivity.id === randomActivity.id
+            (favActivity) => favActivity._id === randomActivity._id
           )?.isFavorite
         }
       />

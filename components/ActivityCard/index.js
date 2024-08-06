@@ -16,7 +16,7 @@ export default function ActivityCard({
         <StyledImageComponent images={activity.images} alt={activity.title} />
         <StyledFavoriteButton
           onClick={() => {
-            onToggleFavorite(activity.id);
+            onToggleFavorite(activity._id);
           }}
         >
           <Icon
@@ -26,7 +26,7 @@ export default function ActivityCard({
           />
         </StyledFavoriteButton>
       </ImageContainer>
-      <StyledLink href={`/${activity.id}`}>
+      <StyledLink href={`/${activity._id}`}>
         <CardContent>
           <Title>{activity.title}</Title>
           <Info>{`${activity.city}, ${activity.country}`}</Info>
