@@ -3,8 +3,9 @@ import { StyledBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { mutate } from "swr";
 
-export default function CreateActivity({ activity, mutate }) {
+export default function CreateActivity({ activity }) {
   const router = useRouter();
   async function handleAddActivity(newActivityData) {
     const response = await fetch("/api/activities", {
@@ -18,7 +19,7 @@ export default function CreateActivity({ activity, mutate }) {
       console.error(response.status);
       return;
     }
-    mutate();
+    mutate("/api/activities");
     router.push("/");
     toast.success("Activity added successfully!");
   }

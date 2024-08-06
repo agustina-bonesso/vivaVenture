@@ -14,7 +14,6 @@ export default function App({ Component, pageProps }) {
     data: activityData,
     error,
     isLoading,
-    mutate,
   } = useSWR("/api/activities", fetcher);
 
   const [favoriteActivitiesList, setFavoriteActivitiesList] =
@@ -61,23 +60,14 @@ export default function App({ Component, pageProps }) {
   const fuseActivity = new Fuse(filteredActivities, searchOptions);
 
   function handleCategorySelect(newCategory) {
-    if (selectedCategory === newCategory) setSelectedCategory("");
-    else setSelectedCategory(newCategory);
-  }
-
-  function handleSearch(event) {
-    const searchTerm = event.target.value.toLowerCase();
-    setSearchTerm(searchTerm);
-  }
-
-  function handleCategorySelect(newCategory) {
     setSelectedCategory((prevCategory) =>
       prevCategory === newCategory ? "" : newCategory
     );
   }
 
   function handleSearch(event) {
-    setSearchTerm(event.target.value.toLowerCase());
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
   }
 
   const results = searchTerm
@@ -95,7 +85,6 @@ export default function App({ Component, pageProps }) {
         <Component
           {...pageProps}
           activityData={results}
-          mutate={mutate}
           randomActivity={randomActivity}
           getRandomActivity={getRandomActivity}
           favoriteActivitiesList={favoriteActivitiesList}

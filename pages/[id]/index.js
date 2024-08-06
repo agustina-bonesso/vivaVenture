@@ -3,13 +3,9 @@ import ActivityDetails from "@/components/ActivityDetails";
 import { ConfirmModal } from "@/components/ConfirmModal";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
-export default function Activity({
-  onToggleFavorite,
-  favoriteActivitiesList,
-  mutate,
-}) {
+export default function Activity({ onToggleFavorite, favoriteActivitiesList }) {
   const router = useRouter();
   const { id } = router.query;
 
@@ -30,7 +26,7 @@ export default function Activity({
       console.error(response.status);
       return;
     }
-    mutate();
+    mutate("/api/activities");
     router.push("/");
     toast.success("Activity deleted successfully!");
   }

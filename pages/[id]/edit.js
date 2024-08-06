@@ -2,10 +2,10 @@ import ActivityForm from "@/components/ActivityForm";
 import { useRouter } from "next/router";
 import { StyledBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { toast } from "react-toastify";
 
-export default function EditPage({ mutate }) {
+export default function EditPage() {
   const router = useRouter();
   const { id } = router.query;
   const { data: activity } = useSWR(`/api/activities/${id}`);
@@ -23,7 +23,7 @@ export default function EditPage({ mutate }) {
       console.error(response.status);
       return;
     }
-    mutate();
+    mutate("/api/activities");
     router.back();
     toast.success("Activity updated successfully!");
   }
