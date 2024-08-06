@@ -126,6 +126,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       return false;
     }
     onSubmit(newActivity);
+    isEditMode ? router.back() : router.push("/");
   }
 
   return (

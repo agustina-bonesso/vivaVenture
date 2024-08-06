@@ -24,7 +24,6 @@ export default function EditPage() {
       return;
     }
     mutate("/api/activities");
-    router.back();
     toast.success("Activity updated successfully!");
   }
   return (

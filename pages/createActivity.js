@@ -2,11 +2,9 @@ import ActivityForm from "@/components/ActivityForm";
 import { StyledBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import { toast } from "react-toastify";
-import { useRouter } from "next/router";
 import { mutate } from "swr";
 
 export default function CreateActivity({ activity }) {
-  const router = useRouter();
   async function handleAddActivity(newActivityData) {
     const response = await fetch("/api/activities", {
       method: "POST",
@@ -20,7 +18,6 @@ export default function CreateActivity({ activity }) {
       return;
     }
     mutate("/api/activities");
-    router.push("/");
     toast.success("Activity added successfully!");
   }
   return (
