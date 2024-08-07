@@ -6,6 +6,7 @@ import { useState } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import SearchBar from "@/components/SearchBar";
 import { useRouter } from "next/router";
+import Login from "../Login";
 
 export default function Header({ getRandomActivity, onChange }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -37,7 +38,7 @@ export default function Header({ getRandomActivity, onChange }) {
           />
         </SearchBarContainer>
       )}
-
+      <Login />
       <StyledDiv>
         <Hamburger toggled={menuOpen} toggle={setMenuOpen} size={30} />
         {menuOpen && (

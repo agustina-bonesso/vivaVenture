@@ -6,10 +6,14 @@ import { useState } from "react";
 import Layout from "@/components/Layout";
 import Fuse from "fuse.js";
 import useSWR, { SWRConfig } from "swr";
+import { SessionProvider } from "next-auth/react";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-export default function App({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const {
     data: activityData,
     error,
@@ -78,21 +82,23 @@ export default function App({ Component, pageProps }) {
   if (error) return <div>Error loading activities: {error.message}</div>;
 
   return (
-    <SWRConfig value={{ fetcher }}>
-      <GlobalStyle />
-      <StyledToastContainer />
-      <Layout getRandomActivity={getRandomActivity} onChange={handleSearch}>
-        <Component
-          {...pageProps}
-          activityData={results}
-          randomActivity={randomActivity}
-          getRandomActivity={getRandomActivity}
-          favoriteActivitiesList={favoriteActivitiesList}
-          onToggleFavorite={handleToggleFavorite}
-          onSelect={handleCategorySelect}
-          selectedCategory={selectedCategory}
-        />
-      </Layout>
-    </SWRConfig>
+    <SessionProvider session={session}>
+      <SWRConfig value={{ fetcher }}>
+        <GlobalStyle />
+        <StyledToastContainer />
+        <Layout getRandomActivity={getRandomActivity} onChange={handleSearch}>
+          <Component
+            {...pageProps}
+            activityData={results}
+            randomActivity={randomActivity}
+            getRandomActivity={getRandomActivity}
+            favoriteActivitiesList={favoriteActivitiesList}
+            onToggleFavorite={handleToggleFavorite}
+            onSelect={handleCategorySelect}
+            selectedCategory={selectedCategory}
+          />
+        </Layout>
+      </SWRConfig>
+    </SessionProvider>
   );
 }

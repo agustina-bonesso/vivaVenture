@@ -4,8 +4,10 @@ import { ConfirmModal } from "@/components/ConfirmModal";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
+import { useSession } from "next-auth/react";
 
 export default function Activity({ onToggleFavorite, favoriteActivitiesList }) {
+  const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
 
@@ -32,6 +34,10 @@ export default function Activity({ onToggleFavorite, favoriteActivitiesList }) {
   }
 
   async function handleDeleteActivity() {
+    if (!session) {
+      toast.info("Please login for this feature");
+      return;
+    }
     setIsModalOpen(true);
   }
   if (error) return <div>Failed to load</div>;

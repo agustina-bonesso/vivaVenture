@@ -3,8 +3,13 @@ import { StyledBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import { toast } from "react-toastify";
 import { mutate } from "swr";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import Login from "@/components/Login";
 
 export default function CreateActivity({ activity }) {
+  const { data: session } = useSession();
+  const router = useRouter();
   async function handleAddActivity(newActivityData) {
     const response = await fetch("/api/activities", {
       method: "POST",
@@ -17,6 +22,7 @@ export default function CreateActivity({ activity }) {
       console.error(response.status);
       return;
     }
+
     mutate("/api/activities");
     toast.success("Activity added successfully!");
   }
@@ -26,7 +32,11 @@ export default function CreateActivity({ activity }) {
         <Icon name="chevronLeft" />
         Back to all Activities
       </StyledBackLink>
-      <ActivityForm onSubmit={handleAddActivity} initialData={activity} />
+      {!session ? (
+        <Login />
+      ) : (
+        <ActivityForm onSubmit={handleAddActivity} initialData={activity} />
+      )}
     </>
   );
 }
