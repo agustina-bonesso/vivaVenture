@@ -57,7 +57,7 @@ const StyledNavButton = styled.button`
 `;
 const StyledNavIcon = styled.div`
   display: flex;
-  align-items: stretch;
+  align-items: center;
   color: ${(props) => (props.$isActive ? "var(--teal)" : "var(--icon-color)")};
   stroke: ${(props) => (props.$isActive ? "var(--teal)" : "var(--icon-color)")};
   transition: color 0.2s;
