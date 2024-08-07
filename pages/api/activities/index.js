@@ -1,7 +1,12 @@
 import dbConnect from "@/db/connect";
 import Activity from "@/db/models/Activity";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(request, response) {
+  const session = await getServerSession(request, response, authOptions);
+  // const token = await getToken({ req: request });
+  // const userId = token.sub;
   await dbConnect();
 
   if (request.method === "GET") {
@@ -16,13 +21,16 @@ export default async function handler(request, response) {
 
   if (request.method === "POST") {
     try {
-      const activityData = request.body;
-      await Activity.create(activityData);
+      if (session) {
+        const activityData = request.body;
+        await Activity.create(activityData);
 
-      response.status(201).json({ status: "Activity created" });
+        response.status(201).json({ status: "Activity created" });
+      } else {
+        response.status(400).json({ error: error.message });
+      }
     } catch (error) {
       console.log(error);
-      response.status(400).json({ error: error.message });
     }
   }
 }
