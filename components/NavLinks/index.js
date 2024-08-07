@@ -67,13 +67,10 @@ const StyledNavIcon = styled.div`
     color: var(--teal);
     stroke: var(--teal);
   }
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-  }
+   flex-direction: column;
   @media (min-width: 768px) {
     gap: 1.5rem;
-    align-items: center;
+    flex-direction: row;
   }
   @media (min-width: 1200px) {
     line-height: 2.1;
