@@ -1,11 +1,7 @@
 import styled from "styled-components";
-import { StyledLink } from "@/components/StyledLinks";
-import { Icon } from "@/components/Icon";
-import { useRouter } from "next/router";
 import NavLinks from "../NavLinks";
 
 export default function NavBar({ getRandomActivity }) {
-  const router = useRouter();
   return (
     <StyledFooter>
       <NavLinks getRandomActivity={getRandomActivity}></NavLinks>
