@@ -75,7 +75,6 @@ const StyledNavIcon = styled.div`
   @media (min-width: 1200px) {
     line-height: 2.1;
     padding: 0 0 0.625rem 0.625rem;
-    gap: 1.5rem;
     svg {
       width: 40px;
       height: 40px;
