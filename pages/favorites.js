@@ -7,10 +7,7 @@ export default function Favorites({
   activityData,
 }) {
   const favoriteActivities = activityData.filter((activity) =>
-    favoriteActivitiesList.find(
-      (favorivedActivity) =>
-        favorivedActivity._id === activity._id && favorivedActivity.isFavorite
-    )
+    favoriteActivitiesList.includes(activity._id)
   );
 
   return (
@@ -25,7 +22,7 @@ export default function Favorites({
                 <ActivityCard
                   activity={activity}
                   onToggleFavorite={onToggleFavorite}
-                  isFavorite
+                  isFavorite={favoriteActivities}
                 />
               </li>
             );

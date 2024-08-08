@@ -1,8 +1,7 @@
 import GlobalStyle from "@/styles";
-import useLocalStorageState from "use-local-storage-state";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledToastContainer } from "@/components/Toast";
-import { act, useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 import Fuse from "fuse.js";
 import useSWR, { SWRConfig } from "swr";
@@ -20,40 +19,25 @@ export default function App({
     isLoading,
   } = useSWR("/api/activities", fetcher);
 
-  const [favoriteActivitiesList, setFavoriteActivitiesList] =
-    useLocalStorageState("favorites", {
-      defaultValue: [],
-    });
-  const [randomActivity, setRandomActivity] = useLocalStorageState(
-    "randomActivity",
-    { defaultValue: null }
-  );
+  const [favoriteActivitiesList, setFavoriteActivitiesList] = useState([]);
+  const [randomActivity, setRandomActivity] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
   async function handleToggleFavorite(id) {
-    const favActivity = activityData
-      .filter((activity) => activity._id === id)
-      .map((act) => act.title);
-    console.log(favActivity);
     const response = await fetch("/api/users", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ favorites: favActivity }),
+      body: JSON.stringify({ favoriteId: id }),
     });
-    console.log(response);
-
-    setFavoriteActivitiesList((prevFavorites) => {
-      const isFavorite = prevFavorites.some((activity) => activity._id === id);
-      if (isFavorite) {
-        return prevFavorites.filter((activity) => activity._id !== id);
-      } else {
-        const activity = activityData?.find((activity) => activity._id === id);
-        return [...prevFavorites, { ...activity, isFavorite: true }];
-      }
-    });
+    if (response.ok) {
+      const updatedFavorites = await response.json();
+      setFavoriteActivitiesList(updatedFavorites);
+    } else {
+      console.error("Failed to update favorites");
+    }
   }
 
   function getRandomActivity() {
