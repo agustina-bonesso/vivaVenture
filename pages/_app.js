@@ -41,7 +41,7 @@ export default function App({
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(favActivity),
+      body: JSON.stringify({ favorites: favActivity }),
     });
     console.log(response);
 
