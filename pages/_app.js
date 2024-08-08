@@ -2,7 +2,7 @@ import GlobalStyle from "@/styles";
 import useLocalStorageState from "use-local-storage-state";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledToastContainer } from "@/components/Toast";
-import { useState } from "react";
+import { act, useState } from "react";
 import Layout from "@/components/Layout";
 import Fuse from "fuse.js";
 import useSWR, { SWRConfig } from "swr";
@@ -32,13 +32,19 @@ export default function App({
   const [searchTerm, setSearchTerm] = useState("");
 
   async function handleToggleFavorite(id) {
+    const favActivity = activityData
+      .filter((activity) => activity._id === id)
+      .map((act) => act.title);
+    console.log(favActivity);
     const response = await fetch("/api/users", {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
-    },})
+      },
+      body: JSON.stringify(favActivity),
+    });
     console.log(response);
-      
+
     setFavoriteActivitiesList((prevFavorites) => {
       const isFavorite = prevFavorites.some((activity) => activity._id === id);
       if (isFavorite) {
