@@ -31,7 +31,14 @@ export default function App({
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  function handleToggleFavorite(id) {
+  async function handleToggleFavorite(id) {
+    const response = await fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+    },})
+    console.log(response);
+      
     setFavoriteActivitiesList((prevFavorites) => {
       const isFavorite = prevFavorites.some((activity) => activity._id === id);
       if (isFavorite) {
