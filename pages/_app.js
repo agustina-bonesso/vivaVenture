@@ -6,6 +6,7 @@ import Layout from "@/components/Layout";
 import Fuse from "fuse.js";
 import useSWR, { mutate, SWRConfig } from "swr";
 import { SessionProvider } from "next-auth/react";
+import useLocalStorageState from "use-local-storage-state";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
