@@ -14,41 +14,22 @@ export default async function handler(request, response) {
       const user = await User.find({
         email: token.email,
       });
-      console.log(user);
       if (!user) {
         return response.status(404).json({ status: "Not Found" });
       }
-      response.status(200).json();
-    }
-  }
-  if (request.method === "POST") {
-    const existingUser = await User.findOne({ email: token.email });
-
-    if (existingUser) {
-      response.status(409).json({ message: "User already exists" });
-      return;
-    }
-    if (session) {
-      try {
-        const userData = { name: token.name, email: token.email };
-        await User.create({ ...userData });
-        response.status(201).json({ status: "User created" });
-      } catch {
-        console.error(error);
-        response.status(400).json({ error: error.message });
-      }
+      response.status(200).json(user);
     }
   }
   if (request.method === "PUT") {
     console.log("PUT METHOD");
     try {
       const { favorites } = request.body;
-      console.log(favorites);
-      await User.findOneAndUpdate(
-        { email: token.email },
-        { $set: { favorites: favorites } }
+      const user = await User.findOneAndUpdate(
+        { email: session.user.email },
+        { $set: { favorites: favorites } },
+        { new: true, upsert: true }
       );
-      return response.status(200).json({ status: "User updated successfully" });
+      return response.status(200).json(user);
     } catch (error) {
       console.error(error);
       return response.status(400).json({ error: error.message });

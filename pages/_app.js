@@ -2,10 +2,10 @@ import GlobalStyle from "@/styles";
 import useLocalStorageState from "use-local-storage-state";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledToastContainer } from "@/components/Toast";
-import { act, useState } from "react";
+import { useState } from "react";
 import Layout from "@/components/Layout";
 import Fuse from "fuse.js";
-import useSWR, { SWRConfig } from "swr";
+import useSWR, { mutate, SWRConfig } from "swr";
 import { SessionProvider } from "next-auth/react";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -20,10 +20,8 @@ export default function App({
     isLoading,
   } = useSWR("/api/activities", fetcher);
 
-  const [favoriteActivitiesList, setFavoriteActivitiesList] =
-    useLocalStorageState("favorites", {
-      defaultValue: [],
-    });
+  const { data: userData } = useSWR("/api/users", fetcher);
+
   const [randomActivity, setRandomActivity] = useLocalStorageState(
     "randomActivity",
     { defaultValue: null }
@@ -31,29 +29,36 @@ export default function App({
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  async function handleToggleFavorite(id) {
-    const favActivity = activityData
-      .filter((activity) => activity._id === id)
-      .map((act) => act.title);
-    console.log(favActivity);
+  async function handleToggleFavorite(id, session) {
+    if (!session) {
+      return;
+    }
+    const favorites = userData[0]?.favorites || [];
+    let updatedFavorites;
+    if (favorites.length === 0) {
+      updatedFavorites = [id];
+    } else {
+      if (favorites.includes(id)) {
+        updatedFavorites = favorites.filter((activity) => activity !== id);
+      } else {
+        updatedFavorites = [...favorites, id];
+      }
+    }
+
     const response = await fetch("/api/users", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ favorites: favActivity }),
+      body: JSON.stringify({ favorites: updatedFavorites }),
     });
-    console.log(response);
 
-    setFavoriteActivitiesList((prevFavorites) => {
-      const isFavorite = prevFavorites.some((activity) => activity._id === id);
-      if (isFavorite) {
-        return prevFavorites.filter((activity) => activity._id !== id);
-      } else {
-        const activity = activityData?.find((activity) => activity._id === id);
-        return [...prevFavorites, { ...activity, isFavorite: true }];
-      }
-    });
+    if (response.ok) {
+      mutate("/api/users");
+      console.log("Favorites updated successfully");
+    } else {
+      console.error("Failed to update favorites", await response.json());
+    }
   }
 
   function getRandomActivity() {
@@ -105,10 +110,10 @@ export default function App({
             activityData={results}
             randomActivity={randomActivity}
             getRandomActivity={getRandomActivity}
-            favoriteActivitiesList={favoriteActivitiesList}
             onToggleFavorite={handleToggleFavorite}
             onSelect={handleCategorySelect}
             selectedCategory={selectedCategory}
+            userData={userData}
           />
         </Layout>
       </SWRConfig>
