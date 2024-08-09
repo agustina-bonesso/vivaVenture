@@ -23,7 +23,7 @@ export default function HomePage({
               onToggleFavorite={onToggleFavorite}
               isFavorite={
                 session
-                  ? userData[0].favorites.some(
+                  ? userData[0]?.favorites.some(
                       (favActivity) => favActivity === activity._id
                     )
                   : false

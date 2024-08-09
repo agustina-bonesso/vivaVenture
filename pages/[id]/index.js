@@ -15,7 +15,7 @@ export default function Activity({ onToggleFavorite, userData }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const isFavorite = session
-    ? userData[0].favorites.some((favActivity) => favActivity === id)
+    ? userData[0]?.favorites.some((favActivity) => favActivity === id)
     : false;
   async function confirmDeleteActivity() {
     setIsModalOpen(false);
