@@ -3,6 +3,7 @@ import { stack as Menu } from "react-burger-menu";
 import NavLinks from "../NavLinks";
 
 export default function HamburgerMenu({
+  showSubline = true,
   menuOpen,
   setMenuOpen,
   getRandomActivity,
@@ -26,6 +27,7 @@ export default function HamburgerMenu({
         <NavLinks
           getRandomActivity={getRandomActivity}
           closeMenu={() => setMenuOpen(false)}
+          showSubline
         />
       </StyledMenu>
     </>

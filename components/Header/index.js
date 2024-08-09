@@ -38,8 +38,8 @@ export default function Header({ getRandomActivity, onChange }) {
           />
         </SearchBarContainer>
       )}
-      <Login />
       <StyledDiv>
+        <Login showSubline={false} />
         <Hamburger toggled={menuOpen} toggle={setMenuOpen} size={30} />
         {menuOpen && (
           <HamburgerMenu
@@ -82,12 +82,13 @@ const Overlay = styled.div`
 `;
 
 const StyledDiv = styled.div`
+
   @media (max-width: 768px) {
     display: none;
   }
 
   @media (min-width: 768px) {
-    display: block;
+    display: flex;
   }
 `;
 

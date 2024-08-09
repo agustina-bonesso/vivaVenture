@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import NavLinks from "../NavLinks";
 
-export default function NavBar({ getRandomActivity }) {
+export default function NavBar({ getRandomActivity, }) {
   return (
     <StyledFooter>
       <NavLinks getRandomActivity={getRandomActivity}></NavLinks>

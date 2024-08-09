@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Login from "../Login";
 import { useSession } from "next-auth/react";
 
-export default function NavLinks({ getRandomActivity, closeMenu }) {
+export default function NavLinks({ getRandomActivity, closeMenu, showSubline = true }) {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -44,9 +44,6 @@ export default function NavLinks({ getRandomActivity, closeMenu }) {
       </StyledLink>
       <StyledNavIcon>
         <Login />
-        <StyledSubline onClick={closeMenu}>
-          {session ? "Logout" : "Login"}
-        </StyledSubline>
       </StyledNavIcon>
     </>
   );
@@ -56,17 +53,20 @@ const StyledSubline = styled.div`
   font-size: 16px;
   margin-top: 3px;
   @media (min-width: 768px) {
-    font-size: 24px;
+    font-size: 20px;
   }
 `;
+
 const StyledNavButton = styled.button`
   all: unset;
   font-family: var(--styled-link);
   font-size: 16px;
 `;
+
 const StyledNavIcon = styled.div`
   display: flex;
   align-items: center;
+  flex-direction: column;
   color: ${(props) => (props.$isActive ? "var(--teal)" : "var(--icon-color)")};
   stroke: ${(props) => (props.$isActive ? "var(--teal)" : "var(--icon-color)")};
   transition: color 0.2s;
@@ -78,11 +78,12 @@ const StyledNavIcon = styled.div`
     color: var(--teal);
     stroke: var(--teal);
   }
-  flex-direction: column;
+
   @media (min-width: 768px) {
     gap: 1.5rem;
     flex-direction: row;
   }
+
   @media (min-width: 1200px) {
     line-height: 2.1;
     padding: 0 0 0.625rem 0.625rem;
