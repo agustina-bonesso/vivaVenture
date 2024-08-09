@@ -22,7 +22,6 @@ export default async function handler(request, response) {
     }
   }
   if (request.method === "PUT") {
-    console.log("PUT METHOD");
     try {
       const { favorites } = request.body;
       const user = await User.findOneAndUpdate(

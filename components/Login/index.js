@@ -1,7 +1,15 @@
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const { data: session } = useSession();
+
+  useEffect(() => {
+    if (session) {
+      toast.success(`Welcome, ${session.user.name}!`);
+    }
+  }, [session]);
 
   if (session) {
     return (
@@ -11,6 +19,7 @@ export default function Login() {
       </>
     );
   }
+
   return (
     <>
       Not signed in <br />
