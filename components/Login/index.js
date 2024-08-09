@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import { Icon } from "../Icon";
 
-export default function Login({ showSubline = true }) {
+export default function Login({ showSubline }) {
   const { data: session } = useSession();
   const [hasShownToast, setHasShownToast] = useState(false);
   useEffect(() => {

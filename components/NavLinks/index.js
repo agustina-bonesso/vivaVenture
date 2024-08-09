@@ -5,7 +5,11 @@ import { useRouter } from "next/router";
 import Login from "../Login";
 import { useSession } from "next-auth/react";
 
-export default function NavLinks({ getRandomActivity, closeMenu, showSubline = true }) {
+export default function NavLinks({
+  getRandomActivity,
+  closeMenu,
+  showSubline,
+}) {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -14,13 +18,17 @@ export default function NavLinks({ getRandomActivity, closeMenu, showSubline = t
       <StyledLink href="/">
         <StyledNavIcon $isActive={router.pathname === "/"}>
           <Icon name="home" />
-          <StyledSubline onClick={closeMenu}>Home</StyledSubline>
+          {showSubline && (
+            <StyledSubline onClick={closeMenu}>Home</StyledSubline>
+          )}
         </StyledNavIcon>
       </StyledLink>
       <StyledLink href="/createActivity">
         <StyledNavIcon $isActive={router.pathname === "/createActivity"}>
           <Icon name="add" color="black" fillColor="transparent" />
-          <StyledSubline onClick={closeMenu}>Add</StyledSubline>
+          {showSubline && (
+            <StyledSubline onClick={closeMenu}>Add</StyledSubline>
+          )}
         </StyledNavIcon>
       </StyledLink>
       <StyledNavButton
@@ -33,17 +41,21 @@ export default function NavLinks({ getRandomActivity, closeMenu, showSubline = t
       >
         <StyledNavIcon $isActive={router.pathname === "/spotlight"}>
           <Icon name="random" />
-          <StyledSubline onClick={closeMenu}>Random</StyledSubline>
+          {showSubline && (
+            <StyledSubline onClick={closeMenu}>Random</StyledSubline>
+          )}
         </StyledNavIcon>
       </StyledNavButton>
       <StyledLink href="/favorites">
         <StyledNavIcon $isActive={router.pathname === "/favorites"}>
           <Icon name="navHeart" />
-          <StyledSubline onClick={closeMenu}>Favorites</StyledSubline>
+          {showSubline && (
+            <StyledSubline onClick={closeMenu}>Favorites</StyledSubline>
+          )}
         </StyledNavIcon>
       </StyledLink>
       <StyledNavIcon>
-        <Login />
+        <Login showSubline={false}/>
       </StyledNavIcon>
     </>
   );
