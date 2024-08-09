@@ -7,8 +7,6 @@ import { getToken } from "next-auth/jwt";
 export default async function handler(request, response) {
   const session = await getServerSession(request, response, authOptions);
   const token = await getToken({ req: request });
-  const userId = token;
-  console.log(userId);
   
   await dbConnect();
 

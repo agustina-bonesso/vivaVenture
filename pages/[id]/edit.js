@@ -35,9 +35,7 @@ export default function EditPage() {
         <Icon name="chevronLeft" />
         Discard changes
       </StyledBackLink>
-      {!session ? (
-          <Login />
-      ) : (
+      {session && (
         <ActivityForm
           initialData={activity}
           isEditMode

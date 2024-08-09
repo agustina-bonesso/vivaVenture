@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { StyledLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import { useRouter } from "next/router";
-import Login from "../Login";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function NavLinks({
   getRandomActivity,
@@ -54,9 +54,31 @@ export default function NavLinks({
           )}
         </StyledNavIcon>
       </StyledLink>
-      <StyledNavIcon>
-        <Login showSubline={false}/>
-      </StyledNavIcon>
+      <StyledLink href="/login">
+        {session ? (
+          <StyledNavIcon>
+            <ImageWrapper>
+              <StyledImage
+                src={session.user.image}
+                alt="user-icon"
+                fill
+                sizes="(max-width: 600px) 30px, (max-width: 1200px) 40px"
+                priority
+              />
+            </ImageWrapper>
+            {showSubline && (
+            <StyledSubline onClick={closeMenu}>Profil</StyledSubline>
+          )}
+          </StyledNavIcon>
+        ) : (
+          <StyledNavIcon>
+            <Icon name="userIcon" />
+            {showSubline && (
+              <StyledSubline onClick={closeMenu}>Profil</StyledSubline>
+            )}
+          </StyledNavIcon>
+        )}
+      </StyledLink>
     </>
   );
 }
@@ -104,4 +126,14 @@ const StyledNavIcon = styled.div`
       height: 40px;
     }
   }
+`;
+const StyledImage = styled(Image)`
+  object-fit: cover;
+  border-radius: 50%;
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 2rem;
+  height: 2rem;
 `;

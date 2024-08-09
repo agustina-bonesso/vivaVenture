@@ -3,11 +3,15 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import Image from "next/image";
+import { useRouter } from "next/router"; // Importiere useRouter
 import { Icon } from "../Icon";
 
 export default function Login({ showSubline }) {
   const { data: session } = useSession();
   const [hasShownToast, setHasShownToast] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter(); // Initialisiere useRouter
+
   useEffect(() => {
     if (session && !hasShownToast) {
       toast.success(`Welcome, ${session.user.name}!`);
@@ -15,10 +19,29 @@ export default function Login({ showSubline }) {
     }
   }, [session, hasShownToast]);
 
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    setMenuOpen(false);
+  };
+
+  const handleSignIn = () => {
+    signIn();
+    setMenuOpen(false);
+  };
+
+  const goToProfile = () => {
+    router.push("/login"); // Route zur login.js Seite
+    setMenuOpen(false); // Schließe das Menü
+  };
+
   return (
     <StyledNavIcon>
       {session ? (
-        <StyledNavButton onClick={() => signOut()}>
+        <StyledNavButton onClick={toggleMenu}>
           <ImageWrapper>
             <StyledImage
               src={session.user.image}
@@ -30,12 +53,24 @@ export default function Login({ showSubline }) {
           </ImageWrapper>
         </StyledNavButton>
       ) : (
-        <StyledNavButton onClick={() => signIn()}>
+        <StyledNavButton onClick={toggleMenu}>
           <Icon name="userIcon" />
         </StyledNavButton>
       )}
       {showSubline && (
         <StyledSubline>{session ? "Logout" : "Login"}</StyledSubline>
+      )}
+      {menuOpen && (
+        <DropdownMenu>
+          {session ? (
+            <>
+              <MenuItem onClick={handleSignOut}>Logout</MenuItem>
+              <MenuItem onClick={goToProfile}>MyProfile</MenuItem>{" "}
+            </>
+          ) : (
+            <MenuItem onClick={handleSignIn}>Login</MenuItem>
+          )}
+        </DropdownMenu>
       )}
     </StyledNavIcon>
   );
@@ -69,6 +104,7 @@ const StyledNavIcon = styled.div`
   transition: color 0.2s;
   font-family: var(--styled-link);
   font-size: 16px;
+  position: relative;
 
   &:hover {
     cursor: pointer;
@@ -95,5 +131,25 @@ const StyledSubline = styled.div`
   margin-top: -1px;
   @media (min-width: 768px) {
     font-size: 20px;
+  }
+`;
+
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 3rem;
+  right: 0;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 10;
+`;
+
+const MenuItem = styled.div`
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  color: var(--icon-color);
+  &:hover {
+    background: var(--light-grey);
   }
 `;

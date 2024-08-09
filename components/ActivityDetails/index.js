@@ -57,7 +57,7 @@ export default function ActivityDetails({
               title="Edit activity"
               type="button"
               $variant="edit"
-              href={`/${activity._id}/edit`}
+              href={session ? `/${activity._id}/edit` : `/login`}
             >
               <Icon name="edit" />
             </StyledEditLink>
