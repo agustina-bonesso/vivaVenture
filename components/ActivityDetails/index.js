@@ -37,7 +37,7 @@ export default function ActivityDetails({
         </TransparentBackButton>
         {session && (
           <TransparentFavoriteButton
-            onClick={() => onToggleFavorite(activity._id)}
+            onClick={() => onToggleFavorite(activity._id, session)}
           >
             <Icon
               name="heart"

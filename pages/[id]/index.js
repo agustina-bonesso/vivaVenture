@@ -6,7 +6,7 @@ import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import { useSession } from "next-auth/react";
 
-export default function Activity({ onToggleFavorite, favoriteActivitiesList }) {
+export default function Activity({ onToggleFavorite, userData }) {
   const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
@@ -14,10 +14,9 @@ export default function Activity({ onToggleFavorite, favoriteActivitiesList }) {
   const { data: activity, isLoading, error } = useSWR(`/api/activities/${id}`);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const isFavorite = favoriteActivitiesList.find(
-    (favActivity) => favActivity._id === id
-  )?.isFavorite;
-
+  const isFavorite = session
+    ? userData[0].favorites.some((favActivity) => favActivity === id)
+    : false;
   async function confirmDeleteActivity() {
     setIsModalOpen(false);
     const response = await fetch(`/api/activities/${id}`, {

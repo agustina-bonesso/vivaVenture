@@ -1,18 +1,28 @@
 import ActivityCard from "@/components/ActivityCard";
+import Login from "@/components/Login";
 import { StyledList } from "@/styles";
+import { useSession } from "next-auth/react";
 
 export default function Favorites({
-  favoriteActivitiesList,
   onToggleFavorite,
   activityData,
+  userData,
 }) {
-  const favoriteActivities = activityData.filter((activity) =>
-    favoriteActivitiesList.includes(activity._id)
-  );
+  const { data: session } = useSession();
+
+  const favoriteActivities = session
+    ? activityData.filter((activity) =>
+        userData[0]?.favorites.find(
+          (favorivedActivity) => favorivedActivity === activity._id
+        )
+      )
+    : [];
 
   return (
     <>
-      {favoriteActivities.length === 0 ? (
+      {!session ? (
+        <Login />
+      ) : favoriteActivities.length === 0 ? (
         <p>No favorite activities found.</p>
       ) : (
         <StyledList>
