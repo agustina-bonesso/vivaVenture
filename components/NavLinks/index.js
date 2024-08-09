@@ -2,9 +2,12 @@ import styled from "styled-components";
 import { StyledLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import { useRouter } from "next/router";
+import Login from "../Login";
+import { useSession } from "next-auth/react";
 
 export default function NavLinks({ getRandomActivity, closeMenu }) {
   const router = useRouter();
+  const { data: session } = useSession();
 
   return (
     <>
@@ -39,6 +42,12 @@ export default function NavLinks({ getRandomActivity, closeMenu }) {
           <StyledSubline onClick={closeMenu}>Favorites</StyledSubline>
         </StyledNavIcon>
       </StyledLink>
+      <StyledNavIcon>
+        <Login />
+        <StyledSubline onClick={closeMenu}>
+          {session ? "Logout" : "Login"}
+        </StyledSubline>
+      </StyledNavIcon>
     </>
   );
 }
@@ -61,13 +70,15 @@ const StyledNavIcon = styled.div`
   color: ${(props) => (props.$isActive ? "var(--teal)" : "var(--icon-color)")};
   stroke: ${(props) => (props.$isActive ? "var(--teal)" : "var(--icon-color)")};
   transition: color 0.2s;
+  font-family: var(--styled-link);
+  font-size: 16px;
 
   &:hover {
     cursor: pointer;
     color: var(--teal);
     stroke: var(--teal);
   }
-   flex-direction: column;
+  flex-direction: column;
   @media (min-width: 768px) {
     gap: 1.5rem;
     flex-direction: row;

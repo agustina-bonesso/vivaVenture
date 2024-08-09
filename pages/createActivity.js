@@ -4,12 +4,10 @@ import { Icon } from "@/components/Icon";
 import { toast } from "react-toastify";
 import { mutate } from "swr";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import Login from "@/components/Login";
 
 export default function CreateActivity({ activity }) {
   const { data: session } = useSession();
-  const router = useRouter();
   async function handleAddActivity(newActivityData) {
     const response = await fetch("/api/activities", {
       method: "POST",
