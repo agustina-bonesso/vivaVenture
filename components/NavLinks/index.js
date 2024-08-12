@@ -114,16 +114,17 @@ const StyledNavIcon = styled.div`
   }
 
   @media (min-width: 768px) {
-    gap: 1.5rem;
+    gap: 2rem;
     flex-direction: row;
   }
 
   @media (min-width: 1200px) {
     line-height: 2.1;
     padding: 0 0 0.625rem 0.625rem;
+    gap: 3rem;
     svg {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
     }
   }
 `;
@@ -136,7 +137,7 @@ const ImageWrapper = styled.div`
   position: relative;
   width: 2rem;
   height: 2rem;
-  @media (min-width: 768px) {
+  @media (min-width: 1200px) {
     width: 3rem;
     height: 3rem;
   }

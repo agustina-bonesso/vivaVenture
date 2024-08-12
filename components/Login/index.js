@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import Image from "next/image";
-import { useRouter } from "next/router"; // Importiere useRouter
+import { useRouter } from "next/router";
 import { Icon } from "../Icon";
 
 export default function Login({ showSubline }) {
   const { data: session } = useSession();
   const [hasShownToast, setHasShownToast] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const router = useRouter(); // Initialisiere useRouter
+  const router = useRouter();
 
   useEffect(() => {
     if (session && !hasShownToast) {
@@ -34,8 +34,8 @@ export default function Login({ showSubline }) {
   };
 
   const goToProfile = () => {
-    router.push("/login"); // Route zur login.js Seite
-    setMenuOpen(false); // Schließe das Menü
+    router.push("/login");
+    setMenuOpen(false);
   };
 
   return (
@@ -65,7 +65,7 @@ export default function Login({ showSubline }) {
           {session ? (
             <>
               <MenuItem onClick={handleSignOut}>Logout</MenuItem>
-              <MenuItem onClick={goToProfile}>MyProfile</MenuItem>{" "}
+              <MenuItem onClick={goToProfile}>Profile</MenuItem>
             </>
           ) : (
             <MenuItem onClick={handleSignIn}>Login</MenuItem>
