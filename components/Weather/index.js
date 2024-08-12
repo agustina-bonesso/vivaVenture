@@ -47,7 +47,6 @@ export default function WeatherInformation({ activity }) {
     <WeatherContainer>
       <CurrentWeatherCard>
         <WeatherHeader>
-          <Location>{activity.city}</Location>
           <Temperature>{temperature}°C</Temperature>
         </WeatherHeader>
         <WeatherContent>
