@@ -85,6 +85,10 @@ const ImageWrapper = styled.div`
   position: relative;
   width: 2rem;
   height: 2rem;
+  @media (min-width: 768px) {
+    width: 3rem;
+    height: 3rem;
+  }
 `;
 
 const StyledNavButton = styled.button`
