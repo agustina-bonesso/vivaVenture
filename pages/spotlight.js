@@ -14,13 +14,9 @@ export default function Spotlight({
       <h1>Spotlight</h1>
       <ActivityCard
         activity={randomActivity}
-        onToggleFavorite={() => onToggleFavorite(randomActivity._id, session)}
+        onToggleFavorite={() => onToggleFavorite(randomActivity._id)}
         isFavorite={
-          session
-            ? userData[0].favorites?.find(
-                (favActivity) => favActivity === randomActivity._id
-              )
-            : false
+          session ? userData[0]?.favorites.includes(randomActivity._id) : false
         }
       />
     </>

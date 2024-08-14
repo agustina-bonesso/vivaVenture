@@ -5,15 +5,24 @@ import { authOptions } from "../auth/[...nextauth]";
 import { getToken } from "next-auth/jwt";
 
 export default async function handler(request, response) {
-  await dbConnect();
+  try {
+    await dbConnect();
+  } catch (error) {
+    console.error("Database connection error:", error);
+    return response.status(500).json({ error: "Database connection failed" });
+  }
+
   const token = await getToken({ req: request });
   const session = await getServerSession(request, response, authOptions);
-  await dbConnect();
+  const userId = token?.sub;
 
+  if (!session) {
+    return response.status(401).json({ message: "Unauthorized" });
+  }
   if (request.method === "GET") {
     if (session) {
       const user = await User.find({
-        email: token.email,
+        userId: userId,
       });
       if (!user) {
         return response.status(404).json({ status: "Not Found" });
@@ -25,7 +34,7 @@ export default async function handler(request, response) {
     try {
       const { favorites } = request.body;
       const user = await User.findOneAndUpdate(
-        { email: session.user.email },
+        { userId: userId },
         { $set: { favorites: favorites } },
         { new: true, upsert: true }
       );

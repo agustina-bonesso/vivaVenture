@@ -5,7 +5,7 @@ import { useState } from "react";
 import Layout from "@/components/Layout";
 import Fuse from "fuse.js";
 import useSWR, { mutate, SWRConfig } from "swr";
-import { SessionProvider } from "next-auth/react";
+import { getSession, SessionProvider } from "next-auth/react";
 import useLocalStorageState from "use-local-storage-state";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -29,7 +29,8 @@ export default function App({
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  async function handleToggleFavorite(id, session) {
+  async function handleToggleFavorite(id) {
+    const session = await getSession();
     if (!session) {
       return;
     }
@@ -55,7 +56,6 @@ export default function App({
 
     if (response.ok) {
       mutate("/api/users");
-      console.log("Favorites updated successfully");
     } else {
       console.error("Failed to update favorites", await response.json());
     }

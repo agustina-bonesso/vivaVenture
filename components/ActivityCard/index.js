@@ -20,7 +20,7 @@ export default function ActivityCard({
         {session && (
           <StyledFavoriteButton
             onClick={() => {
-              onToggleFavorite(activity._id, session);
+              onToggleFavorite(activity._id);
             }}
           >
             <Icon

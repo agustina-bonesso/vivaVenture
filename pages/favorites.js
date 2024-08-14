@@ -8,38 +8,38 @@ export default function Favorites({
   activityData,
   userData,
 }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
+
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
 
   if (!session) {
     router.push("/login");
+    return;
   }
   const favoriteActivities = session
     ? activityData.filter((activity) =>
-        userData[0]?.favorites.find(
-          (favoriteActivity) => favoriteActivity === activity._id
-        )
+        userData[0]?.favorites.includes(activity._id)
       )
     : [];
 
-  return (
-    session &&
-    (favoriteActivities.length === 0 ? (
-      <p> </p>
-    ) : (
-      <StyledList>
-        {favoriteActivities.map((activity) => {
-          return (
-            <li key={activity._id}>
-              <ActivityCard
-                activity={activity}
-                onToggleFavorite={onToggleFavorite}
-                isFavorite={favoriteActivities}
-              />
-            </li>
-          );
-        })}
-      </StyledList>
-    ))
+  return favoriteActivities.length === 0 ? (
+    <p>You have no favorites yet.</p>
+  ) : (
+    <StyledList>
+      {favoriteActivities.map((activity) => {
+        return (
+          <li key={activity._id}>
+            <ActivityCard
+              activity={activity}
+              onToggleFavorite={onToggleFavorite}
+              isFavorite={favoriteActivities}
+            />
+          </li>
+        );
+      })}
+    </StyledList>
   );
 }

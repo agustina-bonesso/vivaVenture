@@ -53,7 +53,7 @@ export default function Login({ showSubline }) {
           </ImageWrapper>
         </StyledNavButton>
       ) : (
-        <StyledNavButton onClick={toggleMenu}>
+        <StyledNavButton aria-label="user-profile-menu" onClick={toggleMenu}>
           <Icon name="userIcon" />
         </StyledNavButton>
       )}
@@ -133,6 +133,7 @@ const StyledNavIcon = styled.div`
 const StyledSubline = styled.div`
   font-size: 16px;
   margin-top: -1px;
+  color: var (--text-color);
   @media (min-width: 768px) {
     font-size: 20px;
   }
@@ -142,7 +143,7 @@ const DropdownMenu = styled.div`
   position: absolute;
   top: 3rem;
   right: 0;
-  background: white;
+  background: var(--background-color);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
