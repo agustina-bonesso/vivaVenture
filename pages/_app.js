@@ -34,24 +34,17 @@ export default function App({
     if (!session) {
       return;
     }
-    const favorites = userData[0]?.favorites || [];
-    let updatedFavorites;
-    if (favorites.length === 0) {
-      updatedFavorites = [id];
-    } else {
-      if (favorites.includes(id)) {
-        updatedFavorites = favorites.filter((activity) => activity !== id);
-      } else {
-        updatedFavorites = [...favorites, id];
-      }
-    }
+    const favorites = userData?.favorites || [];
+    const newFavorites = favorites.includes(id)
+      ? favorites.filter((fav) => fav !== id)
+      : [...favorites, id];
 
     const response = await fetch("/api/users", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ favorites: updatedFavorites }),
+      body: JSON.stringify({ favorites: newFavorites }),
     });
 
     if (response.ok) {

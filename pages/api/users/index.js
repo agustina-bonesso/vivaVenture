@@ -21,7 +21,7 @@ export default async function handler(request, response) {
   }
   if (request.method === "GET") {
     if (session) {
-      const user = await User.find({
+      const user = await User.findOne({
         userId: userId,
       });
       if (!user) {

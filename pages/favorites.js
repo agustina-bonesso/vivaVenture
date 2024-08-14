@@ -21,7 +21,7 @@ export default function Favorites({
   }
   const favoriteActivities = session
     ? activityData.filter((activity) =>
-        userData[0]?.favorites.includes(activity._id)
+        userData?.favorites.includes(activity._id)
       )
     : [];
 

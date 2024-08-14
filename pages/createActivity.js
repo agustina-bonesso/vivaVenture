@@ -12,6 +12,7 @@ export default function CreateActivity({ activity }) {
 
   if (!session) {
     router.push("/login");
+    return;
   }
   async function handleAddActivity(newActivityData) {
     const response = await fetch("/api/activities", {
