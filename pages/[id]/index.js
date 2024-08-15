@@ -14,7 +14,7 @@ export default function Activity({ onToggleFavorite, userData }) {
   const { data: activity, isLoading, error } = useSWR(`/api/activities/${id}`);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const isFavorite = session ? userData?.favorites.includes(id) : false;
+  const isFavorite = session ? (userData?.favorites ?? []).includes(id) : false;
   async function confirmDeleteActivity() {
     setIsModalOpen(false);
     const response = await fetch(`/api/activities/${id}`, {
