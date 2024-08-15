@@ -4,8 +4,9 @@ import CategoryIcons from "@/components/CategoryIcons";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import styled from "styled-components";
 
-const MapComponent = dynamic(() => import("@/components/MapOverView"), {
+const MapOverView = dynamic(() => import("@/components/MapOverView"), {
   ssr: false,
 });
 
@@ -31,7 +32,7 @@ export default function HomePage({
     <>
       <CategoryIcons onSelect={onSelect} selectedCategory={selectedCategory} />
       {isMapOpen ? (
-        <MapComponent isMapOverView markers={markersData}></MapComponent>
+        <MapOverView isMapOverView markers={markersData} />
       ) : (
         <StyledList>
           {activityData.map((activity) => (
@@ -40,16 +41,32 @@ export default function HomePage({
                 activity={activity}
                 onToggleFavorite={onToggleFavorite}
                 isFavorite={
-                  session ? userData?.favorites.includes(activity._id) : false
+                  session
+                    ? (userData?.favorites ?? []).includes(activity._id)
+                    : false
                 }
               />
             </li>
           ))}
         </StyledList>
       )}
-      <button type="button" onClick={handleMapView}>
-        Mapview
-      </button>
+      <ToggleMapButton type="button" onClick={handleMapView}>
+        Show Map
+      </ToggleMapButton>
     </>
   );
 }
+
+const ToggleMapButton = styled.button`
+  position: fixed;
+  font-size: 1.5rem;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--background-map-button);
+  color: var(--map-button-text);
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--border-radius);
+  z-index: 100;
+  cursor: pointer;
+`;
