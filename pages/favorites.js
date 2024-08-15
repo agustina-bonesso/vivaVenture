@@ -19,12 +19,10 @@ export default function Favorites({
     router.push("/login");
     return;
   }
-  const favoriteActivities = session
-    ? activityData.filter((activity) =>
-        userData?.favorites.includes(activity._id)
-      )
-    : [];
-
+  const favoriteActivities = activityData.filter((activity) =>
+    (userData?.favorites ?? []).includes(activity._id)
+  );
+  
   return favoriteActivities.length === 0 ? (
     <p>You have no favorites yet.</p>
   ) : (
