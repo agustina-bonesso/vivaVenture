@@ -4,27 +4,32 @@ import { StyledLink } from "@/components/StyledLinks";
 import styled from "styled-components";
 import { Icon } from "@/components/Icon";
 import { TransparentFavoriteButton } from "@/components/StyledButton";
+import { useSession } from "next-auth/react";
 
 export default function ActivityCard({
   activity,
   onToggleFavorite,
   isFavorite,
 }) {
+  const { data: session } = useSession();
+
   return (
     <StyledArticle>
       <ImageContainer>
         <StyledImageComponent images={activity.images} alt={activity.title} />
-        <StyledFavoriteButton
-          onClick={() => {
-            onToggleFavorite(activity._id);
-          }}
-        >
-          <Icon
-            name="heart"
-            fillColor={isFavorite ? "red" : "white"}
-            color="black"
-          />
-        </StyledFavoriteButton>
+        {session && (
+          <StyledFavoriteButton
+            onClick={() => {
+              onToggleFavorite(activity._id);
+            }}
+          >
+            <Icon
+              name="heart"
+              fillColor={isFavorite ? "red" : "white"}
+              color="black"
+            />
+          </StyledFavoriteButton>
+        )}
       </ImageContainer>
       <StyledLink href={`/${activity._id}`}>
         <CardContent>

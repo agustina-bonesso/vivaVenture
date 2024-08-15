@@ -1,10 +1,12 @@
 import ActivityCard from "@/components/ActivityCard";
+import { useSession } from "next-auth/react";
 
 export default function Spotlight({
   randomActivity,
   onToggleFavorite,
-  favoriteActivitiesList,
+  userData,
 }) {
+  const { data: session } = useSession();
   if (!randomActivity) return <p>No activity data available.</p>;
 
   return (
@@ -14,9 +16,7 @@ export default function Spotlight({
         activity={randomActivity}
         onToggleFavorite={() => onToggleFavorite(randomActivity._id)}
         isFavorite={
-          favoriteActivitiesList.find(
-            (favActivity) => favActivity._id === randomActivity._id
-          )?.isFavorite
+          session ? (userData?.favorites ?? []).includes(randomActivity._id) : false
         }
       />
     </>

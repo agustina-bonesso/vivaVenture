@@ -15,6 +15,7 @@ const activitySchema = new Schema({
   ],
   lat: { type: Number, required: true },
   lng: { type: Number, required: true },
+  owner: { type: String },
 });
 
 const Activity =

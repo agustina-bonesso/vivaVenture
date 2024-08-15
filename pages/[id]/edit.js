@@ -4,8 +4,11 @@ import { StyledBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import useSWR, { mutate } from "swr";
 import { toast } from "react-toastify";
+import Login from "@/components/Login";
+import { useSession } from "next-auth/react";
 
 export default function EditPage() {
+  const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
   const { data: activity } = useSWR(`/api/activities/${id}`);
@@ -32,11 +35,13 @@ export default function EditPage() {
         <Icon name="chevronLeft" />
         Discard changes
       </StyledBackLink>
-      <ActivityForm
-        initialData={activity}
-        isEditMode
-        onSubmit={handleEditActivity}
-      />
+      {session && (
+        <ActivityForm
+          initialData={activity}
+          isEditMode
+          onSubmit={handleEditActivity}
+        />
+      )}
     </>
   );
 }

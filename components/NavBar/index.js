@@ -4,7 +4,10 @@ import NavLinks from "../NavLinks";
 export default function NavBar({ getRandomActivity }) {
   return (
     <StyledFooter>
-      <NavLinks getRandomActivity={getRandomActivity}></NavLinks>
+      <NavLinks
+        getRandomActivity={getRandomActivity}
+        showSubline={false}
+      ></NavLinks>
     </StyledFooter>
   );
 }
@@ -27,4 +30,3 @@ const StyledFooter = styled.footer`
     display: none;
   }
 `;
-

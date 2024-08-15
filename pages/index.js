@@ -1,14 +1,17 @@
 import ActivityCard from "@/components/ActivityCard";
 import { StyledList } from "@/styles";
 import CategoryIcons from "@/components/CategoryIcons";
+import { useSession } from "next-auth/react";
 
 export default function HomePage({
   onToggleFavorite,
-  favoriteActivitiesList,
   onSelect,
   selectedCategory,
   activityData,
+  userData,
 }) {
+  const { data: session } = useSession();
+
   return (
     <>
       <CategoryIcons onSelect={onSelect} selectedCategory={selectedCategory} />
@@ -19,9 +22,9 @@ export default function HomePage({
               activity={activity}
               onToggleFavorite={onToggleFavorite}
               isFavorite={
-                favoriteActivitiesList.find(
-                  (favActivity) => favActivity._id === activity._id
-                )?.isFavorite
+                session
+                  ? (userData?.favorites ?? []).includes(activity._id)
+                  : false
               }
             />
           </li>

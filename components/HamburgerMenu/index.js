@@ -26,6 +26,7 @@ export default function HamburgerMenu({
         <NavLinks
           getRandomActivity={getRandomActivity}
           closeMenu={() => setMenuOpen(false)}
+          showSubline={true}
         />
       </StyledMenu>
     </>
@@ -50,7 +51,7 @@ const StyledMenu = styled(Menu)`
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     display: none;
   }
 `;

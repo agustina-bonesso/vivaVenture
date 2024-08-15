@@ -11,6 +11,7 @@ import { StyledEditLink } from "@/components/StyledLinks";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import WeatherInformation from "@/components/Weather";
+import { useSession } from "next-auth/react";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -20,6 +21,7 @@ export default function ActivityDetails({
   isFavorite,
   onToggleFavorite,
 }) {
+  const { data: session } = useSession();
   const router = useRouter();
   const images = activity.images;
   return (
@@ -33,15 +35,18 @@ export default function ActivityDetails({
         >
           <Icon name="chevronLeft" color="black" />
         </TransparentBackButton>
-        <TransparentFavoriteButton
-          onClick={() => onToggleFavorite(activity._id)}
-        >
-          <Icon
-            name="heart"
-            fillColor={isFavorite ? "red" : "white"}
-            color="black"
-          />
-        </TransparentFavoriteButton>
+        {session && (
+          <TransparentFavoriteButton
+            onClick={() => onToggleFavorite(activity._id)}
+          >
+            <Icon
+              name="heart"
+              fillColor={isFavorite ? "red" : "white"}
+              color="black"
+            />
+          </TransparentFavoriteButton>
+        )}
+
         <StyledImageComponent images={images} alt={activity.title} />
       </ImageContainer>
       <Content>
@@ -52,7 +57,7 @@ export default function ActivityDetails({
               title="Edit activity"
               type="button"
               $variant="edit"
-              href={`/${activity._id}/edit`}
+              href={session ? `/${activity._id}/edit` : `/login`}
             >
               <Icon name="edit" />
             </StyledEditLink>

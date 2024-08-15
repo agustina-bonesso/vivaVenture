@@ -35,7 +35,7 @@ export default function StyledImageComponent({ images, alt }) {
                 alt={alt}
                 sizes="(max-width: 600px) 480px, (max-width: 1200px) 800px, 100vw"
                 fill
-                priority={index === 0} // Nur für das erste Bild im Karussell setzen
+                priority={index === 0}
               />
             </ImageWrapper>
           ))}

@@ -6,6 +6,7 @@ import { useState } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import SearchBar from "@/components/SearchBar";
 import { useRouter } from "next/router";
+import Login from "../Login";
 
 export default function Header({ getRandomActivity, onChange }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -37,8 +38,8 @@ export default function Header({ getRandomActivity, onChange }) {
           />
         </SearchBarContainer>
       )}
-
       <StyledDiv>
+        <Login showSubline={false} />
         <Hamburger toggled={menuOpen} toggle={setMenuOpen} size={30} />
         {menuOpen && (
           <HamburgerMenu
@@ -81,12 +82,13 @@ const Overlay = styled.div`
 `;
 
 const StyledDiv = styled.div`
-  @media (max-width: 768px) {
+
+  @media (max-width: 767px) {
     display: none;
   }
 
   @media (min-width: 768px) {
-    display: block;
+    display: flex;
   }
 `;
 
@@ -94,7 +96,7 @@ const SearchBarContainer = styled.div`
   margin: 0.6rem;
   width: 60%;
 
-  @media (min-width: 768px) {
+  @media (min-width: 767px) {
     width: 50%;
   }
 `;

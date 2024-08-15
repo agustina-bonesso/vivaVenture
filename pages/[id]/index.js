@@ -4,18 +4,17 @@ import { ConfirmModal } from "@/components/ConfirmModal";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
+import { useSession } from "next-auth/react";
 
-export default function Activity({ onToggleFavorite, favoriteActivitiesList }) {
+export default function Activity({ onToggleFavorite, userData }) {
+  const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
 
   const { data: activity, isLoading, error } = useSWR(`/api/activities/${id}`);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const isFavorite = favoriteActivitiesList.find(
-    (favActivity) => favActivity._id === id
-  )?.isFavorite;
-
+  const isFavorite = session ? (userData?.favorites ?? []).includes(id) : false;
   async function confirmDeleteActivity() {
     setIsModalOpen(false);
     const response = await fetch(`/api/activities/${id}`, {
@@ -32,6 +31,10 @@ export default function Activity({ onToggleFavorite, favoriteActivitiesList }) {
   }
 
   async function handleDeleteActivity() {
+    if (!session) {
+      toast.info("Please login for this feature");
+      return;
+    }
     setIsModalOpen(true);
   }
   if (error) return <div>Failed to load</div>;
