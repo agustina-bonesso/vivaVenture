@@ -1,7 +1,9 @@
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Rating } from "react-simple-star-rating";
 
 export default function StarRating({ activityId }) {
+  const { data: session } = useSession();
   const [rating, setRating] = useState(0);
 
   const handleRating = async (rate) => {
@@ -16,6 +18,7 @@ export default function StarRating({ activityId }) {
         body: JSON.stringify({
           activityId,
           rating: rate,
+        //  author: session?.user?.id,
         }),
       });
 

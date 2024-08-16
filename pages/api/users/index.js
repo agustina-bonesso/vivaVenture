@@ -15,6 +15,7 @@ export default async function handler(request, response) {
   const token = await getToken({ req: request });
   const session = await getServerSession(request, response, authOptions);
   const userId = token?.sub;
+  const userName = token?.name;
 
   if (!session) {
     return response.status(401).json({ message: "Unauthorized" });
@@ -35,7 +36,7 @@ export default async function handler(request, response) {
       const { favorites } = request.body;
       const user = await User.findOneAndUpdate(
         { userId: userId },
-        { $set: { favorites: favorites } },
+        { $set: { favorites, name: userName } },
         { new: true, upsert: true }
       );
       return response.status(200).json(user);
