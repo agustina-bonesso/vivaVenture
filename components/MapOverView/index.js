@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Icon } from "leaflet";
 
 export default function Map({ markers }) {
-  markers.map((marker) => console.log(marker.geoCode));
   return (
     <MapWrapper>
       <StyledMapContainer center={[27.06, -0.175]} zoom={2}>

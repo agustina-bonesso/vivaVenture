@@ -80,7 +80,7 @@ export default createGlobalStyle`
 
     --weathercard-primary: #E0F7FA;
     --weathercard-secondary: #B2EBF2;
-    --background-map-button: rgba(0, 0, 0, 50%);
+    --background-map-button: rgba(0, 0, 0, 80%);
     --map-button-text: #ffffff;
 
 
@@ -110,7 +110,7 @@ export default createGlobalStyle`
       --toastify-color: #121212;
       --weathercard-primary: #263238;
       --weathercard-secondary: #37474F;
-      --background-map-button: rgba(255, 255, 255, 50%);
+      --background-map-button: rgba(255, 255, 255, 80%);
       --map-button-text: #0D0D0D;
 
       /* Button */
