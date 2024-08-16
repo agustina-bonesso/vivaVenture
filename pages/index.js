@@ -22,6 +22,7 @@ export default function HomePage({
     return {
       geoCode: [activity.lat, activity.lng],
       popUp: `Activity: ${activity.title}`,
+      id: `${activity._id}`,
     };
   });
   function handleMapView() {

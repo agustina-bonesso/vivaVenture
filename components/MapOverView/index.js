@@ -2,8 +2,15 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import styled from "styled-components";
 import { Icon } from "leaflet";
+import { useRouter } from "next/router";
 
 export default function Map({ markers }) {
+  const router = useRouter();
+
+  function handlePopupClick(markerID) {
+    router.push(`/${markerID}`);
+  }
+
   return (
     <MapWrapper>
       <StyledMapContainer center={[27.06, -0.175]} zoom={2}>
@@ -14,7 +21,11 @@ export default function Map({ markers }) {
         {markers.map((marker, index) => {
           return (
             <Marker key={index} position={marker.geoCode} icon={MapMarker}>
-              <Popup>{marker.popUp}</Popup>
+              <Popup>
+                <div onClick={() => handlePopupClick(marker.id)}>
+                  {marker.popUp}
+                </div>
+              </Popup>
             </Marker>
           );
         })}
