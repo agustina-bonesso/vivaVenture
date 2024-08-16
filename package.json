@@ -30,6 +30,7 @@
     "react-modal": "^3.16.1",
     "react-responsive-carousel": "^3.2.23",
     "react-select": "^5.8.0",
+    "react-simple-star-rating": "^5.1.7",
     "react-toastify": "^10.0.5",
     "styled-components": "^6.0.2",
     "swr": "^2.2.5",

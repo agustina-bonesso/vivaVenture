@@ -9,7 +9,7 @@ export default async function handler(request, response) {
   const { id } = request.query;
 
   if (request.method === "GET") {
-    const activity = await Activity.findById(id);
+    const activity = await Activity.findById(id).populate("reviews");
     if (!activity) {
       return response.status(404).json({ status: "Not Found" });
     }

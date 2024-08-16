@@ -12,6 +12,7 @@ import styled from "styled-components";
 import dynamic from "next/dynamic";
 import WeatherInformation from "@/components/Weather";
 import { useSession } from "next-auth/react";
+import StarRating from "../Rating";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -79,6 +80,7 @@ export default function ActivityDetails({
             <Tag key={index}>{category}</Tag>
           ))}
         </CategoryTags>
+        <StarRating activityId={activity._id} />
         <MapComponent lat={activity.lat} lng={activity.lng} />
         <WeatherInformation activity={activity} />
       </Content>
