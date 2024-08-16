@@ -3,14 +3,10 @@ import "leaflet/dist/leaflet.css";
 import styled from "styled-components";
 import { Icon } from "leaflet";
 import { useRouter } from "next/router";
+import { StyledLink } from "@/components/StyledLinks";
 
 export default function Map({ markers }) {
   const router = useRouter();
-
-  function handlePopupClick(markerID) {
-    router.push(`/${markerID}`);
-  }
-
   return (
     <MapWrapper>
       <StyledMapContainer center={[27.06, -0.175]} zoom={2}>
@@ -22,9 +18,7 @@ export default function Map({ markers }) {
           return (
             <Marker key={index} position={marker.geoCode} icon={MapMarker}>
               <Popup>
-                <div onClick={() => handlePopupClick(marker.id)}>
-                  {marker.popUp}
-                </div>
+                <StyledLink href={`/${marker.id}`}>{marker.popUp}</StyledLink>
               </Popup>
             </Marker>
           );
