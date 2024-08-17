@@ -5,7 +5,7 @@ import { Icon } from "leaflet";
 import { useRouter } from "next/router";
 import { StyledLink } from "@/components/StyledLinks";
 
-export default function Map({ markers }) {
+export default function MapOverView({ markers }) {
   const router = useRouter();
   return (
     <MapWrapper>

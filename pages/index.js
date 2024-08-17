@@ -2,13 +2,15 @@ import ActivityCard from "@/components/ActivityCard";
 import { StyledList } from "@/styles";
 import CategoryIcons from "@/components/CategoryIcons";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { Icon } from "@/components/Icon";
+
 const MapOverView = dynamic(() => import("@/components/MapOverView"), {
   ssr: false,
 });
+
 export default function HomePage({
   onToggleFavorite,
   onSelect,
@@ -18,6 +20,10 @@ export default function HomePage({
 }) {
   const { data: session } = useSession();
   const [isMapOpen, setIsMapOpen] = useState(false);
+  const [showButton, setShowButton] = useState(true);
+
+  const [scrollTimeout, setScrollTimeout] = useState(null);
+
   const markersData = activityData.map((activity) => {
     return {
       geoCode: [activity.lat, activity.lng],
@@ -25,10 +31,36 @@ export default function HomePage({
       id: `${activity._id}`,
     };
   });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowButton(false);
+
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+
+      const timeout = setTimeout(() => {
+        setShowButton(true);
+      }, 500);
+
+      setScrollTimeout(timeout);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+    };
+  }, [scrollTimeout]);
+
   function handleMapView() {
     setIsMapOpen(!isMapOpen);
   }
-  const buttonText = isMapOpen ? "Show List" : "Show Map";
+
   return (
     <>
       <CategoryIcons onSelect={onSelect} selectedCategory={selectedCategory} />
@@ -51,19 +83,28 @@ export default function HomePage({
           ))}
         </StyledList>
       )}
-      <StyledMapButton type="button" onClick={handleMapView}>
-        <StyledButtonText className="full-text">{buttonText}</StyledButtonText>
-        <StyledButtonText className="short-text">
-          {isMapOpen ? "List" : "Map"}
-        </StyledButtonText>
-        <Icon name={isMapOpen ? "listIcon" : "mapIcon"} />
-      </StyledMapButton>
+      {showButton && (
+        <StyledMapButton type="button" onClick={handleMapView}>
+          <Prefix>Show </Prefix>
+          {isMapOpen ? "List" : "Map"}{" "}
+          <Icon name={isMapOpen ? "listIcon" : "mapIcon"} />
+        </StyledMapButton>
+      )}
     </>
   );
 }
-const StyledButtonText = styled.span`
-  font-family: var(--font-h1);
+
+const Prefix = styled.span`
+  display: none;
+  @media (min-width: 768px) {
+    display: inline;
+    font-family: var(--font-h1);
+  }
+  @media (min-width: 1200px) {
+    font-size: 1.125rem;
+  }
 `;
+
 const StyledMapButton = styled.button`
   position: fixed;
   bottom: 10%;
@@ -72,42 +113,28 @@ const StyledMapButton = styled.button`
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
   background-color: var(--background-map-button);
   color: var(--map-button-text);
   border: none;
-  line-height: 1.5;
-  border-radius: 50px;
-  font-size: 16px;
+  border-radius: 3.125rem;
+  font-size: 0.875rem;
   font-family: var(--font-h1);
   box-shadow: var(--box-shadow);
   cursor: pointer;
-  z-index: 1000;
   &:hover {
     background-color: var(--light-orange);
   }
   & svg {
     fill: var(--map-button-text);
   }
-  .short-text {
-    display: none;
-  }
-  @media (max-width: 767px) {
-    .full-text {
-      display: none;
-    }
-    .short-text {
-      display: inline;
-    }
-    padding: 8px 16px;
-    font-size: 14px;
-    & svg {
-      width: 1.2rem;
-      height: 1.2rem;
-    }
-  }
+
   @media (min-width: 1200px) {
-    font-size: 18px;
+    font-size: 1.125rem;
     padding: 0.75rem 1.5625rem;
+    & svg {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
   }
 `;
