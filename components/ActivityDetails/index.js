@@ -12,7 +12,8 @@ import styled from "styled-components";
 import dynamic from "next/dynamic";
 import WeatherInformation from "@/components/Weather";
 import { useSession } from "next-auth/react";
-import StarRating from "../Rating";
+import StarRating from "@/components/Rating";
+import ReviewCard from "@/components/ReviewCard";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -25,13 +26,19 @@ export default function ActivityDetails({
   const { data: session } = useSession();
   const router = useRouter();
   const images = activity.images;
+
+  // Calculate the average rating
+  const ratings = activity.reviews.map((review) => review.rating);
+  const averageRating =
+    ratings.length > 0
+      ? (ratings.reduce((a, b) => a + b) / ratings.length).toFixed(1)
+      : 0;
+
   return (
     <StyledArticle>
       <ImageContainer>
         <TransparentBackButton
-          onClick={() => {
-            router.push("/");
-          }}
+          onClick={() => router.push("/")}
           title="Back to all Activities"
         >
           <Icon name="chevronLeft" color="black" />
@@ -80,7 +87,23 @@ export default function ActivityDetails({
             <Tag key={index}>{category}</Tag>
           ))}
         </CategoryTags>
-        <StarRating activityId={activity._id} />
+        {session && <StarRating activityId={activity._id} />}
+        <ReviewsSummary>
+          <ReviewsCount>
+            {activity.reviews.length} Review
+            {activity.reviews.length > 1 ? "s" : ""}
+          </ReviewsCount>
+          <AverageRating>
+            Average Rating: {averageRating} <Icon name="star" color="gold" />
+          </AverageRating>
+        </ReviewsSummary>
+        {activity.reviews.length > 0 ? (
+          activity.reviews.map((review) => (
+            <ReviewCard key={review._id} review={review} />
+          ))
+        ) : (
+          <NoReviewsMessage>No reviews yet, leave one!</NoReviewsMessage>
+        )}
         <MapComponent lat={activity.lat} lng={activity.lng} />
         <WeatherInformation activity={activity} />
       </Content>
@@ -143,4 +166,29 @@ const Tag = styled.span`
   color: black;
   padding: 0.3125rem 0.625rem;
   border-radius: var(--border-radius);
+`;
+
+const ReviewsSummary = styled.div`
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+`;
+
+const ReviewsCount = styled.p`
+  font-weight: bold;
+  color: var(--text-color);
+`;
+
+const AverageRating = styled.p`
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const NoReviewsMessage = styled.p`
+  margin-top: 1rem;
+  color: var(--text-color);
+  font-style: italic;
 `;

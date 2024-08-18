@@ -1,9 +1,8 @@
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Rating } from "react-simple-star-rating";
+import { mutate } from "swr";
 
 export default function StarRating({ activityId }) {
-  const { data: session } = useSession();
   const [rating, setRating] = useState(0);
 
   const handleRating = async (rate) => {
@@ -18,13 +17,13 @@ export default function StarRating({ activityId }) {
         body: JSON.stringify({
           activityId,
           rating: rate,
-        //  author: session?.user?.id,
         }),
       });
 
       if (!response.ok) {
         console.error("Failed to submit rating");
       }
+      mutate(`/api/activities/${activityId}`);
     } catch (error) {
       console.error("Error submitting rating:", error);
     }
@@ -35,7 +34,7 @@ export default function StarRating({ activityId }) {
       <Rating
         onClick={handleRating}
         ratingValue={rating}
-        size={25}
+        size={40}
         label
         transition
         fillColor="orange"

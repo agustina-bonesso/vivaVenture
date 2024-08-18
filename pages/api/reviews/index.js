@@ -10,8 +10,9 @@ export default async function handler(request, response) {
   await dbConnect();
   const token = await getToken({ req: request });
   const session = await getServerSession(request, response, authOptions);
-  const userId = token?.sub; 
+  const userId = token?.sub;
   const userName = token?.name;
+  const picture = token?.picture;
 
   if (!session) {
     return response.status(401).json({ message: "Nicht autorisiert" });
@@ -28,7 +29,11 @@ export default async function handler(request, response) {
 
       let user = await User.findOne({ userId });
       if (!user) {
-        user = await User.create({ userId: userId, name: userName });
+        user = await User.create({
+          userId: userId,
+          name: userName,
+          picture: picture,
+        });
       }
 
       const newReview = await Review.create({

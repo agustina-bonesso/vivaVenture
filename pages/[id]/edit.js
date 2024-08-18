@@ -4,7 +4,6 @@ import { StyledBackLink } from "@/components/StyledLinks";
 import { Icon } from "@/components/Icon";
 import useSWR, { mutate } from "swr";
 import { toast } from "react-toastify";
-import Login from "@/components/Login";
 import { useSession } from "next-auth/react";
 
 export default function EditPage() {
