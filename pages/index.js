@@ -21,7 +21,6 @@ export default function HomePage({
   const { data: session } = useSession();
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [showButton, setShowButton] = useState(true);
-
   const [scrollTimeout, setScrollTimeout] = useState(null);
 
   const markersData = activityData.map((activity) => {
@@ -86,7 +85,7 @@ export default function HomePage({
       {showButton && (
         <StyledMapButton type="button" onClick={handleMapView}>
           <Prefix>Show </Prefix>
-          {isMapOpen ? "List" : "Map"}{" "}
+          {isMapOpen ? "List" : "Map"}
           <Icon name={isMapOpen ? "listIcon" : "mapIcon"} />
         </StyledMapButton>
       )}
