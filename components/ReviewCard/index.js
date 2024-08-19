@@ -1,20 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import { Icon } from "@/components/Icon";
-import UserCard from "@/components/UserCard"; 
+import UserCard from "@/components/UserCard";
 
 export default function ReviewCard({ review }) {
   return (
     <StyledReviewCard>
       <ReviewHeader>
-        <UserCard user={review.author} /> 
+        <UserCard user={review.author} />
         <Rating>
           {[...Array(review.rating)].map((_, index) => (
             <Icon key={index} name="star" color="gold" fillColor="#FFD700" />
           ))}
         </Rating>
       </ReviewHeader>
-      <ReviewContent>{review.content}</ReviewContent>
     </StyledReviewCard>
   );
 }
@@ -35,10 +34,4 @@ const ReviewHeader = styled.div`
 
 const Rating = styled.div`
   display: flex;
-`;
-
-const ReviewContent = styled.p`
-  margin-top: 0.5rem;
-  color: var(--text-color);
-  line-height: 1.5;
 `;

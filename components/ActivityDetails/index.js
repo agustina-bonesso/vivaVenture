@@ -27,7 +27,6 @@ export default function ActivityDetails({
   const router = useRouter();
   const images = activity.images;
 
-  // Calculate the average rating
   const ratings = activity.reviews.map((review) => review.rating);
   const averageRating =
     ratings.length > 0
@@ -94,7 +93,7 @@ export default function ActivityDetails({
             {activity.reviews.length > 1 ? "s" : ""}
           </ReviewsCount>
           <AverageRating>
-            Average Rating: {averageRating} <Icon name="star" color="gold" />
+            Average Rating: {averageRating} <Icon name="star" color="#FFD700" />
           </AverageRating>
         </ReviewsSummary>
         {activity.reviews.length > 0 ? (

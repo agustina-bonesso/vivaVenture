@@ -12,8 +12,8 @@ export default function UserCard({ user }) {
             : "/images/user_picture.png"
         }
         alt={`${user.name}'s profile picture`}
-        width={100}
-        height={100}
+        width={50}
+        height={50}
       />
       <UserName>{user.name}</UserName>
     </StyledUserCard>
@@ -26,8 +26,6 @@ const StyledUserCard = styled.div`
 `;
 
 const UserImage = styled(Image)`
-  width: 40px;
-  height: 40px;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 0.5rem;

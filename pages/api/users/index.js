@@ -16,7 +16,7 @@ export default async function handler(request, response) {
   const session = await getServerSession(request, response, authOptions);
   const userId = token?.sub;
   const userName = token?.name;
-  const picture = session?.user.image;
+  const picture = token?.picture;
 
   if (!session) {
     return response.status(401).json({ message: "Unauthorized" });
