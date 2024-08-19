@@ -10,7 +10,7 @@ export default function ReviewCard({ review }) {
         <UserCard user={review.author} />
         <Rating>
           {[...Array(review.rating)].map((_, index) => (
-            <Icon key={index} name="star" color="gold" fillColor="#FFD700" />
+            <Icon key={index} name="star" fillColor="gold" />
           ))}
         </Rating>
       </ReviewHeader>
@@ -28,6 +28,7 @@ const StyledReviewCard = styled.div`
 
 const ReviewHeader = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 `;

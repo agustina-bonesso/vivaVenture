@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import StyledImageComponent from "@/components/StyledImageComponent";
 import { Icon } from "@/components/Icon";
@@ -26,6 +26,8 @@ export default function ActivityDetails({
   const { data: session } = useSession();
   const router = useRouter();
   const images = activity.images;
+
+  const [showReviews, setShowReviews] = useState(false);
 
   const ratings = activity.reviews.map((review) => review.rating);
   const averageRating =
@@ -93,16 +95,21 @@ export default function ActivityDetails({
             {activity.reviews.length > 1 ? "s" : ""}
           </ReviewsCount>
           <AverageRating>
-            Average Rating: {averageRating} <Icon name="star" color="#FFD700" />
+            / {averageRating} <Icon name="star" fillColor="gold" />
           </AverageRating>
+          <ToggleReviewsButton onClick={() => setShowReviews(!showReviews)}>
+            <Icon name={showReviews ? "chevronUp" : "chevronDown"} />
+          </ToggleReviewsButton>
         </ReviewsSummary>
         {activity.reviews.length > 0 ? (
+          showReviews &&
           activity.reviews.map((review) => (
             <ReviewCard key={review._id} review={review} />
           ))
         ) : (
           <NoReviewsMessage>No reviews yet, leave one!</NoReviewsMessage>
         )}
+
         <MapComponent lat={activity.lat} lng={activity.lng} />
         <WeatherInformation activity={activity} />
       </Content>
@@ -155,7 +162,7 @@ const Description = styled.p`
 `;
 
 const CategoryTags = styled.div`
-  margin-top: 0.625rem;
+  margin: 1rem 0;
   display: flex;
   gap: 0.3125rem;
 `;
@@ -190,4 +197,8 @@ const NoReviewsMessage = styled.p`
   margin-top: 1rem;
   color: var(--text-color);
   font-style: italic;
+`;
+
+const ToggleReviewsButton = styled.button`
+  all: unset;
 `;

@@ -6,11 +6,7 @@ export default function UserCard({ user }) {
   return (
     <StyledUserCard>
       <UserImage
-        src={
-          user.picture
-            ? user.picture
-            : "/images/user_picture.png"
-        }
+        src={user.picture ? user.picture : "/images/user_picture.png"}
         alt={`${user.name}'s profile picture`}
         width={50}
         height={50}
@@ -22,6 +18,7 @@ export default function UserCard({ user }) {
 
 const StyledUserCard = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
 `;
 

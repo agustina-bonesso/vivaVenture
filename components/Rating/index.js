@@ -7,7 +7,6 @@ export default function StarRating({ activityId }) {
 
   const handleRating = async (rate) => {
     setRating(rate);
-
     try {
       const response = await fetch("/api/reviews", {
         method: "POST",
@@ -19,7 +18,6 @@ export default function StarRating({ activityId }) {
           rating: rate,
         }),
       });
-
       if (!response.ok) {
         console.error("Failed to submit rating");
       }
@@ -28,7 +26,6 @@ export default function StarRating({ activityId }) {
       console.error("Error submitting rating:", error);
     }
   };
-
   return (
     <div>
       <Rating
@@ -37,8 +34,9 @@ export default function StarRating({ activityId }) {
         size={40}
         label
         transition
-        fillColor="orange"
+        fillColor="gold"
         emptyColor="gray"
+        onPointerLeave={0}
       />
     </div>
   );
