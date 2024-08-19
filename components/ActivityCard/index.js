@@ -104,15 +104,10 @@ const CategoryTags = styled.div`
 const Tag = styled.span`
   background: var(--light-orange);
   color: black;
-  padding: 0.3125rem 0.625rem;
+  padding: 0.25rem 0.5rem;
   border-radius: var(--border-radius);
-  font-size: 0.875rem;
-
-  @media (max-width: 767px) {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-  }
-
+  font-size: 0.75rem;
+  
   @media (min-width: 768px) {
     font-size: 0.875rem;
   }

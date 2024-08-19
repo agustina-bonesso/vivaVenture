@@ -114,14 +114,14 @@ const CurrentWeatherCard = styled.div`
 
 const WeatherHeader = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  gap: 1.8rem;
 
-  @media (max-width: 450px) {
-    align-items: flex-start;
-    justify-content: center;
-    text-align: left;
-    gap: 1.8rem;
+  @media (min-width: 450px) {
+    justify-content: space-between;
+    align-items: center;
   }
 `;
 

@@ -26,15 +26,6 @@ const SearchBarContainer = styled.div`
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease, background-color 0.3s ease;
 
-  @media (max-width: 768px) {
-    padding-left: 0.5rem;
-  }
-
-  @media (min-width: 768px) {
-  }
-
-  @media (min-width: 1200px) {
-  }
   */ &:focus-within {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     background-color: #ffffff;
