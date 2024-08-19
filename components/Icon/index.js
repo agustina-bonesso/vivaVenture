@@ -26,7 +26,7 @@ const Icons = {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      class="feather feather-chevron-down"
+      className="feather feather-chevron-down"
     >
       <polyline points="6 9 12 15 18 9"></polyline>
     </svg>
@@ -42,7 +42,7 @@ const Icons = {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      class="feather feather-chevron-up"
+      className="feather feather-chevron-up"
     >
       <polyline points="18 15 12 9 6 15"></polyline>
     </svg>

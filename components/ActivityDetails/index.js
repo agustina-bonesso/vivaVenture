@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import StyledImageComponent from "@/components/StyledImageComponent";
 import { Icon } from "@/components/Icon";
@@ -97,9 +97,11 @@ export default function ActivityDetails({
           <AverageRating>
             / {averageRating} <Icon name="star" fillColor="gold" />
           </AverageRating>
-          <ToggleReviewsButton onClick={() => setShowReviews(!showReviews)}>
-            <Icon name={showReviews ? "chevronUp" : "chevronDown"} />
-          </ToggleReviewsButton>
+          {activity.reviews.length > 0 && (
+            <ToggleReviewsButton onClick={() => setShowReviews(!showReviews)}>
+              <Icon name={showReviews ? "chevronUp" : "chevronDown"} />
+            </ToggleReviewsButton>
+          )}
         </ReviewsSummary>
         {activity.reviews.length > 0 ? (
           showReviews &&
@@ -107,7 +109,7 @@ export default function ActivityDetails({
             <ReviewCard key={review._id} review={review} />
           ))
         ) : (
-          <NoReviewsMessage>No reviews yet, leave one!</NoReviewsMessage>
+          <NoReviewsMessage>No reviews yet</NoReviewsMessage>
         )}
 
         <MapComponent lat={activity.lat} lng={activity.lng} />
