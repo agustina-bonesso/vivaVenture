@@ -120,6 +120,7 @@ const StyledMapButton = styled.button`
   font-size: 0.875rem;
   font-family: var(--font-h1);
   box-shadow: var(--box-shadow);
+  z-index: 20;
   cursor: pointer;
   &:hover {
     background-color: var(--light-orange);
