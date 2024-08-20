@@ -20,7 +20,9 @@ export default async function handler(request, response) {
 
   if (request.method === "POST") {
     try {
-      const { activityId, rating } = request.body;
+      const { activityId, rating, comment } = request.body;
+
+      console.log("Hier", activityId, rating, comment);
       if (!activityId || !rating) {
         return response
           .status(400)
@@ -40,6 +42,7 @@ export default async function handler(request, response) {
         author: user._id,
         rating,
         activity: activityId,
+        comment,
       });
 
       const updatedActivity = await Activity.findByIdAndUpdate(

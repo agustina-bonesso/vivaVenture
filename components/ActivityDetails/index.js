@@ -14,6 +14,7 @@ import WeatherInformation from "@/components/Weather";
 import { useSession } from "next-auth/react";
 import StarRating from "@/components/Rating";
 import ReviewCard from "@/components/ReviewCard";
+import ReviewForm from "../ReviewForm";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -103,6 +104,7 @@ export default function ActivityDetails({
             </ToggleReviewsButton>
           )}
         </ReviewsSummary>
+        <ReviewForm activityId={activity._id}></ReviewForm>
         {activity.reviews.length > 0 ? (
           showReviews &&
           activity.reviews.map((review) => (
