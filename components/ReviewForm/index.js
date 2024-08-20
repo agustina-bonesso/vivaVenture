@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { StyledButton } from "@/components/StyledButton";
 import { toast } from "react-toastify";
 
-export default function ReviewForm({ activityId }) {
+export default function ReviewForm({ activityId, onClose }) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const handleRating = (rate) => {
@@ -33,6 +33,7 @@ export default function ReviewForm({ activityId }) {
         toast.error("ailed to submit review");
       }
       mutate(`/api/activities/${activityId}`);
+      onClose();
       toast.success("Review submitted");
     } catch (error) {
       console.error("Error submitting review:", error);

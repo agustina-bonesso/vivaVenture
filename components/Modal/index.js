@@ -1,20 +1,14 @@
 import styled from "styled-components";
-import { ModalButton } from "../StyledButton";
 
-export function ConfirmModal({ isOpen, onClose, onConfirm, children }) {
+export function Modal({ isOpen, onClose, header, footer, children }) {
   if (!isOpen) return null;
 
   return (
-    <ModalBackdrop>
-      <ModalContent>
-        <ModalHeader>Confirm Delete</ModalHeader>
+    <ModalBackdrop onClick={onClose}>
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        {header && <ModalHeader>{header}</ModalHeader>}
         <ModalBody>{children}</ModalBody>
-        <ModalFooter>
-          <ModalButton onClick={onClose}>Cancel</ModalButton>
-          <ModalButton onClick={onConfirm} $variant="modal-delete">
-            Delete
-          </ModalButton>
-        </ModalFooter>
+        {footer && <ModalFooter>{footer}</ModalFooter>}
       </ModalContent>
     </ModalBackdrop>
   );
@@ -41,12 +35,15 @@ const ModalContent = styled.div`
 
 const ModalHeader = styled.h2`
   font-size: 1.5rem;
+  margin-bottom: 1rem;
 `;
 
-const ModalBody = styled.p`
+const ModalBody = styled.div`
   font-size: 1rem;
+  margin-bottom: 1rem;
 `;
 
 const ModalFooter = styled.div`
   text-align: right;
+  margin-top: 1rem;
 `;

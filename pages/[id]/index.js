@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import ActivityDetails from "@/components/ActivityDetails";
-import { ConfirmModal } from "@/components/ConfirmModal";
+import { Modal } from "@/components/Modal";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
 import { useSession } from "next-auth/react";
+import { ModalButton } from "@/components/StyledButton";
 
 export default function Activity({ onToggleFavorite, userData }) {
   const { data: session } = useSession();
@@ -51,13 +52,26 @@ export default function Activity({ onToggleFavorite, userData }) {
       ) : (
         <p>Activity not found</p>
       )}
-      <ConfirmModal
+      <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onConfirm={confirmDeleteActivity}
+        header="Confirm Delete"
+        footer={
+          <>
+            <ModalButton onClick={() => setIsModalOpen(false)}>
+              Cancel
+            </ModalButton>
+            <ModalButton
+              onClick={confirmDeleteActivity}
+              $variant="modal-delete"
+            >
+              Delete
+            </ModalButton>
+          </>
+        }
       >
-        Are you sure you want to delete this activity?
-      </ConfirmModal>
+        Are you sure you want to delete this item?
+      </Modal>
     </>
   );
 }

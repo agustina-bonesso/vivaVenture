@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import StyledImageComponent from "@/components/StyledImageComponent";
 import { Icon } from "@/components/Icon";
 import {
+  ModalButton,
   StyledButton,
   TransparentBackButton,
   TransparentFavoriteButton,
@@ -14,6 +15,7 @@ import WeatherInformation from "@/components/Weather";
 import { useSession } from "next-auth/react";
 import ReviewCard from "@/components/ReviewCard";
 import ReviewForm from "../ReviewForm";
+import { Modal } from "@/components/Modal";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -28,7 +30,7 @@ export default function ActivityDetails({
   const images = activity.images;
 
   const [showReviews, setShowReviews] = useState(false);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const ratings = activity.reviews.map((review) => review.rating);
   const averageRating =
     ratings.length > 0
@@ -101,7 +103,28 @@ export default function ActivityDetails({
             </ToggleReviewsButton>
           )}
         </ReviewsSummary>
-        {session && <ReviewForm activityId={activity._id}></ReviewForm>}
+        {session && (
+          <>
+            <StyledButton onClick={() => setIsModalOpen(true)}>
+              Write a Review
+            </StyledButton>
+            <Modal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              header="Write a Review"
+              footer={
+                <ModalButton onClick={() => setIsModalOpen(false)}>
+                  Close
+                </ModalButton>
+              }
+            >
+              <ReviewForm
+                activityId={activity._id}
+                onClose={() => setIsModalOpen(false)}
+              />
+            </Modal>
+          </>
+        )}
         {activity.reviews.length > 0 ? (
           showReviews &&
           activity.reviews.map((review) => (
