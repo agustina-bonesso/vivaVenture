@@ -27,11 +27,14 @@ export default async function handler(request, response) {
           .json({ message: "Aktivitäts-ID und Bewertung sind erforderlich" });
       }
 
-      const user = await User.findOneAndUpdate(
-        { userId: userId },
-        { $set: { name: userName, picture: picture } },
-        { new: true, upsert: true }
-      );
+      const existingUser = await User.findOne({ userId });
+      const user = existingUser
+        ? existingUser
+        : await User.create({
+            userId: userId,
+            name: userName,
+            picture: picture,
+          });
 
       const newReview = await Review.create({
         author: user._id,
