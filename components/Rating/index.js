@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Rating } from "react-simple-star-rating";
+import { toast } from "react-toastify";
 import { mutate } from "swr";
 
 export default function StarRating({ activityId }) {
@@ -20,8 +21,10 @@ export default function StarRating({ activityId }) {
       });
       if (!response.ok) {
         console.error("Failed to submit rating");
+        toast.error("Failed to submit review");
       }
       mutate(`/api/activities/${activityId}`);
+      toast.success("Review submitted");
     } catch (error) {
       console.error("Error submitting rating:", error);
     }

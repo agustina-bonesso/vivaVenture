@@ -15,7 +15,7 @@ export default async function handler(request, response) {
   const picture = token?.picture;
 
   if (!session) {
-    return response.status(401).json({ message: "Nicht autorisiert" });
+    return response.status(401).json({ message: "Not authorized" });
   }
 
   if (request.method === "POST") {
@@ -24,7 +24,7 @@ export default async function handler(request, response) {
       if (!activityId || !rating) {
         return response
           .status(400)
-          .json({ message: "Aktivitäts-ID und Bewertung sind erforderlich" });
+          .json({ message: "Activity ID and rating are required" });
       }
 
       let user = await User.findOne({ userId });
@@ -51,9 +51,9 @@ export default async function handler(request, response) {
       return response.status(201).json(updatedActivity);
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ message: "Interner Serverfehler" });
+      return response.status(500).json({ message: "Internal server error" });
     }
   } else {
-    return response.status(405).json({ message: "Methode nicht erlaubt" });
+    return response.status(405).json({ message: "Method not allowed" });
   }
 }
