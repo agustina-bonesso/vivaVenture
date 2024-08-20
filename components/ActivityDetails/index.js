@@ -12,7 +12,6 @@ import styled from "styled-components";
 import dynamic from "next/dynamic";
 import WeatherInformation from "@/components/Weather";
 import { useSession } from "next-auth/react";
-import StarRating from "@/components/Rating";
 import ReviewCard from "@/components/ReviewCard";
 import ReviewForm from "../ReviewForm";
 
@@ -81,7 +80,6 @@ export default function ActivityDetails({
             </StyledButton>
           </ActionIcons>
         </StyledDiv>
-
         <Info>{`${activity.city}, ${activity.country}`}</Info>
         <Description>{activity.description}</Description>
         <CategoryTags>
@@ -89,7 +87,6 @@ export default function ActivityDetails({
             <Tag key={index}>{category}</Tag>
           ))}
         </CategoryTags>
-        {session && <StarRating activityId={activity._id} />}
         <ReviewsSummary>
           <ReviewsCount>
             {activity.reviews.length} Review
@@ -104,7 +101,7 @@ export default function ActivityDetails({
             </ToggleReviewsButton>
           )}
         </ReviewsSummary>
-        <ReviewForm activityId={activity._id}></ReviewForm>
+        {session && <ReviewForm activityId={activity._id}></ReviewForm>}
         {activity.reviews.length > 0 ? (
           showReviews &&
           activity.reviews.map((review) => (
@@ -113,7 +110,6 @@ export default function ActivityDetails({
         ) : (
           <NoReviewsMessage>No reviews yet</NoReviewsMessage>
         )}
-
         <MapComponent lat={activity.lat} lng={activity.lng} />
         <WeatherInformation activity={activity} />
       </Content>

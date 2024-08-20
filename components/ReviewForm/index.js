@@ -3,6 +3,7 @@ import { Rating } from "react-simple-star-rating";
 import { mutate } from "swr";
 import styled from "styled-components";
 import { StyledButton } from "@/components/StyledButton";
+import { toast } from "react-toastify";
 
 export default function ReviewForm({ activityId }) {
   const [rating, setRating] = useState(0);
@@ -29,8 +30,10 @@ export default function ReviewForm({ activityId }) {
       });
       if (!response.ok) {
         console.error("Failed to submit review");
+        toast.error("ailed to submit review");
       }
       mutate(`/api/activities/${activityId}`);
+      toast.success("Review submitted");
     } catch (error) {
       console.error("Error submitting review:", error);
     }
