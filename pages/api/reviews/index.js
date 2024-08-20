@@ -21,8 +21,6 @@ export default async function handler(request, response) {
   if (request.method === "POST") {
     try {
       const { activityId, rating, comment } = request.body;
-
-      console.log("Hier", activityId, rating, comment);
       if (!activityId || !rating) {
         return response
           .status(400)
