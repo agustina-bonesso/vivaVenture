@@ -15,31 +15,29 @@ export default async function handler(request, response) {
   const picture = token?.picture;
 
   if (!session) {
-    return response.status(401).json({ message: "Not authorized" });
+    return response.status(401).json({ message: "Nicht autorisiert" });
   }
 
   if (request.method === "POST") {
     try {
-      const { activityId, rating } = request.body;
+      const { activityId, rating, comment } = request.body;
       if (!activityId || !rating) {
         return response
           .status(400)
-          .json({ message: "Activity ID and rating are required" });
+          .json({ message: "Aktivitäts-ID und Bewertung sind erforderlich" });
       }
 
-      let user = await User.findOne({ userId });
-      if (!user) {
-        user = await User.create({
-          userId: userId,
-          name: userName,
-          picture: picture,
-        });
-      }
+      const user = await User.findOneAndUpdate(
+        { userId: userId },
+        { $set: { name: userName, picture: picture } },
+        { new: true, upsert: true }
+      );
 
       const newReview = await Review.create({
         author: user._id,
         rating,
         activity: activityId,
+        comment,
       });
 
       const updatedActivity = await Activity.findByIdAndUpdate(
@@ -51,9 +49,9 @@ export default async function handler(request, response) {
       return response.status(201).json(updatedActivity);
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ message: "Internal server error" });
+      return response.status(500).json({ message: "Interner Serverfehler" });
     }
   } else {
-    return response.status(405).json({ message: "Method not allowed" });
+    return response.status(405).json({ message: "Methode nicht erlaubt" });
   }
 }
