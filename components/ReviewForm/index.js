@@ -13,6 +13,11 @@ export default function ReviewForm({ activityId, onClose }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (rating === 0) {
+      toast.error("Please select a rating before submitting");
+      return;
+    }
     try {
       const response = await fetch("/api/reviews", {
         method: "POST",
@@ -25,8 +30,8 @@ export default function ReviewForm({ activityId, onClose }) {
         }),
       });
       if (!response.ok) {
-        console.error("Failed to submit review");
-        toast.error("ailed to submit review");
+        toast.error("Failed to submit review");
+        return;
       }
       mutate(`/api/activities/${activityId}`);
       onClose();

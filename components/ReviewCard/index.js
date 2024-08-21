@@ -1,16 +1,12 @@
 import styled from "styled-components";
-import { Icon } from "@/components/Icon";
 import UserCard from "@/components/UserCard";
+import { Rating } from "react-simple-star-rating";
 
 export default function ReviewCard({ review }) {
   return (
     <StyledReviewCard>
       <UserCard user={review.author} />
-      <Rating>
-        {[...Array(review.rating)].map((_, index) => (
-          <Icon key={index} name="star" fillColor="gold" />
-        ))}
-      </Rating>
+      <Rating initialValue={review.rating} readonly />
     </StyledReviewCard>
   );
 }
@@ -25,8 +21,4 @@ const StyledReviewCard = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-`;
-
-const Rating = styled.div`
-  display: flex;
 `;

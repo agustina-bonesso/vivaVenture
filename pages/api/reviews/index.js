@@ -15,16 +15,16 @@ export default async function handler(request, response) {
   const picture = token?.picture;
 
   if (!session) {
-    return response.status(401).json({ message: "Nicht autorisiert" });
+    return response.status(401).json({ message: "Not autorized" });
   }
 
   if (request.method === "POST") {
     try {
-      const { activityId, rating, comment } = request.body;
+      const { activityId, rating } = request.body;
       if (!activityId || !rating) {
         return response
           .status(400)
-          .json({ message: "Aktivitäts-ID und Bewertung sind erforderlich" });
+          .json({ message: "Aktivity-ID and Review are required" });
       }
 
       const existingUser = await User.findOne({ userId });
@@ -40,21 +40,20 @@ export default async function handler(request, response) {
         author: user._id,
         rating,
         activity: activityId,
-        comment,
       });
 
       const updatedActivity = await Activity.findByIdAndUpdate(
         activityId,
         { $push: { reviews: newReview._id } },
         { new: true }
-      ).populate("reviews");
+      );
 
       return response.status(201).json(updatedActivity);
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ message: "Interner Serverfehler" });
+      return response.status(500).json({ message: "Internal server error" });
     }
   } else {
-    return response.status(405).json({ message: "Methode nicht erlaubt" });
+    return response.status(405).json({ message: "Method not allowed" });
   }
 }
