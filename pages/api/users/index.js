@@ -21,25 +21,39 @@ export default async function handler(request, response) {
   if (!session) {
     return response.status(401).json({ message: "Unauthorized" });
   }
+
   if (request.method === "GET") {
-    if (session) {
-      const user = await User.findOne({
-        userId: userId,
-      });
+    try {
+      const user = await User.findOne({ userId: userId });
       if (!user) {
         return response.status(404).json({ status: "Not Found" });
       }
       response.status(200).json(user);
+    } catch (error) {
+      console.error(error);
+      return response.status(400).json({ error: error.message });
     }
   }
+
   if (request.method === "PUT") {
     try {
-      const { favorites } = request.body;
+      const { favorites, country, city, aboutMe } = request.body;
+
+      const updatedUserData = {
+        favorites,
+        name: userName,
+        picture: picture,
+        country,
+        city,
+        aboutMe,
+      };
+
       const user = await User.findOneAndUpdate(
         { userId: userId },
-        { $set: { favorites, name: userName, picture: picture } },
+        { $set: updatedUserData },
         { new: true, upsert: true }
       );
+
       return response.status(200).json(user);
     } catch (error) {
       console.error(error);

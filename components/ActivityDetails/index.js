@@ -17,6 +17,7 @@ import ReviewCard from "@/components/ReviewCard";
 import ReviewForm from "../ReviewForm";
 import { Modal } from "@/components/Modal";
 import CreatorCard from "../CreatorCard";
+import Link from "next/link";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -133,7 +134,10 @@ export default function ActivityDetails({
         )}
         <MapComponent lat={activity.lat} lng={activity.lng} />
         <WeatherInformation activity={activity} />
-        <CreatorCard user={activity.owner} />
+
+        <Link href={`/users/${activity.owner._id}`}>
+          <CreatorCard user={activity.owner} />
+        </Link>
       </Content>
     </StyledArticle>
   );

@@ -2,12 +2,13 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import styled from "styled-components";
 import Image from "next/image";
 import { Icon } from "../components/Icon";
+import UserForm from "@/components/UserForm";
 
 export default function LoginPage() {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
-    return <p>Loading...</p>; 
+    return <p>Loading...</p>;
   }
 
   return (
@@ -28,6 +29,7 @@ export default function LoginPage() {
             <UserEmail>{session.user.email}</UserEmail>
             <SignOutButton onClick={() => signOut()}>Sign Out</SignOutButton>
           </ProfileDetails>
+          <UserForm />
         </ProfileCard>
       ) : (
         <LoginCard>
