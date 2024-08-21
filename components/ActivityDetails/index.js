@@ -16,6 +16,7 @@ import { useSession } from "next-auth/react";
 import ReviewCard from "@/components/ReviewCard";
 import ReviewForm from "../ReviewForm";
 import { Modal } from "@/components/Modal";
+import CreatorCard from "../CreatorCard";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -132,6 +133,7 @@ export default function ActivityDetails({
         )}
         <MapComponent lat={activity.lat} lng={activity.lng} />
         <WeatherInformation activity={activity} />
+        <CreatorCard user={activity.owner} />
       </Content>
     </StyledArticle>
   );

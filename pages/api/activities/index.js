@@ -3,11 +3,13 @@ import Activity from "@/db/models/Activity";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
 import { getToken } from "next-auth/jwt";
+import User from "@/db/models/User";
 
 export default async function handler(request, response) {
   const session = await getServerSession(request, response, authOptions);
   const token = await getToken({ req: request });
-  
+  const userId = token?.sub;
+
   await dbConnect();
 
   if (request.method === "GET") {
@@ -23,7 +25,17 @@ export default async function handler(request, response) {
   if (request.method === "POST") {
     try {
       if (session) {
+        const existingUser = await User.findOne({ userId });
+        const user = existingUser
+          ? existingUser
+          : await User.create({
+              userId: userId,
+              name: userName,
+              picture: picture,
+            });
+
         const activityData = request.body;
+        activityData.owner = user._id;
         await Activity.create(activityData);
 
         response.status(201).json({ status: "Activity created" });

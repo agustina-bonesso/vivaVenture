@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import "./Review";
-
+import "./User";
 const { Schema } = mongoose;
 
 const activitySchema = new Schema({
@@ -17,6 +17,7 @@ const activitySchema = new Schema({
   lat: { type: Number, required: true },
   lng: { type: Number, required: true },
   reviews: { type: [Schema.Types.ObjectId], ref: "Review" },
+  owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 const Activity =
