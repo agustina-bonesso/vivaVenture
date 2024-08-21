@@ -31,6 +31,7 @@ const ModalContent = styled.div`
   background: var(--card-background);
   padding: 20px;
   border-radius: var(--border-radius);
+  font-family: var(--font-p);
 `;
 
 const ModalHeader = styled.h2`

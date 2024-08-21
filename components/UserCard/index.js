@@ -19,6 +19,9 @@ const StyledUserCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 600px) {
+    flex-direction: row;
+  }
 `;
 
 const UserImage = styled(Image)`

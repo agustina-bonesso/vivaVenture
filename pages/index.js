@@ -2,7 +2,7 @@ import ActivityCard from "@/components/ActivityCard";
 import { StyledList } from "@/styles";
 import CategoryIcons from "@/components/CategoryIcons";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { Icon } from "@/components/Icon";

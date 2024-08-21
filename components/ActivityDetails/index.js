@@ -16,6 +16,8 @@ import { useSession } from "next-auth/react";
 import ReviewCard from "@/components/ReviewCard";
 import ReviewForm from "../ReviewForm";
 import { Modal } from "@/components/Modal";
+import { toast } from "react-toastify";
+import { Rating } from "react-simple-star-rating";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -28,7 +30,6 @@ export default function ActivityDetails({
   const { data: session } = useSession();
   const router = useRouter();
   const images = activity.images;
-
   const [showReviews, setShowReviews] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const ratings = activity.reviews.map((review) => review.rating);
@@ -57,7 +58,6 @@ export default function ActivityDetails({
             />
           </TransparentFavoriteButton>
         )}
-
         <StyledImageComponent images={images} alt={activity.title} />
       </ImageContainer>
       <Content>
@@ -95,7 +95,8 @@ export default function ActivityDetails({
             {activity.reviews.length > 1 ? "s" : ""}
           </ReviewsCount>
           <AverageRating>
-            / {averageRating} <Icon name="star" fillColor="gold" />
+            | <Rating initialValue={averageRating} readonly size={30} />
+            {averageRating}
           </AverageRating>
           {activity.reviews.length > 0 && (
             <ToggleReviewsButton onClick={() => setShowReviews(!showReviews)}>
@@ -103,28 +104,30 @@ export default function ActivityDetails({
             </ToggleReviewsButton>
           )}
         </ReviewsSummary>
-        {session && (
-          <>
-            <StyledButton onClick={() => setIsModalOpen(true)}>
-              Write a Review
-            </StyledButton>
-            <Modal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-              header="Write a Review"
-              footer={
-                <ModalButton onClick={() => setIsModalOpen(false)}>
-                  Close
-                </ModalButton>
-              }
-            >
-              <ReviewForm
-                activityId={activity._id}
-                onClose={() => setIsModalOpen(false)}
-              />
-            </Modal>
-          </>
-        )}
+        <ReviewButton
+          onClick={() => {
+            session
+              ? setIsModalOpen(true)
+              : toast.info("Please log in to write a review");
+          }}
+        >
+          Write a Review
+        </ReviewButton>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          header="Write a Review"
+          footer={
+            <ModalButton onClick={() => setIsModalOpen(false)}>
+              Close
+            </ModalButton>
+          }
+        >
+          <ReviewForm
+            activityId={activity._id}
+            onClose={() => setIsModalOpen(false)}
+          />
+        </Modal>
         {activity.reviews.length > 0 ? (
           showReviews &&
           activity.reviews.map((review) => (
@@ -139,7 +142,6 @@ export default function ActivityDetails({
     </StyledArticle>
   );
 }
-
 const StyledArticle = styled.article`
   max-width: 50rem;
   margin: 2rem auto 5rem auto;
@@ -147,81 +149,96 @@ const StyledArticle = styled.article`
   border-radius: var(--border-radius);
   background: var(--card-background);
 `;
-
 const ImageContainer = styled.div`
   position: relative;
   max-height: 30rem;
 `;
-
 const ActionIcons = styled.div`
   display: flex;
   align-items: baseline;
   gap: 0.625rem;
 `;
-
 const Content = styled.div`
   padding: 1.25rem;
 `;
-
 const Title = styled.h2`
   color: var(--text-color);
 `;
-
 const StyledDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
 `;
-
 const Info = styled.p`
   color: var(--brown);
   margin-top: 0.3125rem;
 `;
-
 const Description = styled.p`
   margin-top: 0.625rem;
   line-height: 1.6;
   color: var(--teal);
 `;
-
 const CategoryTags = styled.div`
   margin: 1rem 0;
   display: flex;
   gap: 0.3125rem;
 `;
-
 const Tag = styled.span`
   background: var(--light-orange);
   color: black;
   padding: 0.3125rem 0.625rem;
   border-radius: var(--border-radius);
 `;
-
 const ReviewsSummary = styled.div`
   margin-top: 1rem;
   display: flex;
   gap: 1rem;
   align-items: center;
 `;
-
 const ReviewsCount = styled.p`
   font-weight: bold;
   color: var(--text-color);
 `;
-
 const AverageRating = styled.p`
   color: var(--text-color);
   display: flex;
   align-items: center;
   gap: 0.5rem;
 `;
-
 const NoReviewsMessage = styled.p`
   margin-top: 1rem;
   color: var(--text-color);
   font-style: italic;
 `;
-
 const ToggleReviewsButton = styled.button`
   all: unset;
+`;
+const ReviewButton = styled.button`
+  background-color: transparent;
+  color: var(--text-color);
+  padding: 0.5rem 1.25rem;
+  font-size: 1rem;
+  border: 2px solid var(--text-color);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--text-color);
+    color: var(--background-color);
+    border-color: var(--background-color);
+  }
+
+  &:active {
+    background-color: var(--text-color);
+    color: var(--background-color);
+    border-color: var(--background-color);
+    transform: scale(0.98);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  }
 `;

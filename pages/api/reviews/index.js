@@ -41,7 +41,7 @@ export default async function handler(request, response) {
         activityId,
         { $push: { reviews: newReview._id } },
         { new: true }
-      ).populate("reviews");
+      );
       return response.status(201).json(updatedActivity);
     } catch (error) {
       console.error(error);
