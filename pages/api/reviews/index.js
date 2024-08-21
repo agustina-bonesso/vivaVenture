@@ -23,14 +23,16 @@ export default async function handler(request, response) {
           .status(400)
           .json({ message: "Activity ID and rating are required" });
       }
-      let user = await User.findOne({ userId });
-      if (!user) {
-        user = await User.create({
-          userId: userId,
-          name: userName,
-          picture: picture,
-        });
-      }
+
+      const existingUser = await User.findOne({ userId });
+      const user = existingUser
+        ? existingUser
+        : await User.create({
+            userId: userId,
+            name: userName,
+            picture: picture,
+          });
+
       const newReview = await Review.create({
         author: user._id,
         rating,
@@ -46,8 +48,10 @@ export default async function handler(request, response) {
     } catch (error) {
       console.error(error);
       return response.status(500).json({ message: "Internal server error" });
+      return response.status(500).json({ message: "Internal server error" });
     }
   } else {
+    return response.status(405).json({ message: "Method not allowed" });
     return response.status(405).json({ message: "Method not allowed" });
   }
 }

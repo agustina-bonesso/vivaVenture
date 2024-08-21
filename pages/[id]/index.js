@@ -11,17 +11,16 @@ export default function Activity({ onToggleFavorite, userData }) {
   const { data: session } = useSession();
   const router = useRouter();
   const { id } = router.query;
-
   const { data: activity, isLoading, error } = useSWR(`/api/activities/${id}`);
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const isFavorite = session ? (userData?.favorites ?? []).includes(id) : false;
+
   async function confirmDeleteActivity() {
     setIsModalOpen(false);
     const response = await fetch(`/api/activities/${id}`, {
       method: "DELETE",
     });
-
     if (!response.ok) {
       console.error(response.status);
       return;
@@ -30,7 +29,6 @@ export default function Activity({ onToggleFavorite, userData }) {
     router.push("/");
     toast.success("Activity deleted successfully!");
   }
-
   async function handleDeleteActivity() {
     if (!session) {
       toast.info("Please login for this feature");

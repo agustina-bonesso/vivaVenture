@@ -2,8 +2,11 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import styled from "styled-components";
 import { Icon } from "leaflet";
+import { useRouter } from "next/router";
+import { StyledLink } from "@/components/StyledLinks";
 
-export default function Map({ markers }) {
+export default function MapOverView({ markers }) {
+  const router = useRouter();
   return (
     <MapWrapper>
       <StyledMapContainer center={[27.06, -0.175]} zoom={2}>
@@ -14,7 +17,9 @@ export default function Map({ markers }) {
         {markers.map((marker, index) => {
           return (
             <Marker key={index} position={marker.geoCode} icon={MapMarker}>
-              <Popup>{marker.popUp}</Popup>
+              <Popup>
+                <StyledLink href={`/${marker.id}`}>{marker.popUp}</StyledLink>
+              </Popup>
             </Marker>
           );
         })}

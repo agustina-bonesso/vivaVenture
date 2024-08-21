@@ -37,7 +37,6 @@ export default function ActivityDetails({
     ratings.length > 0
       ? (ratings.reduce((a, b) => a + b) / ratings.length).toFixed(1)
       : 0;
-
   return (
     <StyledArticle>
       <ImageContainer>
