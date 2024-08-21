@@ -9,24 +9,50 @@ export default async function handler(request, response) {
   const { id } = request.query;
 
   if (request.method === "GET") {
-    const activity = await Activity.findById(id);
-    if (!activity) {
-      return response.status(404).json({ status: "Not Found" });
+    try {
+      const activity = await Activity.findById(id).populate({
+        path: "reviews",
+        populate: {
+          path: "author",
+          select: "name picture", 
+        },
+      });
+
+      if (!activity) {
+        return response.status(404).json({ status: "Not Found" });
+      }
+
+      response.status(200).json(activity);
+    } catch (error) {
+      console.error(error);
+      return response.status(500).json({ status: "Server Error", error });
     }
-    response.status(200).json(activity);
   }
+
   if (session) {
     if (request.method === "PUT") {
-      const activityData = request.body;
-      await Activity.findByIdAndUpdate(id, activityData);
-      return response.status(200).json({ status: `Activity ${id} updated!` });
+      try {
+        const activityData = request.body;
+        await Activity.findByIdAndUpdate(id, activityData);
+        return response.status(200).json({ status: `Activity ${id} updated!` });
+      } catch (error) {
+        console.error(error);
+        return response.status(500).json({ status: "Server Error", error });
+      }
     }
   }
 
   if (request.method === "DELETE") {
-    await Activity.findByIdAndDelete(id);
-    response
-      .status(200)
-      .json({ status: `Activity ${id} successfully deleted.` });
+    try {
+      await Activity.findByIdAndDelete(id);
+      response
+        .status(200)
+        .json({ status: `Activity ${id} successfully deleted.` });
+    } catch (error) {
+      console.error(error);
+      return response.status(500).json({ status: "Server Error", error });
+    }
+  } else {
+    response.status(405).json({ status: "Method Not Allowed" });
   }
 }
