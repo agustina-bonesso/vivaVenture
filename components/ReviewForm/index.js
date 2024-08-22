@@ -7,15 +7,13 @@ import { toast } from "react-toastify";
 
 export default function ReviewForm({ activityId, onClose }) {
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
   const handleRating = (rate) => {
     setRating(rate);
   };
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
-  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const comment = event.target.comment.value;
     if (rating === 0) {
       toast.error("Please select a rating before submitting");
       return;
@@ -63,8 +61,6 @@ export default function ReviewForm({ activityId, onClose }) {
         cols="30"
         rows="5"
         placeholder="Add your comment here..."
-        value={comment}
-        onChange={handleCommentChange}
         maxLength={500}
       />
       <StyledButton type="submit">Post</StyledButton>
