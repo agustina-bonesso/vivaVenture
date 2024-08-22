@@ -26,13 +26,13 @@ export default async function handler(request, response) {
     try {
       if (session) {
         const existingUser = await User.findOne({ userId });
-        const user = existingUser
-          ? existingUser
-          : await User.create({
-              userId: userId,
-              name: userName,
-              picture: picture,
-            });
+        const user =
+          existingUser ??
+          (await User.create({
+            userId: userId,
+            name: userName,
+            picture: picture,
+          }));
 
         const activityData = request.body;
         activityData.owner = user._id;

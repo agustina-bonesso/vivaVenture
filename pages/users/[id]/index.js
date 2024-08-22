@@ -21,9 +21,9 @@ export default function UserPage({ activityData, onToggleFavorite, userData }) {
       />
       <UserName>{userProilData.name}</UserName>
       <UserLocation>
-        {userProilData.city && userProilData.country
-          ? `${userProilData.city}, ${userProilData.country}`
-          : ""}
+        {userProilData.city &&
+          userProilData.country &&
+          `${userProilData.city}, ${userProilData.country}`}
       </UserLocation>
       <UserAbout>
         <SectionTitle>About Me</SectionTitle>
@@ -39,9 +39,8 @@ export default function UserPage({ activityData, onToggleFavorite, userData }) {
                 activity={userActivity}
                 onToggleFavorite={onToggleFavorite}
                 isFavorite={
-                  session
-                    ? (userData?.favorites ?? []).includes(userActivity._id)
-                    : false
+                  session &&
+                  (userData?.favorites ?? []).includes(userActivity._id)
                 }
               />
             </li>

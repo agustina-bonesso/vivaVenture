@@ -10,7 +10,7 @@ import useSWR from "swr";
 export default function LoginPage() {
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: profilData } = useSWR(`/api/users`);
+  const { data: profileData } = useSWR(`/api/users`);
   return (
     <Container>
       {session ? (
@@ -28,15 +28,15 @@ export default function LoginPage() {
             <UserName>{session.user.name}</UserName>
             <UserEmail>{session.user.email}</UserEmail>
             <UserLocation>
-              {profilData.city && profilData.country
-                ? `${profilData.city}, ${profilData.country}`
+              {profileData.city && profileData.country
+                ? `${profileData.city}, ${profileData.country}`
                 : "No details provided."}
             </UserLocation>
-            {profilData.aboutMe && (
+            {profileData.aboutMe && (
               <UserAbout>
                 <SectionTitle>About Me:</SectionTitle>
                 <AboutText>
-                  {profilData.aboutMe || "No details provided."}
+                  {profileData.aboutMe || "No details provided."}
                 </AboutText>
               </UserAbout>
             )}
@@ -59,7 +59,7 @@ export default function LoginPage() {
             }
           >
             <UserForm
-              initialUserData={profilData}
+              initialUserData={profileData}
               onClose={() => setIsModalOpen(false)}
             />
           </Modal>
