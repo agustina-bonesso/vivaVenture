@@ -13,7 +13,7 @@ export default function ReviewForm({ activityId, onClose }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    const comment = event.target.comment.value;
     if (rating === 0) {
       toast.error("Please select a rating before submitting");
       return;
@@ -27,6 +27,7 @@ export default function ReviewForm({ activityId, onClose }) {
         body: JSON.stringify({
           activityId,
           rating,
+          comment,
         }),
       });
       if (!response.ok) {
@@ -42,14 +43,25 @@ export default function ReviewForm({ activityId, onClose }) {
   };
   return (
     <StyledForm onSubmit={handleSubmit}>
-      <Rating
-        onClick={handleRating}
-        ratingValue={rating}
-        size={40}
-        label
-        transition
-        fillColor="gold"
-        emptyColor="gray"
+      <div>
+        <Rating
+          onClick={handleRating}
+          ratingValue={rating}
+          size={40}
+          label
+          transition
+          fillColor="gold"
+          emptyColor="gray"
+        />
+      </div>
+      <StyledLabel htmlFor="comment">Comment</StyledLabel>
+      <StyledTextarea
+        name="comment"
+        id="comment"
+        cols="30"
+        rows="5"
+        placeholder="Add your comment here..."
+        maxLength={500}
       />
       <StyledButton type="submit">Post</StyledButton>
     </StyledForm>
@@ -66,4 +78,26 @@ const StyledForm = styled.form`
   border-radius: var(--border-radius);
   background: var(--form-background);
   color: var(--text-color);
+`;
+const StyledTextarea = styled.textarea`
+  padding: 0.75rem;
+  border: 1px solid var(--form-border);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  color: var(--text-color);
+  background: var(--background-color);
+  resize: vertical;
+  &:hover {
+    border-color: var(--light-orange);
+  }
+  &:focus-within {
+    border-color: var(--light-orange);
+    outline: none;
+  }
+`;
+const StyledLabel = styled.label`
+  font-weight: bold;
+  margin-top: 0.8rem;
+  font-family: var(--font-h1);
+  font-size: 1.125rem;
 `;

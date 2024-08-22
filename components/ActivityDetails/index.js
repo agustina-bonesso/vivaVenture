@@ -9,6 +9,7 @@ import {
   TransparentFavoriteButton,
 } from "@/components/StyledButton";
 import { StyledEditLink } from "@/components/StyledLinks";
+import { StyledLink } from "@/components/StyledLinks";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import WeatherInformation from "@/components/Weather";
@@ -16,8 +17,9 @@ import { useSession } from "next-auth/react";
 import ReviewCard from "@/components/ReviewCard";
 import ReviewForm from "../ReviewForm";
 import { Modal } from "@/components/Modal";
+import { toast } from "react-toastify";
+import { Rating } from "react-simple-star-rating";
 import CreatorCard from "../CreatorCard";
-import Link from "next/link";
 import useSWR from "swr";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
@@ -98,7 +100,8 @@ export default function ActivityDetails({
             {activity.reviews.length > 1 ? "s" : ""}
           </ReviewsCount>
           <AverageRating>
-            / {averageRating} <Icon name="star" fillColor="gold" />
+            | <Rating initialValue={averageRating} readonly size={30} />
+            {averageRating}
           </AverageRating>
           {activity.reviews.length > 0 && (
             <ToggleReviewsButton onClick={() => setShowReviews(!showReviews)}>
@@ -106,28 +109,30 @@ export default function ActivityDetails({
             </ToggleReviewsButton>
           )}
         </ReviewsSummary>
-        {session && (
-          <>
-            <ReviewButton onClick={() => setIsModalOpen(true)}>
-              Write a Review
-            </ReviewButton>
-            <Modal
-              isOpen={isModalOpen}
-              onClose={() => setIsModalOpen(false)}
-              header="Write a Review"
-              footer={
-                <ModalButton onClick={() => setIsModalOpen(false)}>
-                  Close
-                </ModalButton>
-              }
-            >
-              <ReviewForm
-                activityId={activity._id}
-                onClose={() => setIsModalOpen(false)}
-              />
-            </Modal>
-          </>
-        )}
+        <ReviewButton
+          onClick={() => {
+            session
+              ? setIsModalOpen(true)
+              : toast.info("Please log in to write a review");
+          }}
+        >
+          Write a Review
+        </ReviewButton>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          header="Write a Review"
+          footer={
+            <ModalButton onClick={() => setIsModalOpen(false)}>
+              Close
+            </ModalButton>
+          }
+        >
+          <ReviewForm
+            activityId={activity._id}
+            onClose={() => setIsModalOpen(false)}
+          />
+        </Modal>
         {activity.reviews.length > 0 ? (
           showReviews &&
           activity.reviews.map((review) => (
@@ -139,9 +144,9 @@ export default function ActivityDetails({
         <MapComponent lat={activity.lat} lng={activity.lng} />
         <WeatherInformation activity={activity} />
 
-        <Link href={`/users/${activity.owner._id}`}>
+        <StyledLink href={`/users/${activity.owner._id}`}>
           <CreatorCard user={activity.owner} />
-        </Link>
+        </StyledLink>
       </Content>
     </StyledArticle>
   );
@@ -218,31 +223,31 @@ const ToggleReviewsButton = styled.button`
   all: unset;
 `;
 const ReviewButton = styled.button`
-  background-color: #ff6b6b;
-  color: white;
-  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: var(--text-color);
+  padding: 0.5rem 1.25rem;
   font-size: 1rem;
-  font-weight: bold;
-  border: none;
+  border: 2px solid var(--text-color);
   border-radius: 50px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
 
   &:hover {
-    background-color: #ff5252;
-    transform: translateY(-2px);
-    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
+    background-color: var(--text-color);
+    color: var(--background-color);
+    border-color: var(--background-color);
   }
 
   &:active {
-    background-color: #ff3b3b;
-    transform: translateY(0);
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+    background-color: var(--text-color);
+    color: var(--background-color);
+    border-color: var(--background-color);
+    transform: scale(0.98);
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0px 0px 0px 4px rgba(255, 107, 107, 0.5);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
   }
 `;

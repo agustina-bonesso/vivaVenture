@@ -26,21 +26,25 @@ const ModalBackdrop = styled.div`
   align-items: center;
   z-index: 1050;
 `;
+
 const ModalContent = styled.div`
   background: var(--card-background);
   padding: 20px;
   border-radius: var(--border-radius);
+  font-family: var(--font-p);
 `;
+
 const ModalHeader = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 1rem;
 `;
+
 const ModalBody = styled.div`
   font-size: 1rem;
   margin-bottom: 1rem;
 `;
+
 const ModalFooter = styled.div`
   text-align: right;
   margin-top: 1rem;
 `;
-
