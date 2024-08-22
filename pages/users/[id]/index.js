@@ -51,11 +51,11 @@ export default function UserPage({ activityData, onToggleFavorite, userData }) {
 
 const UserContainer = styled.div`
   display: flex;
+  max-width: 80vw;
   flex-direction: column;
   align-items: center;
   margin: 2rem auto;
   padding: 1rem;
-  max-width: 600px;
   background: var(--card-background);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
