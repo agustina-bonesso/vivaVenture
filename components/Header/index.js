@@ -6,7 +6,7 @@ import { useState } from "react";
 import HamburgerMenu from "@/components/HamburgerMenu";
 import SearchBar from "@/components/SearchBar";
 import { useRouter } from "next/router";
-import Login from "../Login";
+import Login from "@/components/Login";
 
 export default function Header({ getRandomActivity, onChange }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -82,7 +82,6 @@ const Overlay = styled.div`
 `;
 
 const StyledDiv = styled.div`
-
   @media (max-width: 767px) {
     display: none;
   }

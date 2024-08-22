@@ -14,7 +14,7 @@ export default async function handler(request, response) {
         path: "reviews",
         populate: {
           path: "author",
-          select: "name picture", 
+          select: "name picture comment", 
         },
       });
 
