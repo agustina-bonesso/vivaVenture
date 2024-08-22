@@ -17,7 +17,9 @@ export default function UserPage() {
       />
       <UserName>{user.name}</UserName>
       <UserLocation>
-        {`${user.city}, ${user.country}` || "No details provided."}
+        {user.city && user.country
+          ? `${user.city}, ${user.country}`
+          : "No details provided."}
       </UserLocation>
       <UserAbout>
         <SectionTitle>About Me</SectionTitle>

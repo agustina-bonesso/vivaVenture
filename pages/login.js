@@ -3,34 +3,65 @@ import styled from "styled-components";
 import Image from "next/image";
 import { Icon } from "../components/Icon";
 import UserForm from "@/components/UserForm";
+import { Modal } from "@/components/Modal";
+import { ModalButton, StyledButton } from "@/components/StyledButton";
+import { useState } from "react";
+import useSWR from "swr";
 
 export default function LoginPage() {
-  const { data: session, status } = useSession();
-
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
+  const { data: session } = useSession();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data: userData } = useSWR(`/api/users`);
 
   return (
     <Container>
       {session ? (
-        <ProfileCard>
-          <ProfileImageWrapper>
-            <StyledImage
-              src={session.user.image}
-              alt={session.user.name}
-              fill
-              sizes="(max-width: 600px) 150px, (max-width: 1200px) 200px"
-              priority
-            />
-          </ProfileImageWrapper>
-          <ProfileDetails>
-            <UserName>{session.user.name}</UserName>
-            <UserEmail>{session.user.email}</UserEmail>
-            <SignOutButton onClick={() => signOut()}>Sign Out</SignOutButton>
-          </ProfileDetails>
-          <UserForm />
-        </ProfileCard>
+        <>
+          <ProfileCard>
+            <ProfileImageWrapper>
+              <StyledImage
+                src={session.user.image}
+                alt={session.user.name}
+                fill
+                sizes="(max-width: 600px) 150px, (max-width: 1200px) 200px"
+                priority
+              />
+            </ProfileImageWrapper>
+            <ProfileDetails>
+              <UserName>{session.user.name}</UserName>
+              <UserEmail>{session.user.email}</UserEmail>
+              <UserLocation>
+                {userData.city && userData.country
+                  ? `${userData.city}, ${userData.country}`
+                  : "No details provided."}
+              </UserLocation>
+              <UserAbout>
+                <SectionTitle>About Me</SectionTitle>
+                <AboutText>{userData.aboutMe || "No details provided."}</AboutText>
+              </UserAbout>
+              <SignOutButton onClick={() => signOut()}>Sign Out</SignOutButton>
+            </ProfileDetails>
+            <StyledButton
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+            >
+              Edit your Profile
+            </StyledButton>
+            <Modal
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              header="Edit your Profile"
+              footer={
+                <ModalButton onClick={() => setIsModalOpen(false)}>
+                  Close
+                </ModalButton>
+              }
+            >
+              <UserForm initialUserData={userData} />
+            </Modal>
+          </ProfileCard>
+        </>
       ) : (
         <LoginCard>
           <p>You are not signed in</p>
@@ -135,4 +166,25 @@ const SignInButton = styled.button`
     width: 24px;
     height: 24px;
   }
+`;
+const UserLocation = styled.p`
+  color: var(--secondary-text-color);
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+`;
+
+const UserAbout = styled.div`
+  width: 100%;
+  text-align: left;
+`;
+
+const SectionTitle = styled.h2`
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+`;
+
+const AboutText = styled.p`
+  color: var(--text-color);
+  font-size: 1rem;
+  line-height: 1.5;
 `;

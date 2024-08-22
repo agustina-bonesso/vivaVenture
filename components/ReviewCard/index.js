@@ -3,20 +3,21 @@ import { Rating } from "react-simple-star-rating";
 import Image from "next/image";
 
 export default function ReviewCard({ review }) {
+  console.log(review)
   return (
     <StyledReviewCard>
       <StyledUserCard>
         <UserImage
           src={
-            review.user.picture
-              ? review.user.picture
+            review.author.picture
+              ? review.author.picture
               : "/images/user_picture.png"
           }
-          alt={`${review.user.name}'s profile picture`}
+          alt={`${review.author.name}'s profile picture`}
           width={50}
           height={50}
         />
-        <UserName>{eview.user.name}</UserName>
+        <UserName>{review.author.name}</UserName>
       </StyledUserCard>
       <Rating initialValue={review.rating} readonly />
     </StyledReviewCard>

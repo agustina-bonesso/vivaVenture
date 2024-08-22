@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { StyledButton } from "@/components/StyledButton";
 import { toast } from "react-toastify";
 
-export default function UserForm() {
+
+export default function UserForm({ initialUserData }) {
   async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -28,9 +29,9 @@ export default function UserForm() {
   return (
     <StyledForm onSubmit={handleSubmit}>
       <StyledLabel htmlFor="city">City</StyledLabel>
-      <StyledInput id="city" name="city" type="text" />
+      <StyledInput id="city" name="city" type="text" defaultValue={initialUserData?.city}/>
       <StyledLabel htmlFor="country">Country</StyledLabel>
-      <StyledInput id="country" name="country" type="text" />
+      <StyledInput id="country" name="country" type="text" defaultValue={initialUserData?.country}/>
       <StyledLabel htmlFor="aboutMe">About me</StyledLabel>
       <StyledTextArea
         name="aboutMe"
@@ -38,6 +39,7 @@ export default function UserForm() {
         cols="30"
         rows="10"
         placeholder="add a text that describes you"
+        defaultValue={initialUserData?.aboutMe}
       ></StyledTextArea>
       <StyledButton type="submit">Submit</StyledButton>
     </StyledForm>
