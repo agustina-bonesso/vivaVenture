@@ -14,7 +14,7 @@ export default function UserPage({ activityData, onToggleFavorite, userData }) {
   if (!userProilData) return <p>Loading...</p>;
 
   return (
-    <UserContainer>
+    <>
       <UserImage
         src={userProilData.picture || "/images/user_picture.png"}
         alt={`${userProilData.name}'s profile picture`}
@@ -33,33 +33,23 @@ export default function UserPage({ activityData, onToggleFavorite, userData }) {
         {activityData
           .filter((activity) => activity.owner === id)
           .map((userActivity) => (
-            <ActivityCard
-              key={userActivity._id}
-              activity={userActivity}
-              onToggleFavorite={onToggleFavorite}
-              isFavorite={
-                session
-                  ? (userData?.favorites ?? []).includes(userActivity._id)
-                  : false
-              }
-            />
+            <li key={userActivity._id}>
+              <ActivityCard
+                key={userActivity._id}
+                activity={userActivity}
+                onToggleFavorite={onToggleFavorite}
+                isFavorite={
+                  session
+                    ? (userData?.favorites ?? []).includes(userActivity._id)
+                    : false
+                }
+              />
+            </li>
           ))}
       </StyledList>
-    </UserContainer>
+    </>
   );
 }
-
-const UserContainer = styled.div`
-  display: flex;
-  max-width: 80vw;
-  flex-direction: column;
-  align-items: center;
-  margin: 2rem auto;
-  padding: 1rem;
-  background: var(--card-background);
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-`;
 
 const UserImage = styled.img`
   border-radius: 50%;
