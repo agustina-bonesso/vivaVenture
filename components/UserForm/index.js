@@ -7,7 +7,6 @@ export default function UserForm() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const userData = Object.fromEntries(formData);
-
     try {
       const response = await fetch("/api/users", {
         method: "PUT",
@@ -18,13 +17,12 @@ export default function UserForm() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to update user information");
+        toast.error("There was a problem updating your information");
+        return;
       }
-
       toast.success("User information updated successfully");
     } catch (error) {
       console.error("Error updating user information:", error);
-      toast.error("There was a problem updating your information");
     }
   }
   return (
