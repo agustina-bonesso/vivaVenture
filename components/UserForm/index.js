@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { StyledButton } from "@/components/StyledButton";
 import { toast } from "react-toastify";
+import { mutate } from "swr";
 
-
-export default function UserForm({ initialUserData }) {
+export default function UserForm({ initialUserData, onClose }) {
   async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -21,7 +21,9 @@ export default function UserForm({ initialUserData }) {
         toast.error("There was a problem updating your information");
         return;
       }
+      mutate("/api/users");
       toast.success("User information updated successfully");
+      onClose();
     } catch (error) {
       console.error("Error updating user information:", error);
     }
@@ -29,9 +31,19 @@ export default function UserForm({ initialUserData }) {
   return (
     <StyledForm onSubmit={handleSubmit}>
       <StyledLabel htmlFor="city">City</StyledLabel>
-      <StyledInput id="city" name="city" type="text" defaultValue={initialUserData?.city}/>
+      <StyledInput
+        id="city"
+        name="city"
+        type="text"
+        defaultValue={initialUserData?.city}
+      />
       <StyledLabel htmlFor="country">Country</StyledLabel>
-      <StyledInput id="country" name="country" type="text" defaultValue={initialUserData?.country}/>
+      <StyledInput
+        id="country"
+        name="country"
+        type="text"
+        defaultValue={initialUserData?.country}
+      />
       <StyledLabel htmlFor="aboutMe">About me</StyledLabel>
       <StyledTextArea
         name="aboutMe"

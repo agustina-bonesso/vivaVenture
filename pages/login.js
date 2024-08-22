@@ -37,7 +37,9 @@ export default function LoginPage() {
               </UserLocation>
               <UserAbout>
                 <SectionTitle>About Me</SectionTitle>
-                <AboutText>{userData.aboutMe || "No details provided."}</AboutText>
+                <AboutText>
+                  {userData.aboutMe || "No details provided."}
+                </AboutText>
               </UserAbout>
               <SignOutButton onClick={() => signOut()}>Sign Out</SignOutButton>
             </ProfileDetails>
@@ -58,7 +60,10 @@ export default function LoginPage() {
                 </ModalButton>
               }
             >
-              <UserForm initialUserData={userData} />
+              <UserForm
+                initialUserData={userData}
+                onClose={() => setIsModalOpen(false)}
+              />
             </Modal>
           </ProfileCard>
         </>

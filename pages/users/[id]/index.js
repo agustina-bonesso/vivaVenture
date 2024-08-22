@@ -1,30 +1,50 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import useSWR from "swr";
+import { StyledList } from "@/styles";
+import ActivityCard from "@/components/ActivityCard";
+import { useSession } from "next-auth/react";
 
-export default function UserPage() {
+export default function UserPage({ activityData, onToggleFavorite, userData }) {
   const router = useRouter();
   const { id } = router.query;
-  const { data: user } = useSWR(`/api/users/${id}`);
-
-  if (!user) return <p>Loading...</p>; // Falls die Daten noch geladen werden
+  const { data: userProfilData } = useSWR(`/api/users/${id}`);
+  const { data: session } = useSession();
 
   return (
     <UserContainer>
       <UserImage
-        src={user.picture || "/images/user_picture.png"}
-        alt={`${user.name}'s profile picture`}
+        src={userProfilData.picture || "/images/user_picture.png"}
+        alt={`${userProfilData.name}'s profile picture`}
       />
-      <UserName>{user.name}</UserName>
+      <UserName>{userProfilData.name}</UserName>
       <UserLocation>
-        {user.city && user.country
-          ? `${user.city}, ${user.country}`
+        {userProfilData.city && userProfilData.country
+          ? `${userProfilData.city}, ${userProfilData.country}`
           : "No details provided."}
       </UserLocation>
       <UserAbout>
         <SectionTitle>About Me</SectionTitle>
-        <AboutText>{user.aboutMe || "No details provided."}</AboutText>
+        <AboutText>
+          {userProfilData.aboutMe || "No details provided."}
+        </AboutText>
       </UserAbout>
+      <StyledList>
+        {activityData
+          .filter((activity) => activity.owner === id)
+          .map((userActivity) => (
+            <ActivityCard
+              key={userActivity._id}
+              activity={userActivity}
+              onToggleFavorite={onToggleFavorite}
+              isFavorite={
+                session
+                  ? (userData?.favorites ?? []).includes(userActivity._id)
+                  : false
+              }
+            />
+          ))}
+      </StyledList>
     </UserContainer>
   );
 }
