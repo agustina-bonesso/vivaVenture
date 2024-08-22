@@ -18,6 +18,7 @@ import ReviewForm from "../ReviewForm";
 import { Modal } from "@/components/Modal";
 import CreatorCard from "../CreatorCard";
 import Link from "next/link";
+import useSWR from "swr";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -32,6 +33,7 @@ export default function ActivityDetails({
   const images = activity.images;
   const [showReviews, setShowReviews] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data: userData } = useSWR(`/api/users`);
   const ratings = activity.reviews.map((review) => review.rating);
   const averageRating =
     ratings.length > 0
@@ -62,24 +64,26 @@ export default function ActivityDetails({
       <Content>
         <StyledDiv>
           <Title>{activity.title}</Title>
-          <ActionIcons>
-            <StyledEditLink
-              title="Edit activity"
-              type="button"
-              $variant="edit"
-              href={session ? `/${activity._id}/edit` : `/login`}
-            >
-              <Icon name="edit" />
-            </StyledEditLink>
-            <StyledButton
-              title="Delete activity"
-              type="button"
-              $variant="delete"
-              onClick={onDeleteActivity}
-            >
-              <Icon name="delete" />
-            </StyledButton>
-          </ActionIcons>
+          {activity.owner._id === userData._id && (
+            <ActionIcons>
+              <StyledEditLink
+                title="Edit activity"
+                type="button"
+                $variant="edit"
+                href={session ? `/${activity._id}/edit` : `/login`}
+              >
+                <Icon name="edit" />
+              </StyledEditLink>
+              <StyledButton
+                title="Delete activity"
+                type="button"
+                $variant="delete"
+                onClick={onDeleteActivity}
+              >
+                <Icon name="delete" />
+              </StyledButton>
+            </ActionIcons>
+          )}
         </StyledDiv>
         <Info>{`${activity.city}, ${activity.country}`}</Info>
         <Description>{activity.description}</Description>

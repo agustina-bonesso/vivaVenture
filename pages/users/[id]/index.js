@@ -8,26 +8,26 @@ import { useSession } from "next-auth/react";
 export default function UserPage({ activityData, onToggleFavorite, userData }) {
   const router = useRouter();
   const { id } = router.query;
-  const { data: userProfilData } = useSWR(`/api/users/${id}`);
+  const { data: userProilData } = useSWR(`/api/users/${id}`);
   const { data: session } = useSession();
+
+  if (!userProilData) return <p>Loading...</p>;
 
   return (
     <UserContainer>
       <UserImage
-        src={userProfilData.picture || "/images/user_picture.png"}
-        alt={`${userProfilData.name}'s profile picture`}
+        src={userProilData.picture || "/images/user_picture.png"}
+        alt={`${userProilData.name}'s profile picture`}
       />
-      <UserName>{userProfilData.name}</UserName>
+      <UserName>{userProilData.name}</UserName>
       <UserLocation>
-        {userProfilData.city && userProfilData.country
-          ? `${userProfilData.city}, ${userProfilData.country}`
-          : "No details provided."}
+        {userProilData.city && userProilData.country
+          ? `${userProilData.city}, ${userProilData.country}`
+          : ""}
       </UserLocation>
       <UserAbout>
         <SectionTitle>About Me</SectionTitle>
-        <AboutText>
-          {userProfilData.aboutMe || "No details provided."}
-        </AboutText>
+        <AboutText>{userProilData.aboutMe || "No details provided."}</AboutText>
       </UserAbout>
       <StyledList>
         {activityData
