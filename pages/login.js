@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: profileData } = useSWR(`/api/users`);
   return (
-    <Container>
+    <StyledArticle>
       {session ? (
         <ProfileCard>
           <ProfileImageWrapper>
@@ -74,16 +74,18 @@ export default function LoginPage() {
           </SignInButton>
         </LoginCard>
       )}
-    </Container>
+    </StyledArticle>
   );
 }
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f0f4f8;
+
+const StyledArticle = styled.article`
+  max-width: 50rem;
+  margin: 2rem auto 5rem auto;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  background: var(--card-background);
 `;
+
 const ProfileCard = styled.div`
   display: flex;
   flex-direction: column;

@@ -20,7 +20,7 @@ export default async function handler(request, response) {
         })
         .populate({
           path: "owner",
-          select: "name email picture",
+          select: "name email picture city country",
         });
 
       if (!activity) {

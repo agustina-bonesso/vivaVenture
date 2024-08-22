@@ -1,9 +1,14 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { StyledButton } from "@/components/StyledButton";
 import { toast } from "react-toastify";
 import { mutate } from "swr";
 
 export default function UserForm({ initialUserData, onClose }) {
+  const maxChars = 250;
+
+  const [aboutMeText, setAboutMeText] = useState(initialUserData?.aboutMe || "");
+
   async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -28,6 +33,7 @@ export default function UserForm({ initialUserData, onClose }) {
       console.error("Error updating user information:", error);
     }
   }
+
   return (
     <StyledForm onSubmit={handleSubmit}>
       <StyledLabel htmlFor="city">City</StyledLabel>
@@ -50,9 +56,13 @@ export default function UserForm({ initialUserData, onClose }) {
         id="aboutMe"
         cols="30"
         rows="10"
-        placeholder="add a text that describes you"
-        defaultValue={initialUserData?.aboutMe}
+        placeholder="Add a text that describes you"
+        value={aboutMeText}
+        onChange={(e) => setAboutMeText(e.target.value)}
       ></StyledTextArea>
+      <CharCounter>
+        {maxChars - aboutMeText.length} characters remaining
+      </CharCounter>
       <StyledButton type="submit">Submit</StyledButton>
     </StyledForm>
   );
@@ -70,6 +80,7 @@ const StyledForm = styled.form`
   background: var(--form-background);
   color: var(--text-color);
 `;
+
 const StyledLabel = styled.label`
   font-weight: bold;
   margin-top: 0.8rem;
@@ -93,4 +104,12 @@ const StyledTextArea = styled.textarea`
   color: var(--text-color);
   resize: vertical;
   min-height: 100px;
+`;
+
+const CharCounter = styled.div`
+  font-size: 0.875rem;
+  color: grey;
+  text-align: right;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
 `;

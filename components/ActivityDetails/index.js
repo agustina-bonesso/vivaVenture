@@ -145,7 +145,7 @@ export default function ActivityDetails({
         <WeatherInformation activity={activity} />
 
         <StyledLink href={`/users/${activity.owner._id}`}>
-          <CreatorCard user={activity.owner} />
+          <CreatorCard activityOwner={activity.owner} />
         </StyledLink>
       </Content>
     </StyledArticle>
