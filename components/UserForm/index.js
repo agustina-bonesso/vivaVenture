@@ -60,6 +60,7 @@ export default function UserForm({ initialUserData, onClose }) {
         rows="5"
         placeholder="Add a text that describes you"
         value={aboutMeText}
+        maxLength={maxChars}
         onChange={(e) => setAboutMeText(e.target.value)}
       ></StyledTextArea>
       <CharCounter>
