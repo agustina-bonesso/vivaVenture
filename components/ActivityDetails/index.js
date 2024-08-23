@@ -100,7 +100,7 @@ export default function ActivityDetails({
             {activity.reviews.length > 1 ? "s" : ""}
           </ReviewsCount>
           <AverageRating>
-            | <Rating initialValue={averageRating} readonly size={30} />
+            <Rating initialValue={averageRating} readonly size={30} />
             {averageRating}
             {activity.reviews.length > 0 && (
               <ToggleReviewsButton onClick={() => setShowReviews(!showReviews)}>

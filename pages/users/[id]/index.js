@@ -3,7 +3,6 @@ import styled from "styled-components";
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import MiniActivityCard from "@/components/MiniActivityCard";
-import ActivityCard from "@/components/ActivityCard";
 import { TransparentBackButton } from "@/components/StyledButton";
 import { Icon } from "@/components/Icon";
 
@@ -84,19 +83,10 @@ const StyledList = styled.ul`
   @media (min-width: 320px) {
     display: grid;
     grid-template-columns: repeat(1, 250px);
-    justify-content: center;
-    gap: 1rem;
   }
 
   @media (min-width: 768px) {
-    display: grid;
-    grid-template-columns: repeat(2, 360px);
-    gap: 1rem;
-  }
-
-  @media (min-width: 1024px) {
     grid-template-columns: repeat(2, 300px);
-    gap: 1.2rem;
   }
 `;
 

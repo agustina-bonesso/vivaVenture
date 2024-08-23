@@ -48,10 +48,8 @@ export default async function handler(request, response) {
     } catch (error) {
       console.error(error);
       return response.status(500).json({ message: "Internal server error" });
-      return response.status(500).json({ message: "Internal server error" });
     }
   } else {
-    return response.status(405).json({ message: "Method not allowed" });
     return response.status(405).json({ message: "Method not allowed" });
   }
 }

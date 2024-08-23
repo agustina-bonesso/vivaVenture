@@ -28,15 +28,15 @@ const ModalBackdrop = styled.div`
 `;
 
 const ModalContent = styled.div`
-  width: 300px;
-  height: 450px;
+  max-width: 300px;
+  max-height: 550px;
   background: var(--card-background);
   padding: 10px;
   border-radius: var(--border-radius);
   font-family: var(--font-p);
   @media (min-width: 450px) {
-    width: 450px;
-    height: 550px;
+    max-width: 450px;
+    max-height: 650px;
   }
 `;
 

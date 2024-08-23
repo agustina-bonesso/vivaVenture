@@ -7,7 +7,9 @@ import { mutate } from "swr";
 export default function UserForm({ initialUserData, onClose }) {
   const maxChars = 250;
 
-  const [aboutMeText, setAboutMeText] = useState(initialUserData?.aboutMe || "");
+  const [aboutMeText, setAboutMeText] = useState(
+    initialUserData?.aboutMe || ""
+  );
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -55,7 +57,7 @@ export default function UserForm({ initialUserData, onClose }) {
         name="aboutMe"
         id="aboutMe"
         cols="30"
-        rows="10"
+        rows="5"
         placeholder="Add a text that describes you"
         value={aboutMeText}
         onChange={(e) => setAboutMeText(e.target.value)}
@@ -73,9 +75,7 @@ const StyledForm = styled.form`
   flex-direction: column;
   gap: 0.6rem;
   max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
   background: var(--form-background);
   color: var(--text-color);
@@ -83,27 +83,36 @@ const StyledForm = styled.form`
 
 const StyledLabel = styled.label`
   font-weight: bold;
-  margin-top: 0.8rem;
+  margin-top: 0.5rem;
   font-family: var(--font-h1);
-  font-size: 1.125rem;
+  font-size: 0.85rem;
+  @media (min-width: 450px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const StyledInput = styled.input`
-  padding: 0.8rem;
+  padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: var(--border-radius);
-  font-size: 1rem;
   color: var(--text-color);
+  font-size: 0.85rem;
+  @media (min-width: 450px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const StyledTextArea = styled.textarea`
-  padding: 0.8rem;
+  padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: var(--border-radius);
-  font-size: 1rem;
   color: var(--text-color);
   resize: vertical;
   min-height: 100px;
+  font-size: 0.85rem;
+  @media (min-width: 450px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const CharCounter = styled.div`
@@ -111,5 +120,5 @@ const CharCounter = styled.div`
   color: grey;
   text-align: right;
   margin-top: -0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5;
 `;
