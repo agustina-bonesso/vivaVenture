@@ -110,10 +110,12 @@ const ProfileDetails = styled.div`
   text-align: center;
 `;
 const UserName = styled.h2`
+  color: #2F2F2F;
   margin: 0;
   font-size: 1.5rem;
 `;
 const UserEmail = styled.p`
+  color: #2F2F2F;
   margin: 0.5rem 0;
 `;
 const SignOutButton = styled.button`
@@ -169,7 +171,7 @@ const UserAbout = styled.div`
 `;
 const SectionTitle = styled.p`
   line-height: 1.6;
-  color: var(--text-color);
+  color: #2F2F2F;
 `;
 const AboutText = styled.p`
   color: var(--teal);
@@ -177,7 +179,7 @@ const AboutText = styled.p`
   line-height: 1.5;
 `;
 const EditProfileButton = styled.button`
-  background-color: transparent;
+  background-color: var(--button-background);
   color: var(--text-color);
   padding: 0.5rem 1.25rem;
   font-size: 1rem;
