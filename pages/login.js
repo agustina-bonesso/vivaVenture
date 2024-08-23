@@ -90,7 +90,7 @@ const ProfileCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: white;
+  background-color: var(--form-background);
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -110,12 +110,13 @@ const ProfileDetails = styled.div`
   text-align: center;
 `;
 const UserName = styled.h2`
-  color: #2F2F2F;
+  color: var(--text-color)
   margin: 0;
+  color: var(--text-color)
   font-size: 1.5rem;
 `;
 const UserEmail = styled.p`
-  color: #2F2F2F;
+  color: var(--text-color)
   margin: 0.5rem 0;
 `;
 const SignOutButton = styled.button`
@@ -171,7 +172,7 @@ const UserAbout = styled.div`
 `;
 const SectionTitle = styled.p`
   line-height: 1.6;
-  color: #2F2F2F;
+  color: var(--text-color);
 `;
 const AboutText = styled.p`
   color: var(--teal);

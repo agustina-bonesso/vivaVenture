@@ -78,7 +78,7 @@ const StyledForm = styled.form`
   max-width: 600px;
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
-  background: var(--form-background);
+  background-color: var(--background-color);
   color: var(--text-color);
 `;
 
@@ -97,6 +97,7 @@ const StyledInput = styled.input`
   border: 1px solid #ccc;
   border-radius: var(--border-radius);
   color: var(--text-color);
+  background-color: var(--background-color);
   font-size: 0.85rem;
   @media (min-width: 450px) {
     font-size: 1.2rem;
@@ -108,6 +109,7 @@ const StyledTextArea = styled.textarea`
   border: 1px solid #ccc;
   border-radius: var(--border-radius);
   color: var(--text-color);
+  background-color: var(--background-color);
   resize: vertical;
   min-height: 100px;
   font-size: 0.85rem;
@@ -119,6 +121,7 @@ const StyledTextArea = styled.textarea`
 const CharCounter = styled.div`
   font-size: 0.875rem;
   color: grey;
+  padding-right: 0.3rem;
   text-align: right;
   margin-top: -0.5rem;
   margin-bottom: 0.5;
