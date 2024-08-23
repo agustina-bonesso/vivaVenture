@@ -47,7 +47,7 @@ export default function ReviewForm({ activityId, onClose }) {
         <Rating
           onClick={handleRating}
           ratingValue={rating}
-          size={40}
+          size={35}
           label
           transition
           fillColor="gold"
@@ -71,13 +71,19 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  max-width: 600px;
-  margin: 2rem auto;
+  width: 250px;
+  height: 320px;
+  margin: 0.5rem auto;
   padding: 2rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: var(--border-radius);
   background: var(--form-background);
   color: var(--text-color);
+
+  @media (min-width: 450px) {
+    width: 400px;
+    height: 400px;
+  }
 `;
 const StyledTextarea = styled.textarea`
   padding: 0.75rem;

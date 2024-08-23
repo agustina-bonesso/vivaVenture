@@ -4,6 +4,8 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import MiniActivityCard from "@/components/MiniActivityCard";
 import ActivityCard from "@/components/ActivityCard";
+import { TransparentBackButton } from "@/components/StyledButton";
+import { Icon } from "@/components/Icon";
 
 export default function UserPage({ activityData, onToggleFavorite, userData }) {
   const router = useRouter();
@@ -15,6 +17,12 @@ export default function UserPage({ activityData, onToggleFavorite, userData }) {
 
   return (
     <StyledArticle>
+      <TransparentBackButton
+        onClick={() => router.back()}
+        title="Back to all Activities"
+      >
+        <Icon name="chevronLeft" color="black" />
+      </TransparentBackButton>
       <UserImage
         src={userProfileData.picture || "/images/user_picture.png"}
         alt={`${userProfileData.name}'s profile picture`}
@@ -27,12 +35,12 @@ export default function UserPage({ activityData, onToggleFavorite, userData }) {
       )}
 
       {userProfileData.aboutMe && (
-        <>
-          <SectionTitle>About me:</SectionTitle>
+        <AboutMeSection>
+          <Title>About me:</Title>
           <AboutText>{userProfileData.aboutMe}</AboutText>
-        </>
+        </AboutMeSection>
       )}
-      <SectionTitle>Other Activities:</SectionTitle>
+      <CreatedActvitiesTitle>Created Activities:</CreatedActvitiesTitle>
       <StyledList>
         {activityData
           .filter((activity) => activity.owner === id)
@@ -54,6 +62,7 @@ export default function UserPage({ activityData, onToggleFavorite, userData }) {
   );
 }
 const StyledArticle = styled.article`
+  position: relative;
   max-width: 50rem;
   margin: 2rem auto 5rem auto;
   box-shadow: var(--box-shadow);
@@ -72,6 +81,13 @@ const StyledList = styled.ul`
   padding: 0;
   margin: 0 auto 10rem auto;
 
+  @media (min-width: 320px) {
+    display: grid;
+    grid-template-columns: repeat(1, 250px);
+    justify-content: center;
+    gap: 1rem;
+  }
+
   @media (min-width: 768px) {
     display: grid;
     grid-template-columns: repeat(2, 360px);
@@ -79,7 +95,7 @@ const StyledList = styled.ul`
   }
 
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(2, 450px);
+    grid-template-columns: repeat(2, 300px);
     gap: 1.2rem;
   }
 `;
@@ -105,16 +121,34 @@ const UserLocation = styled.p`
   align-self: center;
 `;
 
-const SectionTitle = styled.p`
+const AboutMeSection = styled.div`
+  display: flex;
+  max-width: 90%;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem;
+  background: var(--background-color);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  transition: box-shadow 0.3s ease;
+`;
+
+const Title = styled.p`
   color: var(--text-color);
   font-size: 18px;
-  align-self: start;
-  margin-left: 0.5rem;
+  align-items: center;
+`;
+
+const CreatedActvitiesTitle = styled.p`
+  color: var(--text-color);
+  font-size: 18px;
+  align-items: center;
+  margin-left: 3.7rem;
 `;
 
 const AboutText = styled.p`
   color: var(--teal);
   font-size: 1rem;
   line-height: 1.5;
-  margin-left: 0.5rem;
 `;

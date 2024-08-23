@@ -102,12 +102,12 @@ export default function ActivityDetails({
           <AverageRating>
             | <Rating initialValue={averageRating} readonly size={30} />
             {averageRating}
+            {activity.reviews.length > 0 && (
+              <ToggleReviewsButton onClick={() => setShowReviews(!showReviews)}>
+                <Icon name={showReviews ? "chevronUp" : "chevronDown"} />
+              </ToggleReviewsButton>
+            )}
           </AverageRating>
-          {activity.reviews.length > 0 && (
-            <ToggleReviewsButton onClick={() => setShowReviews(!showReviews)}>
-              <Icon name={showReviews ? "chevronUp" : "chevronDown"} />
-            </ToggleReviewsButton>
-          )}
         </ReviewsSummary>
         <ReviewButton
           onClick={() => {
@@ -199,12 +199,18 @@ const Tag = styled.span`
   border-radius: var(--border-radius);
 `;
 const ReviewsSummary = styled.div`
-  margin-top: 1rem;
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
   align-items: center;
+
+  @media (min-width: 450px) {
+    flex-direction: row;
+    margin-top: 1rem;
+    gap: 1rem;
+  }
 `;
 const ReviewsCount = styled.p`
+  margin: 0;
   font-weight: bold;
   color: var(--text-color);
 `;
