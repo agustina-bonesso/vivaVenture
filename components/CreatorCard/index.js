@@ -7,7 +7,11 @@ export default function CreatorCard({ activityOwner }) {
       <Heading>Who Greets You</Heading>
       <CreatorInfo>
         <CreatorImage
-          src={activityOwner.picture ? activityOwner.picture : "/images/user_picture.png"}
+          src={
+            activityOwner.picture
+              ? activityOwner.picture
+              : "/images/user_picture.png"
+          }
           alt={`${activityOwner.name}'s profile picture`}
           width={60}
           height={60}
@@ -15,7 +19,9 @@ export default function CreatorCard({ activityOwner }) {
         <CreatorDetails>
           <CreatorName>{activityOwner.name}</CreatorName>
           {activityOwner.city && activityOwner.country && (
-            <Location>{activityOwner.city}, {activityOwner.country}</Location>
+            <Location>
+              {activityOwner.city}, {activityOwner.country}
+            </Location>
           )}
         </CreatorDetails>
       </CreatorInfo>
@@ -28,7 +34,7 @@ const StyledCreatorCard = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 1.5rem;
-  background: #ffffff;
+  background-color: var(--form-background);
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease;
@@ -41,7 +47,7 @@ const StyledCreatorCard = styled.div`
 const Heading = styled.h2`
   font-size: 1.25rem;
   font-weight: 700;
-  color: #333333;
+  color: var(--text-color);
   margin-bottom: 1rem;
 `;
 
@@ -65,7 +71,7 @@ const CreatorImage = styled(Image)`
 const CreatorName = styled.p`
   font-weight: 600;
   font-size: 1rem;
-  color: #333333;
+  color: var(--text-color);
   margin: 0;
 `;
 
