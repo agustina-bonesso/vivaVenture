@@ -7,10 +7,12 @@ import { Modal } from "@/components/Modal";
 import { ModalButton, StyledButton } from "@/components/StyledButton";
 import { useState } from "react";
 import useSWR from "swr";
+
 export default function LoginPage() {
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: profileData } = useSWR(`/api/users`);
+  const { data: profileData = { city: "", country: "", aboutMe: "" } } = useSWR(`/api/users`);
+
   return (
     <StyledArticle>
       {session ? (
@@ -35,16 +37,12 @@ export default function LoginPage() {
             {profileData.aboutMe && (
               <UserAbout>
                 <SectionTitle>About Me:</SectionTitle>
-                <AboutText>
-                  {profileData.aboutMe || "No details provided."}
-                </AboutText>
+                <AboutText>{profileData.aboutMe}</AboutText>
               </UserAbout>
             )}
           </ProfileDetails>
           <EditProfileButton
-            onClick={() => {
-              setIsModalOpen(true);
-            }}
+            onClick={() => setIsModalOpen(true)}
           >
             Edit your Profile
           </EditProfileButton>
@@ -96,89 +94,56 @@ const ProfileCard = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: auto;
 `;
+
 const ProfileImageWrapper = styled.div`
   position: relative;
   width: 150px;
   height: 150px;
   margin-bottom: 1rem;
 `;
+
 const StyledImage = styled(Image)`
   object-fit: cover;
   border-radius: 50%;
 `;
+
 const ProfileDetails = styled.div`
   text-align: center;
 `;
+
 const UserName = styled.h2`
-  color: var(--text-color)
   margin: 0;
-  color: var(--text-color)
+  color: var(--text-color);
   font-size: 1.5rem;
 `;
+
 const UserEmail = styled.p`
-  color: var(--text-color)
   margin: 0.5rem 0;
+  color: var(--text-color);
 `;
-const SignOutButton = styled.button`
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  color: white;
-  background-color: #0070f3;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  &:hover {
-    background-color: #005bb5;
-  }
-`;
-const LoginCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`;
-const SignInButton = styled.button`
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  color: white;
-  background-color: #0070f3;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  &:hover {
-    background-color: #005bb5;
-  }
-  svg {
-    width: 24px;
-    height: 24px;
-  }
-`;
+
 const UserLocation = styled.p`
   color: var(--brown);
   font-size: 1rem;
   margin-bottom: 0.5rem;
 `;
+
 const UserAbout = styled.div`
   width: auto;
   text-align: left;
 `;
+
 const SectionTitle = styled.p`
   line-height: 1.6;
   color: var(--text-color);
 `;
+
 const AboutText = styled.p`
   color: var(--teal);
   font-size: 1rem;
   line-height: 1.5;
 `;
+
 const EditProfileButton = styled.button`
   background-color: var(--button-background);
   color: var(--text-color);
@@ -203,5 +168,50 @@ const EditProfileButton = styled.button`
   &:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const SignOutButton = styled.button`
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #0070f3;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  &:hover {
+    background-color: #005bb5;
+  }
+`;
+
+const LoginCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--background-color);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const SignInButton = styled.button`
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #0070f3;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  &:hover {
+    background-color: #005bb5;
+  }
+  svg {
+    width: 24px;
+    height: 24px;
   }
 `;
