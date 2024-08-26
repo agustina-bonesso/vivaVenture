@@ -2,21 +2,17 @@ import styled from "styled-components";
 import { useState } from "react";
 import UserCard from "@/components/UserCard";
 import { Rating } from "react-simple-star-rating";
-
 export default function ReviewCard({ review }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const maxCharacters = 200;
-
   function toggleReadMore() {
     setIsExpanded(!isExpanded);
   }
-
   const comment = review?.comment || "";
   const truncatedText =
     comment.length > maxCharacters
       ? comment.substring(0, maxCharacters) + "..."
       : comment;
-
   return (
     <StyledReviewCard>
       <Header>
@@ -38,7 +34,6 @@ export default function ReviewCard({ review }) {
     </StyledReviewCard>
   );
 }
-
 const StyledReviewCard = styled.div`
   display: flex;
   flex-direction: column;
@@ -48,7 +43,6 @@ const StyledReviewCard = styled.div`
   background: var(--card-background);
   box-shadow: var(--box-shadow);
 `;
-
 const Header = styled.div`
   display: flex;
   flex-direction: column;
@@ -59,7 +53,6 @@ const Header = styled.div`
     flex-direction: row;
   }
 `;
-
 const NameAndRating = styled.div`
   display: flex;
   justify-content: space-between;
@@ -67,7 +60,6 @@ const NameAndRating = styled.div`
   flex-grow: 1;
   margin-left: 1rem;
 `;
-
 const RatingWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -77,7 +69,6 @@ const RatingWrapper = styled.div`
     flex-direction: row;
   }
 `;
-
 const Comment = styled.p`
   font-style: italic;
   color: var(--text-color);
@@ -88,7 +79,6 @@ const Comment = styled.p`
     margin: 0.5rem;
   }
 `;
-
 const ReadMoreButton = styled.span`
   color: var(--teal);
   cursor: pointer;

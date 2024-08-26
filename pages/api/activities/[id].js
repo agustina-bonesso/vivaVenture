@@ -10,13 +10,18 @@ export default async function handler(request, response) {
 
   if (request.method === "GET") {
     try {
-      const activity = await Activity.findById(id).populate({
-        path: "reviews",
-        populate: {
-          path: "author",
-          select: "name picture comment", 
-        },
-      });
+      const activity = await Activity.findById(id)
+        .populate({
+          path: "reviews",
+          populate: {
+            path: "author",
+            select: "name picture",
+          },
+        })
+        .populate({
+          path: "owner",
+          select: "name email picture city country",
+        });
 
       if (!activity) {
         return response.status(404).json({ status: "Not Found" });

@@ -9,6 +9,7 @@ import {
   TransparentFavoriteButton,
 } from "@/components/StyledButton";
 import { StyledEditLink } from "@/components/StyledLinks";
+import { StyledLink } from "@/components/StyledLinks";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import WeatherInformation from "@/components/Weather";
@@ -18,6 +19,8 @@ import ReviewForm from "../ReviewForm";
 import { Modal } from "@/components/Modal";
 import { toast } from "react-toastify";
 import { Rating } from "react-simple-star-rating";
+import CreatorCard from "../CreatorCard";
+import useSWR from "swr";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -32,6 +35,7 @@ export default function ActivityDetails({
   const images = activity.images;
   const [showReviews, setShowReviews] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data: userData } = useSWR(`/api/users`);
   const ratings = activity.reviews.map((review) => review.rating);
   const averageRating =
     ratings.length > 0
@@ -62,24 +66,26 @@ export default function ActivityDetails({
       <Content>
         <StyledDiv>
           <Title>{activity.title}</Title>
-          <ActionIcons>
-            <StyledEditLink
-              title="Edit activity"
-              type="button"
-              $variant="edit"
-              href={session ? `/${activity._id}/edit` : `/login`}
-            >
-              <Icon name="edit" />
-            </StyledEditLink>
-            <StyledButton
-              title="Delete activity"
-              type="button"
-              $variant="delete"
-              onClick={onDeleteActivity}
-            >
-              <Icon name="delete" />
-            </StyledButton>
-          </ActionIcons>
+          {activity.owner._id === userData._id && (
+            <ActionIcons>
+              <StyledEditLink
+                title="Edit activity"
+                type="button"
+                $variant="edit"
+                href={session ? `/${activity._id}/edit` : `/login`}
+              >
+                <Icon name="edit" />
+              </StyledEditLink>
+              <StyledButton
+                title="Delete activity"
+                type="button"
+                $variant="delete"
+                onClick={onDeleteActivity}
+              >
+                <Icon name="delete" />
+              </StyledButton>
+            </ActionIcons>
+          )}
         </StyledDiv>
         <Info>{`${activity.city}, ${activity.country}`}</Info>
         <Description>{activity.description}</Description>
@@ -94,14 +100,14 @@ export default function ActivityDetails({
             {activity.reviews.length > 1 ? "s" : ""}
           </ReviewsCount>
           <AverageRating>
-            | <Rating initialValue={averageRating} readonly size={30} />
+            <Rating initialValue={averageRating} readonly size={30} />
             {averageRating}
+            {activity.reviews.length > 0 && (
+              <ToggleReviewsButton onClick={() => setShowReviews(!showReviews)}>
+                <Icon name={showReviews ? "chevronUp" : "chevronDown"} />
+              </ToggleReviewsButton>
+            )}
           </AverageRating>
-          {activity.reviews.length > 0 && (
-            <ToggleReviewsButton onClick={() => setShowReviews(!showReviews)}>
-              <Icon name={showReviews ? "chevronUp" : "chevronDown"} />
-            </ToggleReviewsButton>
-          )}
         </ReviewsSummary>
         <ReviewButton
           onClick={() => {
@@ -137,6 +143,10 @@ export default function ActivityDetails({
         )}
         <MapComponent lat={activity.lat} lng={activity.lng} />
         <WeatherInformation activity={activity} />
+
+        <StyledLink href={`/users/${activity.owner._id}`}>
+          <CreatorCard activityOwner={activity.owner} />
+        </StyledLink>
       </Content>
     </StyledArticle>
   );
@@ -189,12 +199,18 @@ const Tag = styled.span`
   border-radius: var(--border-radius);
 `;
 const ReviewsSummary = styled.div`
-  margin-top: 1rem;
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
   align-items: center;
+
+  @media (min-width: 450px) {
+    flex-direction: row;
+    margin-top: 1rem;
+    gap: 1rem;
+  }
 `;
 const ReviewsCount = styled.p`
+  margin: 0;
   font-weight: bold;
   color: var(--text-color);
 `;

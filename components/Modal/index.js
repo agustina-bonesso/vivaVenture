@@ -28,10 +28,16 @@ const ModalBackdrop = styled.div`
 `;
 
 const ModalContent = styled.div`
+  max-width: 300px;
+  max-height: 550px;
   background: var(--card-background);
-  padding: 20px;
+  padding: 10px;
   border-radius: var(--border-radius);
   font-family: var(--font-p);
+  @media (min-width: 450px) {
+    max-width: 450px;
+    max-height: 650px;
+  }
 `;
 
 const ModalHeader = styled.h2`
@@ -46,5 +52,4 @@ const ModalBody = styled.div`
 
 const ModalFooter = styled.div`
   text-align: right;
-  margin-top: 1rem;
 `;
