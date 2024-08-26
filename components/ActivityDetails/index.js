@@ -36,7 +36,7 @@ export default function ActivityDetails({
   const [showReviews, setShowReviews] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: userData } = useSWR(`/api/users`);
-  const ratings = activity.reviews.map((review) => review.rating);
+  const ratings = activity.reviews?.map((review) => review.rating);
   const averageRating =
     ratings.length > 0
       ? (ratings.reduce((a, b) => a + b) / ratings.length).toFixed(1)

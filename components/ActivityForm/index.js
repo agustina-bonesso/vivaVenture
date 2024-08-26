@@ -9,6 +9,7 @@ import Select from "react-select";
 import { fetchCitiesData, fetchCoordinatesData } from "@/lib/utils/geoData";
 import dynamic from "next/dynamic";
 import { countriesData } from "@/lib/countriesData";
+import { toast } from "react-toastify";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
@@ -96,7 +97,8 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       });
 
       if (!response.ok) {
-        throw new Error("Error uploading images");
+        toast.error("error uploading images");
+        return;
       }
 
       const uploadedImageUrls = await response.json();
