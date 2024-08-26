@@ -24,9 +24,9 @@ export default function CreateActivity({ activity }) {
     });
     if (!response.ok) {
       console.error(response.status);
+      toast.error("Activity not created")
       return;
     }
-
     mutate("/api/activities");
     toast.success("Activity added successfully!");
   }

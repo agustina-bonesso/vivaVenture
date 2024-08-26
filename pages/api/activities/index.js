@@ -9,6 +9,8 @@ export default async function handler(request, response) {
   const session = await getServerSession(request, response, authOptions);
   const token = await getToken({ req: request });
   const userId = token?.sub;
+  const picture = token?.picture;
+  const userName = token?.name;
 
   await dbConnect();
 
