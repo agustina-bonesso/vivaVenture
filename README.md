@@ -41,17 +41,12 @@ vivaVenture is developed by a passionate team of four:
 
 - **Davide Esposito**
   - [GitHub](https://github.com/davide-esposito)
-  - [LinkedIn](www.linkedin.com/in/davideesp)
+  - [LinkedIn](https://www.linkedin.com/in/davideesp/)
 - **Maria Agustina Bonesso Immerso**
   - [GitHub](https://github.com/agustina-bonesso)
-  - [LinkedIn](#)
 - **Kaya Wolfert**
   - [GitHub](https://github.com/KayaWolfert)
-  - [LinkedIn](#)
+  - [LinkedIn](https://www.linkedin.com/in/kaya-wolfert-78a365325/)
 - **Steffen Zierold**
   - [GitHub](https://github.com/e-Steffen)
-  - [LinkedIn](#)
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
