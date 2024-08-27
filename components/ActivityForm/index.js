@@ -10,11 +10,13 @@ import { fetchCitiesData, fetchCoordinatesData } from "@/lib/utils/geoData";
 import dynamic from "next/dynamic";
 import { countriesData } from "@/lib/countriesData";
 import { toast } from "react-toastify";
+import imageCompression from 'browser-image-compression';
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
+  const maxFileSize = 5100000;
   const defaultImages = initialData ? initialData.images : [];
   const [images, setImages] = useState(defaultImages);
   const maxNumberOfImages = 20;
@@ -76,8 +78,33 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
     setSelectedCity({ value: placeData.cityName, label: placeData.cityName });
   };
 
-  const onChangeImage = (imageList) => {
-    setImages(imageList);
+  const onChangeImage = async (imageList) => {
+    const compressedImages = [];
+
+    for (let image of imageList) {
+      if (image.file.size > maxFileSize) {
+        toast.error('a image size is too big');
+        continue; 
+      }
+
+      try {
+        const options = {
+          maxSizeMB: 5, 
+          maxWidthOrHeight: 1024, 
+          useWebWorker: true,
+        };
+
+        const compressedFile = await imageCompression(image.file, options);
+
+        compressedImages.push({
+          data_url: await imageCompression.getDataUrlFromFile(compressedFile),
+          file: compressedFile,
+        });
+      } catch (error) {
+        toast.error('Error in image compression: ' + error.message);
+      }
+    }
+    setImages(compressedImages);
   };
 
   const uploadImages = async (images) => {
@@ -97,8 +124,7 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
       });
 
       if (!response.ok) {
-        toast.error("error uploading images");
-        return;
+        throw new Error("Error uploading images");
       }
 
       const uploadedImageUrls = await response.json();
