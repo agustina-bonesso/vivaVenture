@@ -9,11 +9,14 @@ import Select from "react-select";
 import { fetchCitiesData, fetchCoordinatesData } from "@/lib/utils/geoData";
 import dynamic from "next/dynamic";
 import { countriesData } from "@/lib/countriesData";
+import { toast } from "react-toastify";
+import imageCompression from "browser-image-compression";
 
 const MapComponent = dynamic(() => import("@/components/Map"), { ssr: false });
 
 export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const router = useRouter();
+  const maxFileSize = 5100000;
   const defaultImages = initialData ? initialData.images : [];
   const [images, setImages] = useState(defaultImages);
   const maxNumberOfImages = 20;
@@ -78,17 +81,53 @@ export default function ActivityForm({ onSubmit, initialData, isEditMode }) {
   const onChangeImage = (imageList) => {
     setImages(imageList);
   };
+  const getCompressedImages = async (images) => {
+    const compressedImages = [];
+
+    for (let image of images) {
+      if (!image.file) {
+        continue;
+      }
+      try {
+        const options = {
+          maxSizeMB: 5,
+          maxWidthOrHeight: 1024,
+          useWebWorker: true,
+        };
+        if (!image.file) {
+          image.file = await imageCompression.getFilefromDataUrl(
+            image.data_url
+          );
+        }
+        const compressedFile = await imageCompression(image.file, options);
+
+        const dataUrl = await imageCompression.getDataUrlFromFile(
+          compressedFile
+        );
+
+        compressedImages.push({
+          data_url: dataUrl,
+          file: compressedFile,
+        });
+      } catch (error) {
+        toast.error("Error in image compression: " + error.message);
+      }
+    }
+    return compressedImages;
+  };
 
   const uploadImages = async (images) => {
     const formData = new FormData();
     const imageUrls = [];
+    const compressedImages = await getCompressedImages(images);
     images.forEach((image) => {
       if (!image.file) {
         imageUrls.push({ data_url: image.data_url });
       }
-      formData.append("images", image.file);
     });
-
+    compressedImages.forEach((compressedImage) => {
+      formData.append("images", compressedImage.file);
+    });
     try {
       const response = await fetch("/api/upload", {
         method: "POST",
