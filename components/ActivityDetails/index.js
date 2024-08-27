@@ -38,7 +38,7 @@ export default function ActivityDetails({
   const { data: userData } = useSWR(`/api/users`);
   const ratings = activity.reviews?.map((review) => review.rating);
   const averageRating =
-    ratings.length > 0
+    ratings?.length > 0
       ? (ratings.reduce((a, b) => a + b) / ratings.length).toFixed(1)
       : 0;
   return (
