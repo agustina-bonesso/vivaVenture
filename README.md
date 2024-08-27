@@ -19,6 +19,8 @@ vivaVenture is a dynamic activity and event app that allows users to easily disc
 - **User Activities:** View activities created by other users and favorite them.
 - **Responsive Design:** Enjoy our app in a responsive design that includes both light and dark modes.
 
+![vivaVenture iPhone](https://github.com/user-attachments/assets/de404440-8d7e-4b48-b594-abaf6ad45758)
+
 ### Technologies
 
 vivaVenture utilizes modern web technologies to ensure a fast and responsive user experience. Here is an overview of the technologies used:
@@ -37,10 +39,18 @@ vivaVenture utilizes modern web technologies to ensure a fast and responsive use
 
 vivaVenture is developed by a passionate team of four:
 
-- **Davide Esposito** - [GitHub](https://github.com/DavideEsposito)
-- **Maria Agustina Bonesso Immerso** - [GitHub](https://github.com/MariaAgustinaBonessoImmerso)
-- **Kaya Wolfert** - [GitHub](https://github.com/KayaWolfert)
-- **Steffen Zierold** - [GitHub](https://github.com/SteffenZierold)
+- **Davide Esposito**
+  - [GitHub](https://github.com/davide-esposito)
+  - [LinkedIn](www.linkedin.com/in/davideesp)
+- **Maria Agustina Bonesso Immerso**
+  - [GitHub](https://github.com/agustina-bonesso)
+  - [LinkedIn](#)
+- **Kaya Wolfert**
+  - [GitHub](https://github.com/KayaWolfert)
+  - [LinkedIn](#)
+- **Steffen Zierold**
+  - [GitHub](https://github.com/e-Steffen)
+  - [LinkedIn](#)
 
 ## License
 
