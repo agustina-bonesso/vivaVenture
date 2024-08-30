@@ -49,4 +49,4 @@ vivaVenture is developed by a passionate team of four:
   - [LinkedIn](https://www.linkedin.com/in/kaya-wolfert-78a365325/)
 - **Steffen Zierold**
   - [GitHub](https://github.com/e-Steffen)
-
+  - [LinkedIn](https://www.linkedin.com/in/steffen-zierold/)
